@@ -968,3 +968,17 @@ Files:
 
 Files:
 - e2e/smoke.spec.ts (new)
+
+## TEST-002: Create Test Utilities with providers - COMPLETE
+
+- Created src/test/utils.tsx with:
+  - createTestQueryClient() with retry/gcTime/staleTime disabled for tests
+  - createTestTRPCClient() with httpBatchLink for localhost:3000
+  - AllProviders wrapper combining QueryClientProvider + TRPCProvider
+  - renderWithProviders() function for component testing
+  - Re-exports all @testing-library/react utilities
+- Uses createTRPCContext from @trpc/tanstack-react-query v11
+- Typecheck + lint + all tests pass (21 unit, 49 E2E)
+
+Files:
+- src/test/utils.tsx (new)

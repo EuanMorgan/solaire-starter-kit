@@ -511,3 +511,17 @@ Files changed:
 - src/components/ui/alert-dialog.tsx (new)
 - src/components/ui/button.tsx (updated by shadcn)
 - package.json (@radix-ui/react-dialog, @radix-ui/react-alert-dialog deps)
+
+## UI-005: Install Dropdown and Select - COMPLETE
+
+- Installed shadcn dropdown-menu via `bunx shadcn@latest add dropdown-menu`
+- Installed shadcn select via `bunx shadcn@latest add select`
+- DropdownMenu: DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent
+- Select: SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectLabel, SelectSeparator, SelectScrollUpButton, SelectScrollDownButton, SelectValue
+- Applied Biome lint fixes (import type, semicolons, import order)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/dropdown-menu.tsx (new)
+- src/components/ui/select.tsx (new)
+- package.json (@radix-ui/react-dropdown-menu, @radix-ui/react-select deps)

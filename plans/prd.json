@@ -663,7 +663,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: DropdownMenu and Select components installed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-006",

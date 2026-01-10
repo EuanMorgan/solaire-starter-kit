@@ -1252,7 +1252,7 @@
       "VERIFY: CI workflow includes Storybook build",
       "DONE: Storybook build verified in CI"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CI-003",

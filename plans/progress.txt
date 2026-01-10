@@ -1120,3 +1120,14 @@ Files:
 - src/components/ui/button.stories.tsx (new)
 - src/components/ui/form.stories.tsx (new)
 - vitest.config.ts (fixed coverage config location)
+
+## CI-002: Add Storybook to CI - COMPLETE
+
+- Added storybook job to .github/workflows/ci.yml
+- Job runs `bun run build-storybook`
+- Runs in parallel with other CI jobs (lint, typecheck, test, build)
+- Verified: bun run build-storybook completes successfully
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- .github/workflows/ci.yml (updated)

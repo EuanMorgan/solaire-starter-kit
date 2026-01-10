@@ -370,3 +370,17 @@ Files changed:
 - src/trpc/routers/__tests__/user.test.ts (new)
 - src/app/api/trpc/[trpc]/route.ts (new)
 - package.json (server-only, @tanstack/react-query-devtools deps)
+
+## API-011: Common Validation Schemas - COMPLETE
+
+- Created src/lib/validations/common.ts with:
+  - paginationSchema: page (min 1), limit (min 1, max 100)
+  - idSchema: id (non-empty string)
+  - Exported types: PaginationInput, IdInput
+- Created src/lib/validations/index.ts barrel export
+- Exports all schemas + types from auth.ts and common.ts
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/lib/validations/common.ts (new)
+- src/lib/validations/index.ts (new)

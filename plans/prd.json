@@ -530,7 +530,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Common validation schemas exported"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-012",

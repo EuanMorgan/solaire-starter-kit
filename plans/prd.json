@@ -1096,7 +1096,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: MSW v2 configured for test mocking"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TEST-004",

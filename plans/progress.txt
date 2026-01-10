@@ -982,3 +982,24 @@ Files:
 
 Files:
 - src/test/utils.tsx (new)
+
+## TEST-003: Set Up MSW v2 for API mocking - COMPLETE
+
+- Installed msw@2.12.7
+- Created src/mocks/handlers.ts with:
+  - http and HttpResponse from msw (v2 API)
+  - Example handlers: user.me, user.me.unauthorized, health
+- Created src/mocks/server.ts: setupServer from msw/node for Vitest
+- Created src/mocks/browser.ts: setupWorker from msw/browser for Storybook
+- Updated src/test/setup.ts:
+  - beforeAll: server.listen({ onUnhandledRequest: "bypass" })
+  - afterEach: server.resetHandlers()
+  - afterAll: server.close()
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- src/mocks/handlers.ts (new)
+- src/mocks/server.ts (new)
+- src/mocks/browser.ts (new)
+- src/test/setup.ts (updated)
+- package.json (msw devDep)

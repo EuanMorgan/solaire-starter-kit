@@ -3,12 +3,17 @@ import { headers } from "next/headers";
 import { cache } from "react";
 import superjson from "superjson";
 import { auth } from "@/lib/auth";
+import { ratelimit } from "@/lib/rate-limit";
 
 export const createTRPCContext = cache(async () => {
+  const reqHeaders = await headers();
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: reqHeaders,
   });
-  return { session };
+  // Get IP for rate limiting (X-Forwarded-For or fallback)
+  const ip =
+    reqHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  return { session, ip };
 });
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
@@ -81,4 +86,23 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
       session: ctx.session,
     },
   });
+});
+
+/**
+ * Rate-limited procedure for sensitive endpoints.
+ * Uses user ID if authenticated, otherwise IP address.
+ * Gracefully skips if Upstash env vars not configured.
+ */
+export const rateLimitedProcedure = baseProcedure.use(async ({ ctx, next }) => {
+  if (ratelimit) {
+    const identifier = ctx.session?.user?.id ?? ctx.ip;
+    const { success } = await ratelimit.limit(identifier);
+    if (!success) {
+      throw new TRPCError({
+        code: "TOO_MANY_REQUESTS",
+        message: "Rate limit exceeded. Please try again later.",
+      });
+    }
+  }
+  return next();
 });

@@ -284,3 +284,19 @@ Files changed:
 - src/app/signup/page.tsx (new - placeholder)
 - src/app/dashboard/page.tsx (new - placeholder)
 - src/app/settings/page.tsx (new - placeholder)
+
+## API-001: tRPC Core Setup - COMPLETE
+
+- Installed @trpc/server@11.8.1 + @trpc/client@11.8.1 + @trpc/tanstack-react-query@11.8.1 + @tanstack/react-query@5.90.16 + superjson@2.2.6
+- Created src/trpc/init.ts with:
+  - createTRPCContext using React cache() for request deduplication
+  - Session fetched from better-auth via auth.api.getSession
+  - Uses superjson transformer for Date/BigInt/Map/Set serialization
+  - createTRPCRouter, createCallerFactory exports
+  - baseProcedure (public, no auth)
+  - protectedProcedure (throws UNAUTHORIZED if no session)
+- Typecheck passes
+
+Files changed:
+- src/trpc/init.ts (new)
+- package.json (deps)

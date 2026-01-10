@@ -356,7 +356,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: tRPC initialized with auth-aware context"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-002",

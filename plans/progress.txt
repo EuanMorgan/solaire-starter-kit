@@ -131,3 +131,32 @@ Files changed:
 Files changed:
 - src/db/schema/auth.schema.ts (new)
 - src/db/schema/index.ts (updated exports)
+
+## DB-004: Posts Schema - COMPLETE
+
+- Created src/db/schema/posts.schema.ts with:
+  - post: id, title, content, published (boolean), userId (FK to user), timestamps
+  - Index on userId for query performance
+- Comments explain pgTable wrapper pattern
+- Restructured relations to avoid circular deps:
+  - Moved all relations to src/db/schema/relations.ts
+  - userRelations now includes posts: many(post)
+- Typecheck + lint pass
+
+Files changed:
+- src/db/schema/posts.schema.ts (new)
+- src/db/schema/relations.ts (new - consolidated relations)
+- src/db/schema/auth.schema.ts (removed relations - moved to relations.ts)
+- src/db/schema/index.ts (updated exports)
+
+## DB-005: Schema Barrel Export - COMPLETE
+
+- Updated src/db/schema/index.ts barrel export
+- Exports all tables: user, session, account, verification, post
+- Exports all relations: userRelations, sessionRelations, accountRelations, postRelations
+- Exports common helpers: id, pgTable, timestamps
+- import * as schema from '@/db/schema' works
+- Typecheck passes
+
+Files changed:
+- src/db/schema/index.ts (updated)

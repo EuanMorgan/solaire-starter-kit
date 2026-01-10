@@ -130,10 +130,10 @@
       "Add .dockerignore if not exists",
       "Update .gitignore to ignore docker volumes if needed",
       "VERIFY: docker-compose up -d starts postgres container",
-      "VERIFY: psql -h localhost -p 5434 -U postgres -d solaire connects",
+      "VERIFY: psql -h localhost -p 5435 -U postgres -d solaire connects",
       "DONE: Local PostgreSQL running via Docker for development"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DB-001",
@@ -236,7 +236,7 @@
       "VERIFY: Can login with test@example.com / password123",
       "DONE: Seed script using drizzle-seed creates dummy user for local dev and testing"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-001",

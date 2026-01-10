@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build outputs
+.next
+out
+dist
+
+# Development
+*.log
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea
+.vscode
+
+# Testing
+coverage
+.playwright-mcp
+
+# Git
+.git
+.gitignore

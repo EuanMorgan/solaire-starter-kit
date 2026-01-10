@@ -665,3 +665,38 @@ Files:
 Files:
 - src/components/public-header.tsx (new)
 - src/app/login/page.tsx (updated to include PublicHeader)
+
+## DB-000: Docker Compose for local PostgreSQL - COMPLETE
+
+- Created docker-compose.yml with postgres:16-alpine
+- Port mapped to 5435:5432 (changed from 5434 due to local port conflict)
+- POSTGRES_USER/PASSWORD/DB set to postgres/postgres/solaire
+- Named volume postgres_data for persistence
+- Healthcheck configured
+- Created .dockerignore for cleaner Docker builds
+- Updated .env and .env.example to use port 5435
+- Verified: docker-compose up -d starts container + healthy
+
+Files:
+- docker-compose.yml (new)
+- .dockerignore (new)
+- .env (updated port)
+- .env.example (updated port)
+
+## DB-006: Database Seed Script with test user - COMPLETE
+
+- Installed drizzle-seed@0.3.1
+- Created src/db/seed.ts with:
+  - hashPassword from better-auth/crypto for scrypt hashing
+  - Check for existing user (idempotent)
+  - Creates test user: email=test@example.com, name=Test User
+  - Creates credential account with hashed password
+  - Uses drizzle-seed to seed 3 test posts for user
+- Added db:seed script to package.json
+- Verified: bun run db:seed creates test user
+- Verified: POST /api/auth/sign-in/email with credentials returns token (login works)
+- Verified: Running seed again skips (idempotent)
+
+Files:
+- src/db/seed.ts (new)
+- package.json (db:seed script, drizzle-seed dep)

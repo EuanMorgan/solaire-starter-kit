@@ -446,3 +446,23 @@ Files changed:
 - src/modules/email/ui/magic-link-email.tsx (new)
 - src/modules/email/ui/index.ts (updated export)
 - src/lib/auth.ts (wired email callbacks)
+
+## UI-001: Install Core shadcn Components - COMPLETE
+
+- Ran bunx shadcn@latest init --yes --defaults (New York style, Tailwind v4 detected)
+- Added button, input, label, card components via bunx shadcn@latest add
+- Created src/lib/utils.ts with cn() helper (clsx + tailwind-merge)
+- Created components.json config for shadcn CLI
+- Installed deps: class-variance-authority, clsx, tailwind-merge, lucide-react, @radix-ui/react-slot, @radix-ui/react-label
+- Fixed Biome lint issues in generated files (import order, semicolons)
+- Verified via Playwright: all components render correctly (tested Button variants, Input, Label, Card)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/button.tsx (new)
+- src/components/ui/input.tsx (new)
+- src/components/ui/label.tsx (new)
+- src/components/ui/card.tsx (new)
+- src/lib/utils.ts (new)
+- components.json (new)
+- package.json (deps)

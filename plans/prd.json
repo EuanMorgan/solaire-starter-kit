@@ -609,7 +609,7 @@
       "VERIFY: Playwright - create temp test page importing Button, renders without error",
       "DONE: Core shadcn components installed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-002",

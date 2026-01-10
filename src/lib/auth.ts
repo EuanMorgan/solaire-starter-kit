@@ -6,9 +6,9 @@ import * as schema from "@/db/schema";
 import { env } from "@/env";
 import { sendEmail } from "@/modules/email/server/email.service";
 import {
-  VerificationEmail,
-  ResetPasswordEmail,
   MagicLinkEmail,
+  ResetPasswordEmail,
+  VerificationEmail,
 } from "@/modules/email/ui";
 
 export const auth = betterAuth({

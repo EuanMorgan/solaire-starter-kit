@@ -479,3 +479,19 @@ Files changed:
 
 Files changed:
 - src/components/ui/button.tsx (updated)
+
+## UI-003: Install Form Components with react-hook-form - COMPLETE
+
+- Installed react-hook-form@7.70.0 + @hookform/resolvers@5.2.2
+- Added shadcn form component via `bunx shadcn@latest add form --overwrite`
+- Form component provides: Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage
+- useFormField hook for accessing field state/errors
+- Works with zodResolver from @hookform/resolvers/zod
+- Applied Biome lint fixes to shadcn-generated files
+- Typecheck + lint + all 16 tests pass
+
+Files changed:
+- src/components/ui/form.tsx (new)
+- src/components/ui/button.tsx (updated by shadcn)
+- src/components/ui/label.tsx (updated by shadcn)
+- package.json (react-hook-form, @hookform/resolvers deps)

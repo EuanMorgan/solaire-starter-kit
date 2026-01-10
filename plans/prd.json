@@ -544,7 +544,7 @@
       "VERIFY: GET /api/health returns 200 with status: 'ok'",
       "DONE: Health check endpoint for monitoring"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "EMAIL-001",

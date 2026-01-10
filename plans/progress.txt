@@ -384,3 +384,15 @@ Files changed:
 Files changed:
 - src/lib/validations/common.ts (new)
 - src/lib/validations/index.ts (new)
+
+## API-012: Health Check Endpoint - COMPLETE
+
+- Created src/app/api/health/route.ts
+- GET handler returns JSON: status, timestamp, database
+- Pings DB with `SELECT 1` via drizzle sql template
+- Returns 200 + "connected" on success, 503 + "unreachable" on failure
+- Verified: endpoint returns 503 when DB not running (correct)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/app/api/health/route.ts (new)

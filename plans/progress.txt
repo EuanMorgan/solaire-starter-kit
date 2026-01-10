@@ -1068,3 +1068,34 @@ Files:
 
 Files:
 - README.md (updated)
+
+## STORYBOOK-001: Initialize Storybook 8 - COMPLETE
+
+- Ran bunx storybook@latest init --yes --type nextjs
+- Installed Storybook 10.1.11 (latest) with @storybook/nextjs-vite framework
+- Addons: chromatic, vitest, a11y, docs, onboarding
+- Created .storybook/main.ts with nextjs-vite framework
+- Created .storybook/preview.ts importing globals.css for Tailwind v4 styles
+- Created .storybook/vitest.setup.ts for Storybook test integration
+- Added scripts: storybook, build-storybook, test:storybook
+- Updated vitest.config.ts with projects config:
+  - "unit" project: runs src/**/*.test.{ts,tsx}
+  - "storybook" project: runs story tests via browser (chromium)
+- Removed example stories (referenced non-existent components)
+- Verified: bun run storybook starts on localhost:6006
+- Verified: bun run build-storybook completes successfully
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- .storybook/main.ts (new)
+- .storybook/preview.ts (new)
+- .storybook/vitest.setup.ts (new)
+- vitest.config.ts (updated - projects config)
+- vitest.shims.d.ts (new - browser types)
+- package.json (scripts + deps)
+
+## CI-005: Create CLAUDE.md for AI assistants - COMPLETE (marked)
+
+- Already completed in TEST-005
+- CLAUDE.md exists with comprehensive docs: Commands, Architecture, Testing Patterns
+- Marking as complete in PRD

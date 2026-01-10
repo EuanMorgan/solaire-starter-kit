@@ -1171,7 +1171,7 @@
       "VERIFY: bun run storybook starts without errors",
       "DONE: Storybook 8 configured with Next.js and Tailwind"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "STORYBOOK-002",
@@ -1300,7 +1300,7 @@
       "VERIFY: File exists with useful content",
       "DONE: CLAUDE.md provides AI assistant context"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CI-006",

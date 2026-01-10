@@ -23,6 +23,11 @@ bun run test:watch   # Vitest watch mode
 bun run test:coverage # Vitest with coverage report
 bun run test:e2e     # Run Playwright E2E tests
 bun run test:e2e:ui  # Playwright with UI
+bun run test:storybook # Run Storybook component tests
+
+# Storybook
+bun run storybook    # Start Storybook dev server (port 6006)
+bun run build-storybook # Build Storybook for production
 
 # Code Quality
 bun run typecheck    # TypeScript type checking

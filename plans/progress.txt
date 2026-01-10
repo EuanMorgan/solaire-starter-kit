@@ -177,3 +177,14 @@ Files changed:
 - src/lib/auth.ts (new)
 - src/db/index.ts (added schema)
 - package.json (better-auth dep)
+
+## AUTH-002: Email/Password Auth Plugin - COMPLETE
+
+- Added emailAndPassword plugin to src/lib/auth.ts
+- Set enabled: true
+- Password hashing handled automatically by better-auth (scrypt default)
+- Comment notes email verification can be enabled later via emailVerification config
+- Typecheck passes
+
+Files changed:
+- src/lib/auth.ts (added emailAndPassword config)

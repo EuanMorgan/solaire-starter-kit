@@ -13,3 +13,14 @@ Files changed:
 - src/env.ts (new)
 - next.config.ts (import env)
 - package.json (typecheck script, deps)
+
+## FOUND-002: .env.example Documentation - COMPLETE
+
+- Updated .env.example with all vars from env.ts
+- Grouped by category: Database, Auth, GitHub OAuth, Email, Rate Limiting, Analytics
+- Added example values + setup URLs for external services
+- Added callback URL comment for GitHub OAuth
+- Verified all env.ts vars have entries
+
+Files changed:
+- .env.example (updated)

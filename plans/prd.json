@@ -47,7 +47,7 @@
       "VERIFY: All vars in env.ts have corresponding entry in .env.example",
       "DONE: .env.example documents all env vars with descriptions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-003",

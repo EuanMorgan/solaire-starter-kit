@@ -1,0 +1,15 @@
+## FOUND-001: Environment Validation - COMPLETE
+
+- Installed @t3-oss/env-nextjs@0.13.10 + zod@4.3.5
+- Created src/env.ts with createEnv validating:
+  - Required: DATABASE_URL, BETTER_AUTH_SECRET, NEXT_PUBLIC_BASE_URL
+  - Optional: GITHUB_*, RESEND_*, UPSTASH_*, POSTHOG_*
+- Import in next.config.ts triggers build-time validation
+- Added typecheck script to package.json
+- Verified: missing DATABASE_URL errors correctly
+- Made GitHub/Resend/Upstash optional (matches .env.example pattern)
+
+Files changed:
+- src/env.ts (new)
+- next.config.ts (import env)
+- package.json (typecheck script, deps)

@@ -33,7 +33,7 @@
       "VERIFY: Remove DATABASE_URL from .env, run bun dev - should error about missing var",
       "DONE: env.ts validates all required vars, build fails without them"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-002",

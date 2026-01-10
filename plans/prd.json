@@ -1020,7 +1020,7 @@
       "VERIFY: bun run test:e2e passes",
       "DONE: Settings page with E2E tests for user interactions"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-009",

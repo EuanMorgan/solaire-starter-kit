@@ -906,3 +906,25 @@ Files:
 - playwright.config.ts (updated baseURL to 127.0.0.1:3000)
 - e2e/helpers/auth.ts (new)
 - e2e/dashboard/dashboard.spec.ts (new)
+
+## PAGES-008: Create Settings Page - COMPLETE
+
+- Created src/app/(dashboard)/settings/page.tsx with:
+  - Tabs for Profile and Security sections
+  - Profile tab: displays email + name, update name form with react-hook-form
+  - Security tab: change password link to /forgot-password
+  - Danger zone: delete account with AlertDialog confirmation
+  - Uses useTRPC + useMutation for updateProfile and deleteAccount
+  - Loading/error states, form validation with Zod
+- E2E tests: e2e/dashboard/settings.spec.ts with 7 tests:
+  - Redirect unauthenticated to /login
+  - Tabs switch between Profile/Security
+  - Profile shows user name + email
+  - Delete dialog shows + validates confirmation
+  - Cancel closes dialog
+  - Security shows change password option
+- All checks pass: typecheck, lint, 21 unit tests, 45 E2E tests
+
+Files:
+- src/app/(dashboard)/settings/page.tsx (updated from placeholder)
+- e2e/dashboard/settings.spec.ts (new)

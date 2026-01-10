@@ -372,7 +372,7 @@
       "VERIFY: Call a procedure, see log output in console",
       "DONE: tRPC procedures log path and duration"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-003",

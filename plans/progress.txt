@@ -300,3 +300,17 @@ Files changed:
 Files changed:
 - src/trpc/init.ts (new)
 - package.json (deps)
+
+## API-002: tRPC Logging Middleware - COMPLETE
+
+- Added loggingMiddleware to src/trpc/init.ts
+- Logs path, type, duration for each procedure call
+- Dev: info level with sanitized input; Prod: debug level (silent)
+- sanitizeInput() redacts password/confirmPassword/token/secret fields
+- Uses getRawInput() (async fn) per tRPC v11 middleware API
+- baseProcedure now uses logging middleware
+- protectedProcedure extends baseProcedure (inherits logging)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/trpc/init.ts (updated)

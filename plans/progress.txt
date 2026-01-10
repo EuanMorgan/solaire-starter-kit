@@ -466,3 +466,16 @@ Files changed:
 - src/lib/utils.ts (new)
 - components.json (new)
 - package.json (deps)
+
+## UI-002: Add Loading State to Button - COMPLETE
+
+- Added loading prop to ButtonProps interface
+- Import Loader2 from lucide-react for spinner icon
+- When loading=true: shows Loader2 with animate-spin before children
+- aria-busy={loading} for accessibility
+- disabled={loading || disabled} prevents clicks while loading
+- Verified via Playwright: spinner renders, button disabled in all variants
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/button.tsx (updated)

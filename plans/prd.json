@@ -626,7 +626,7 @@
       "VERIFY: Playwright - Button with loading shows spinner",
       "DONE: Button supports loading state with spinner"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-003",

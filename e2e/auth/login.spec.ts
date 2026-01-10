@@ -49,11 +49,11 @@ test.describe("Login Page", () => {
     await expect(page).toHaveURL("/signup");
   });
 
-  test("'Forgot password' link navigates to /auth/forgot-password", async ({
+  test("'Forgot password' link navigates to /forgot-password", async ({
     page,
   }) => {
     await page.getByRole("link", { name: "Forgot password?" }).click();
-    await expect(page).toHaveURL("/auth/forgot-password");
+    await expect(page).toHaveURL("/forgot-password");
   });
 
   test("'Magic link' link navigates to /login/magic-link", async ({ page }) => {

@@ -853,12 +853,13 @@
       "Move reset-password: src/app/auth/reset-password -> src/app/(auth)/reset-password",
       "Move verify-email: src/app/auth/verify-email -> src/app/(auth)/verify-email",
       "Remove PublicHeader imports from individual auth pages (now in layout)",
+      "Update internal links: /auth/forgot-password -> /forgot-password, /auth/reset-password -> /reset-password",
       "VERIFY: bun run typecheck passes",
       "VERIFY: /login shows PublicHeader but no sidebar",
       "VERIFY: /dashboard still shows sidebar layout",
       "DONE: Auth pages use minimal layout, dashboard pages use sidebar layout"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-001",
@@ -872,7 +873,7 @@
       "GitHub OAuth button calling signIn.social({provider: 'github'})",
       "Link to /login/magic-link for passwordless option",
       "Link to /signup for new users",
-      "Link to /auth/forgot-password",
+      "Link to /forgot-password",
       "Loading states on form submission",
       "Error states showing validation/auth errors",
       "Include PublicHeader component",
@@ -915,13 +916,12 @@
     "category": "pages",
     "description": "Create Magic Link Page",
     "steps": [
-      "Create src/app/login/magic-link/page.tsx",
+      "Create src/app/(auth)/login/magic-link/page.tsx",
       "Import Form components and magicLinkSchema",
       "Import signIn from auth-client",
       "Email form with submit calling signIn.magicLink()",
       "Success message: 'Check your email for a login link'",
       "Link back to /login for password login",
-      "Include PublicHeader component",
       "VERIFY: bun run typecheck passes",
       "VERIFY: Playwright - magic link form renders",
       "DONE: Magic link login page"
@@ -933,12 +933,11 @@
     "category": "pages",
     "description": "Create Forgot Password Page",
     "steps": [
-      "Create src/app/auth/forgot-password/page.tsx",
+      "Create src/app/(auth)/forgot-password/page.tsx",
       "Email form requesting password reset",
       "Submit calls auth client forgetPassword method",
       "Show success message regardless of email existence (security)",
       "Link back to /login",
-      "Include PublicHeader component",
       "VERIFY: bun run typecheck passes",
       "VERIFY: Playwright - forgot password form renders",
       "DONE: Forgot password page"
@@ -950,13 +949,12 @@
     "category": "pages",
     "description": "Create Reset Password Page",
     "steps": [
-      "Create src/app/auth/reset-password/page.tsx",
+      "Create src/app/(auth)/reset-password/page.tsx",
       "CRITICAL: Next.js 16 - searchParams is a Promise, must be awaited",
       "Get token from searchParams",
       "Form: new password, confirm password fields",
       "Submit calls auth client resetPassword with token",
       "Redirect to /login on success with success message",
-      "Include PublicHeader component",
       "VERIFY: bun run typecheck passes",
       "VERIFY: Playwright - reset form renders when given token param",
       "DONE: Reset password page handling token"
@@ -968,7 +966,7 @@
     "category": "pages",
     "description": "Create Email Verification Page",
     "steps": [
-      "Create src/app/auth/verify-email/page.tsx",
+      "Create src/app/(auth)/verify-email/page.tsx",
       "CRITICAL: Next.js 16 - searchParams is a Promise, must be awaited",
       "Get token from searchParams",
       "Call auth client verifyEmail on mount",

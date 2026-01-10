@@ -746,3 +746,31 @@ Files:
 - src/app/auth/forgot-password/page.tsx (new placeholder)
 - src/app/login/magic-link/page.tsx (new placeholder)
 - e2e/auth/login.spec.ts (new)
+
+## UI-014: Create Auth Route Group with minimal layout - COMPLETE
+
+- Created src/app/(auth)/layout.tsx with PublicHeader + centered content
+- Moved all auth pages to (auth) route group:
+  - /login -> (auth)/login
+  - /signup -> (auth)/signup
+  - /login/magic-link -> (auth)/login/magic-link
+  - /auth/forgot-password -> (auth)/forgot-password
+  - Created reset-password and verify-email placeholder pages
+- Removed PublicHeader imports from individual pages (now in layout)
+- Updated internal links: /auth/forgot-password -> /forgot-password
+- Updated proxy.ts to include new auth routes in matcher
+- Updated E2E test for new route paths
+- Verified via Playwright: all auth pages show PublicHeader, no sidebar
+- Verified: /dashboard redirects to /login (route protection works)
+- All checks pass: typecheck, lint, 16 unit tests, 7 E2E tests
+
+Files:
+- src/app/(auth)/layout.tsx (new)
+- src/app/(auth)/login/page.tsx (moved + updated)
+- src/app/(auth)/signup/page.tsx (moved)
+- src/app/(auth)/login/magic-link/page.tsx (moved)
+- src/app/(auth)/forgot-password/page.tsx (moved)
+- src/app/(auth)/reset-password/page.tsx (new placeholder)
+- src/app/(auth)/verify-email/page.tsx (new placeholder)
+- src/proxy.ts (updated matcher)
+- e2e/auth/login.spec.ts (updated route path)

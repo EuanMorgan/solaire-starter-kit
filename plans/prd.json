@@ -278,7 +278,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Auth client exports hooks and helpers"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-006",

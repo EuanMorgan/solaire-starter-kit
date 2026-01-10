@@ -209,3 +209,15 @@ Files changed:
 
 Files changed:
 - src/lib/auth.ts (added socialProviders)
+
+## AUTH-005: Auth Client for client-side auth - COMPLETE
+
+- Created src/lib/auth-client.ts with "use client" directive
+- createAuthClient from better-auth/react
+- Added magicLinkClient plugin for signIn.magicLink support
+- Exports: authClient, useSession, signIn, signOut, signUp
+- signIn.social and signIn.magicLink available via signIn export
+- Typecheck + lint pass
+
+Files changed:
+- src/lib/auth-client.ts (new)

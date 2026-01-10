@@ -28,7 +28,7 @@ for ((i=1; i<=$1; i++)); do
     2. If you made UI changes, you MUST use the Playwright MCP to visually verify the changes render correctly. \
     Navigate to the relevant page and take a snapshot. If it looks wrong, fix it before proceeding. \
     If Playwright fails to connect, restart the dev server and retry. \
-    IMPORTANT: If you verify a protected page via Playwright and it shows you're not logged in (redirected to /login, see login buttons instead of expected content), output <auth-required/> and stop working immediately. \
+    If you verify a protected page via Playwright and it shows you're not logged in (redirected to /login), you need to run the seed script first (bun run db:seed) to create the test user, then login as test@example.com / password123. \
     3. Run checks and fix any failures before moving on: \
     - bun run typecheck \
     - bun run lint \
@@ -57,12 +57,6 @@ for ((i=1; i<=$1; i++)); do
         echo "PRD complete, exiting."
         ./plans/notify.sh "Ralph is finished"
         exit 0
-    fi
-
-    if [[ "$result" == *"<auth-required/>"* ]]; then
-        echo "Auth required for Playwright. Run: bun run scripts/export-auth.ts"
-        ./plans/notify.sh "Ralph needs auth - run export-auth.ts"
-        exit 1
     fi
 
     if [[ "$result" =~ \<human-required\>(.*)\</human-required\> ]]; then

@@ -618,3 +618,33 @@ Files changed:
 - src/components/ui/button.tsx (restored loading prop)
 - src/components/ui/input.tsx, separator.tsx, tooltip.tsx (updated by shadcn)
 - package.json (@radix-ui/react-dialog dep for sheet)
+
+## UI-011: Create App Sidebar Component - COMPLETE
+
+- src/components/app-sidebar.tsx already existed (created in prev iteration)
+- Imports Sidebar components from ui/sidebar
+- Uses siteConfig.name for header
+- Uses useSession from auth-client for user info
+- Navigation: Dashboard (/dashboard), Settings (/settings) with lucide icons
+- Footer: Avatar with fallback initials, user name/email, theme toggle, sign out
+- Collapsible via SidebarTrigger (offcanvas mode)
+- Verified via Playwright: nav items, user section, toggle all work
+
+Files:
+- src/components/app-sidebar.tsx
+
+## UI-012: Create Dashboard Layout with sidebar - COMPLETE
+
+- Created src/app/(dashboard)/layout.tsx as route group
+- SidebarProvider wraps entire layout
+- AppSidebar as first child
+- SidebarInset wraps main content
+- Header with SidebarTrigger + Separator
+- Moved dashboard/settings pages into (dashboard) group
+- Verified via Playwright: sidebar renders, toggle collapses/expands
+- Typecheck + lint + tests pass
+
+Files:
+- src/app/(dashboard)/layout.tsx (new)
+- src/app/(dashboard)/dashboard/page.tsx (moved from src/app/dashboard)
+- src/app/(dashboard)/settings/page.tsx (moved from src/app/settings)

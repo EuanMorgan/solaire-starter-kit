@@ -118,6 +118,24 @@
     "passes": true
   },
   {
+    "id": "DB-000",
+    "category": "database",
+    "description": "Create Docker Compose for local PostgreSQL",
+    "steps": [
+      "Create docker-compose.yml at project root",
+      "Add postgres service using postgres:16-alpine image",
+      "Map port 5434:5432 (5434 to avoid conflicts with local postgres)",
+      "Set POSTGRES_USER=postgres, POSTGRES_PASSWORD=postgres, POSTGRES_DB=solaire",
+      "Add named volume postgres_data for persistence",
+      "Add .dockerignore if not exists",
+      "Update .gitignore to ignore docker volumes if needed",
+      "VERIFY: docker-compose up -d starts postgres container",
+      "VERIFY: psql -h localhost -p 5434 -U postgres -d solaire connects",
+      "DONE: Local PostgreSQL running via Docker for development"
+    ],
+    "passes": false
+  },
+  {
     "id": "DB-001",
     "category": "database",
     "description": "Set Up Drizzle ORM with PostgreSQL",
@@ -200,6 +218,25 @@
       "DONE: Schema barrel export provides single import point"
     ],
     "passes": true
+  },
+  {
+    "id": "DB-006",
+    "category": "database",
+    "description": "Create Database Seed Script with test user",
+    "steps": [
+      "Use Context7 to look up drizzle-seed latest docs",
+      "Run bun add -D drizzle-seed",
+      "Create src/db/seed.ts",
+      "Import { seed } from drizzle-seed and db instance",
+      "Use drizzle-seed to seed test user: email=test@example.com, password=password123",
+      "Hash password using better-auth's password hashing (or bcrypt)",
+      "Configure seed to be idempotent (reset or check existing)",
+      "Add package.json script: db:seed running bun src/db/seed.ts",
+      "VERIFY: bun run db:seed creates test user",
+      "VERIFY: Can login with test@example.com / password123",
+      "DONE: Seed script using drizzle-seed creates dummy user for local dev and testing"
+    ],
+    "passes": false
   },
   {
     "id": "AUTH-001",
@@ -757,7 +794,7 @@
       "VERIFY: Playwright - sidebar shows nav items, user info",
       "DONE: App sidebar with navigation and user menu"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-012",
@@ -776,7 +813,7 @@
       "VERIFY: Playwright - dashboard layout shows sidebar, content area",
       "DONE: Dashboard layout with sidebar for authenticated pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-013",

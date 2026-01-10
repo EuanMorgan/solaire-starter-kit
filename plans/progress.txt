@@ -525,3 +525,18 @@ Files changed:
 - src/components/ui/dropdown-menu.tsx (new)
 - src/components/ui/select.tsx (new)
 - package.json (@radix-ui/react-dropdown-menu, @radix-ui/react-select deps)
+
+## UI-006: Install Additional Form Controls - COMPLETE
+
+- Installed textarea, checkbox, tabs via `bunx shadcn@latest add textarea checkbox tabs`
+- Textarea: simple text input with auto-sizing
+- Checkbox: uses @radix-ui/react-checkbox with CheckIcon
+- Tabs: TabsList, TabsTrigger, TabsContent for tabbed interfaces
+- Applied Biome lint fixes (import type, semicolons, import order)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/textarea.tsx (new)
+- src/components/ui/checkbox.tsx (new)
+- src/components/ui/tabs.tsx (new)
+- package.json (@radix-ui/react-checkbox, @radix-ui/react-tabs deps)

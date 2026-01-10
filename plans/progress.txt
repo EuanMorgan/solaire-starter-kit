@@ -335,3 +335,38 @@ Files changed:
 - src/lib/rate-limit.ts (new)
 - src/trpc/init.ts (updated - added IP to context, rateLimitedProcedure)
 - package.json (deps)
+
+## API-004 through API-010: tRPC Full Setup - COMPLETE
+
+Implemented complete tRPC v11 with @trpc/tanstack-react-query integration:
+
+- API-004: src/trpc/query-client.ts - makeQueryClient with SSR config, superjson serialize/deserialize, 30s staleTime, retry skips UNAUTHORIZED
+- API-005: src/trpc/client.tsx - TRPCReactProvider with createTRPCContext, useTRPC hook, httpBatchLink, ReactQueryDevtools in dev
+- API-006: src/trpc/server.tsx - createTRPCOptionsProxy, HydrateClient component, prefetch helper, caller for direct server calls
+- API-007: src/trpc/routers/user.ts - me/updateProfile/deleteAccount procedures with tests
+- API-008: src/trpc/routers/_app.ts - appRouter merging userRouter, exports AppRouter type
+- API-009: src/app/api/trpc/[trpc]/route.ts - fetchRequestHandler for GET/POST
+- API-010: src/trpc/index.ts - RouterInputs/RouterOutputs type exports
+
+Key patterns:
+- v11 uses createTRPCContext from @trpc/tanstack-react-query (not @trpc/react-query)
+- useTRPC hook + TRPCProvider pattern for client components
+- createTRPCOptionsProxy for server-side prefetching
+- HydrateClient wraps dehydrated state for SSR
+
+Tests:
+- src/trpc/routers/__tests__/user.test.ts - 6 tests covering procedure behavior
+- All 16 tests pass (10 auth validation + 6 user router)
+
+Verified: GET /api/trpc/user.me returns 401 UNAUTHORIZED (correct behavior)
+
+Files changed:
+- src/trpc/query-client.ts (new)
+- src/trpc/client.tsx (new)
+- src/trpc/server.tsx (new)
+- src/trpc/index.ts (new)
+- src/trpc/routers/user.ts (new)
+- src/trpc/routers/_app.ts (new)
+- src/trpc/routers/__tests__/user.test.ts (new)
+- src/app/api/trpc/[trpc]/route.ts (new)
+- package.json (server-only, @tanstack/react-query-devtools deps)

@@ -409,7 +409,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Query client configured for SSR with superjson"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-005",
@@ -428,7 +428,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: tRPC React provider ready for layout.tsx"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-006",
@@ -446,7 +446,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Server-side tRPC helpers for RSC"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-007",
@@ -469,7 +469,7 @@
       "VERIFY: bun run test passes",
       "DONE: User router with unit tests for procedure behavior"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-008",
@@ -484,7 +484,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: App router exports merged router and types"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-009",
@@ -500,7 +500,7 @@
       "VERIFY: GET /api/trpc/user.me returns 401 when unauthenticated",
       "DONE: tRPC API route handles all procedures"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-010",
@@ -515,7 +515,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Router types exported for type-safe procedure calls"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-011",

@@ -431,3 +431,18 @@ Files changed:
 - src/modules/email/ui/welcome-email.tsx (new)
 - src/modules/email/ui/index.ts (new)
 - package.json (@react-email/components dep)
+
+## EMAIL-003: Wire Emails to better-auth - COMPLETE
+
+- Created src/modules/email/ui/magic-link-email.tsx template
+- Updated src/lib/auth.ts with email callbacks:
+  - emailVerification.sendVerificationEmail -> VerificationEmail
+  - emailAndPassword.sendResetPassword -> ResetPasswordEmail
+  - magicLink.sendMagicLink -> MagicLinkEmail
+- All callbacks use void sendEmail() to prevent timing attacks
+- Typecheck + tests pass
+
+Files changed:
+- src/modules/email/ui/magic-link-email.tsx (new)
+- src/modules/email/ui/index.ts (updated export)
+- src/lib/auth.ts (wired email callbacks)

@@ -4,6 +4,12 @@ import { magicLink } from "better-auth/plugins";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { env } from "@/env";
+import { sendEmail } from "@/modules/email/server/email.service";
+import {
+  VerificationEmail,
+  ResetPasswordEmail,
+  MagicLinkEmail,
+} from "@/modules/email/ui";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -19,8 +25,24 @@ export const auth = betterAuth({
   secret: env.BETTER_AUTH_SECRET,
   emailAndPassword: {
     enabled: true,
-    // Email verification can be enabled later via emailVerification config
-    // requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      // Don't await to prevent timing attacks
+      void sendEmail({
+        to: user.email,
+        subject: "Reset your password",
+        react: ResetPasswordEmail({ resetUrl: url }),
+      });
+    },
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      // Don't await to prevent timing attacks
+      void sendEmail({
+        to: user.email,
+        subject: "Verify your email address",
+        react: VerificationEmail({ verificationUrl: url }),
+      });
+    },
   },
   // GitHub OAuth provider
   // Callback URL: {baseURL}/api/auth/callback/github
@@ -37,8 +59,12 @@ export const auth = betterAuth({
     magicLink({
       expiresIn: 600, // 10 minutes
       sendMagicLink: async ({ email, url }) => {
-        // Placeholder - will be wired to Resend in EMAIL-003
-        console.log(`[Magic Link] Send to ${email}: ${url}`);
+        // Don't await to prevent timing attacks
+        void sendEmail({
+          to: email,
+          subject: "Sign in to your account",
+          react: MagicLinkEmail({ magicLinkUrl: url }),
+        });
       },
     }),
   ],

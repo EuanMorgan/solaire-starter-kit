@@ -593,7 +593,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: better-auth sends emails via Resend with React templates"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-001",

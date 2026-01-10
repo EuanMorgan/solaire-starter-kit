@@ -560,7 +560,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Resend email service ready for templates"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "EMAIL-002",

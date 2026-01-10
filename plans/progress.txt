@@ -396,3 +396,17 @@ Files changed:
 
 Files changed:
 - src/app/api/health/route.ts (new)
+
+## EMAIL-001: Resend Email Service - COMPLETE
+
+- Installed resend@6.7.0
+- Created src/modules/email/server/email.service.ts with:
+  - Resend client initialized from RESEND_API_KEY (optional, null if not set)
+  - sendEmail() function accepting to, subject, react params
+  - Uses FROM_EMAIL from env as sender
+  - Graceful skip if RESEND_API_KEY or FROM_EMAIL not configured
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/modules/email/server/email.service.ts (new)
+- package.json (resend dep)

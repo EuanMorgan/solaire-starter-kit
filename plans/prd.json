@@ -99,7 +99,7 @@
       "VERIFY: Dark mode classes work with .dark on html element",
       "DONE: Tailwind v4 configured with CSS-first approach"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-006",

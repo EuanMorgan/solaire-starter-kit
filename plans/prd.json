@@ -577,7 +577,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Email templates ready for auth flows"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "EMAIL-003",

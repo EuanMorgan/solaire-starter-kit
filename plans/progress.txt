@@ -410,3 +410,24 @@ Files changed:
 Files changed:
 - src/modules/email/server/email.service.ts (new)
 - package.json (resend dep)
+
+## EMAIL-002: React Email Templates - COMPLETE
+
+- Installed @react-email/components@1.0.4
+- Created src/modules/email/ui/verification-email.tsx:
+  - verificationUrl prop, Html/Head/Body/Container/Text/Button/Link
+  - Inline styles for email client compat, responsive container
+- Created src/modules/email/ui/reset-password-email.tsx:
+  - resetUrl prop, same component structure
+  - 1 hour expiry note
+- Created src/modules/email/ui/welcome-email.tsx:
+  - userName prop, simpler structure (no CTA button)
+- Created barrel export: src/modules/email/ui/index.ts
+- Typecheck + tests pass
+
+Files changed:
+- src/modules/email/ui/verification-email.tsx (new)
+- src/modules/email/ui/reset-password-email.tsx (new)
+- src/modules/email/ui/welcome-email.tsx (new)
+- src/modules/email/ui/index.ts (new)
+- package.json (@react-email/components dep)

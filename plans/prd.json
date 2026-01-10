@@ -833,7 +833,7 @@
       "VERIFY: Playwright - header shows on /login page",
       "DONE: Public header for unauthenticated pages"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-001",

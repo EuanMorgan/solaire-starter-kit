@@ -648,3 +648,20 @@ Files:
 - src/app/(dashboard)/layout.tsx (new)
 - src/app/(dashboard)/dashboard/page.tsx (moved from src/app/dashboard)
 - src/app/(dashboard)/settings/page.tsx (moved from src/app/settings)
+
+## UI-013: Create Public Header Component - COMPLETE
+
+- Created src/components/public-header.tsx with "use client"
+- Uses siteConfig for logo/name linking to /
+- ThemeToggle on right side
+- Login button (ghost variant) linking to /login
+- Sign up button (primary) linking to /signup
+- Note: asChild with Link has bug in @radix-ui/react-slot@1.2.4 causing React.Children.only error
+- Workaround: wrap Button with Link instead of using asChild prop
+- Clean, minimal design with sticky header, border-b, backdrop blur
+- Verified via Playwright: header renders correctly on /login
+- Typecheck + lint + tests pass
+
+Files:
+- src/components/public-header.tsx (new)
+- src/app/login/page.tsx (updated to include PublicHeader)

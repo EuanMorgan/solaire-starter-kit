@@ -691,7 +691,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Badge, Avatar, Alert, Separator, Tooltip installed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-008",

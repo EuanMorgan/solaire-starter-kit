@@ -540,3 +540,22 @@ Files changed:
 - src/components/ui/checkbox.tsx (new)
 - src/components/ui/tabs.tsx (new)
 - package.json (@radix-ui/react-checkbox, @radix-ui/react-tabs deps)
+
+## UI-007: Install Display Components - COMPLETE
+
+- Installed badge, avatar, alert, separator, tooltip via `bunx shadcn@latest add badge avatar alert separator tooltip --overwrite`
+- Badge: inline-flex badge with variants (default, secondary, destructive, outline)
+- Avatar: circular avatar with image + fallback using @radix-ui/react-avatar
+- Alert: alert box with variants (default, destructive), AlertTitle, AlertDescription
+- Separator: horizontal/vertical separator line using @radix-ui/react-separator
+- Tooltip: tooltip with provider, trigger, content using @radix-ui/react-tooltip
+- Applied Biome lint fixes (import type, import order, semicolons, trailing commas)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/badge.tsx (new)
+- src/components/ui/avatar.tsx (new)
+- src/components/ui/alert.tsx (new)
+- src/components/ui/separator.tsx (new)
+- src/components/ui/tooltip.tsx (new)
+- package.json (@radix-ui/react-avatar, @radix-ui/react-separator, @radix-ui/react-tooltip deps)

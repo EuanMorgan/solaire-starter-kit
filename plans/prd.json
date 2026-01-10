@@ -707,7 +707,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: FormSuccess and FormError feedback components"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-009",

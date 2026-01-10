@@ -559,3 +559,20 @@ Files changed:
 - src/components/ui/separator.tsx (new)
 - src/components/ui/tooltip.tsx (new)
 - package.json (@radix-ui/react-avatar, @radix-ui/react-separator, @radix-ui/react-tooltip deps)
+
+## UI-008: FormSuccess and FormError Components - COMPLETE
+
+- Created src/components/form-success.tsx:
+  - Accepts message prop, returns null if no message
+  - Uses Alert with emerald green styling for success state
+  - CheckCircle icon from lucide-react
+- Created src/components/form-error.tsx:
+  - Accepts message prop, returns null if no message
+  - Uses Alert with variant="destructive" for error state
+  - AlertCircle icon from lucide-react
+- Verified via Playwright: both components render correctly
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/form-success.tsx (new)
+- src/components/form-error.tsx (new)

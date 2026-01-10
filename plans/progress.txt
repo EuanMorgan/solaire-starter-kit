@@ -33,3 +33,15 @@ Files changed:
 
 Files changed:
 - src/config/site.ts (new)
+
+## FOUND-004: Layout Metadata - COMPLETE
+
+- Updated layout.tsx to import siteConfig
+- Set title/description from siteConfig
+- Added openGraph: title, description, url, siteName, type
+- Added twitter: card summary_large_image, title, description
+- Added icons: favicon.ico, apple-touch-icon.png
+- Verified via Playwright: all meta tags render correctly
+
+Files changed:
+- src/app/layout.tsx (updated metadata)

@@ -78,7 +78,7 @@
       "VERIFY: View page source in browser - meta tags present",
       "DONE: Layout uses siteConfig for SEO metadata"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-005",

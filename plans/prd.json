@@ -260,7 +260,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: GitHub OAuth provider configured"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-005",

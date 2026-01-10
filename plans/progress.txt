@@ -198,3 +198,14 @@ Files changed:
 
 Files changed:
 - src/lib/auth.ts (added magicLink plugin)
+
+## AUTH-004: GitHub OAuth Provider - COMPLETE
+
+- Added socialProviders.github to src/lib/auth.ts
+- Uses GITHUB_CLIENT_ID + GITHUB_CLIENT_SECRET from env (optional)
+- Conditional spread: only adds github if both env vars present
+- Comment documents callback URL: {baseURL}/api/auth/callback/github
+- Typecheck passes
+
+Files changed:
+- src/lib/auth.ts (added socialProviders)

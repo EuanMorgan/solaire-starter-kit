@@ -880,3 +880,29 @@ Files:
 Files:
 - src/app/(auth)/verify-email/page.tsx (updated from placeholder)
 - e2e/auth/verify-email.spec.ts (new)
+
+## PAGES-007: Create Dashboard Page - COMPLETE
+
+- Created src/app/(dashboard)/dashboard/page.tsx with full implementation
+- Uses useTRPC + useQuery pattern from @trpc/tanstack-react-query v11
+- Shows welcome message with user name, profile card with email/name
+- Loading skeleton state, error state handling
+- Quick Actions placeholder card for future features
+- Added TRPCReactProvider to root layout for client-side tRPC queries
+- Updated playwright.config.ts baseURL to 127.0.0.1:3000 (matches NEXT_PUBLIC_BASE_URL to avoid origin errors)
+- Created e2e/helpers/auth.ts with loginAsTestUser helper
+- E2E tests: e2e/dashboard/dashboard.spec.ts with 6 tests:
+  - Unauthenticated redirect to /login
+  - Welcome message with user name
+  - Profile info (email + name via testids)
+  - Sidebar navigation visible
+  - Sidebar shows user info
+  - Settings link navigates to /settings
+- All checks pass: typecheck, lint, 21 unit tests, 38 E2E tests
+
+Files:
+- src/app/(dashboard)/dashboard/page.tsx (updated from placeholder)
+- src/app/layout.tsx (added TRPCReactProvider)
+- playwright.config.ts (updated baseURL to 127.0.0.1:3000)
+- e2e/helpers/auth.ts (new)
+- e2e/dashboard/dashboard.spec.ts (new)

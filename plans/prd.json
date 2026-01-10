@@ -997,7 +997,7 @@
       "VERIFY: bun run test:e2e passes",
       "DONE: Dashboard page with E2E tests for auth and content"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-008",

@@ -221,3 +221,15 @@ Files changed:
 
 Files changed:
 - src/lib/auth-client.ts (new)
+
+## AUTH-006: Auth API Route - COMPLETE
+
+- Created src/app/api/auth/[...all]/route.ts
+- Uses toNextJsHandler from better-auth/next-js (not auth.handler)
+- Exports GET and POST handlers
+- Note: better-auth uses /api/auth/get-session (not /session)
+- Verified: GET /api/auth/get-session returns null (no session)
+- Typecheck passes
+
+Files changed:
+- src/app/api/auth/[...all]/route.ts (new)

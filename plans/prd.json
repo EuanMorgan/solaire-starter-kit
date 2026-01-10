@@ -290,10 +290,10 @@
       "CRITICAL: Next.js 16 - context.params is a Promise, must be awaited",
       "Export GET and POST handlers using auth.handler",
       "VERIFY: bun run typecheck passes",
-      "VERIFY: GET /api/auth/session returns session or null",
+      "VERIFY: GET /api/auth/get-session returns session or null",
       "DONE: Auth API route handles all auth endpoints"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-007",

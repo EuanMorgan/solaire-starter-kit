@@ -1,0 +1,1276 @@
+[
+  {
+    "id": "INIT-001",
+    "category": "setup",
+    "description": "Initialize fresh Next.js project and verify environment",
+    "steps": [
+      "Run bunx create-next-app@latest --typescript --tailwind --eslint --app --src-dir --use-bun",
+      "Run bun install to verify dependencies",
+      "Create CLAUDE.md with commands section (copy structure from reference project)",
+      "Create progress.txt with project overview",
+      "VERIFY: bun dev runs at localhost:3000",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Fresh Next.js 16 project running, ready for features"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-001",
+    "category": "foundation",
+    "description": "Create Environment Validation with @t3-oss/env-nextjs",
+    "steps": [
+      "Use Context7 to look up @t3-oss/env-nextjs latest docs",
+      "Run bun add @t3-oss/env-nextjs zod",
+      "Create src/env.ts with createEnv from @t3-oss/env-nextjs",
+      "Add server vars: DATABASE_URL, TABLE_PREFIX, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY, FROM_EMAIL",
+      "Add client vars: NEXT_PUBLIC_BASE_URL, NEXT_PUBLIC_POSTHOG_KEY (optional)",
+      "Add optional vars: UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN",
+      "Configure experimental__runtimeEnv for client variables",
+      "Set emptyStringAsUndefined: true",
+      "Add skipValidation option checking SKIP_ENV_VALIDATION env var",
+      "Import env.ts in next.config.ts for build-time validation",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Remove DATABASE_URL from .env, run bun dev - should error about missing var",
+      "DONE: env.ts validates all required vars, build fails without them"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-002",
+    "category": "foundation",
+    "description": "Create .env.example documenting all environment variables",
+    "steps": [
+      "Create .env.example with all vars from env.ts",
+      "Group by category with comments: # Database, # Auth (GitHub OAuth), # Email (Resend), # Analytics (optional), # Rate Limiting (optional)",
+      "Add example values where appropriate (not real secrets)",
+      "Include callback URL comment for GitHub OAuth setup",
+      "VERIFY: All vars in env.ts have corresponding entry in .env.example",
+      "DONE: .env.example documents all env vars with descriptions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-003",
+    "category": "foundation",
+    "description": "Create Site Config for centralized app constants",
+    "steps": [
+      "Create src/config/site.ts",
+      "Define SiteConfig interface with name, description, url, links properties",
+      "Export siteConfig object with app name, description, url from env.NEXT_PUBLIC_BASE_URL",
+      "Add links object for github repo URL",
+      "VERIFY: bun run typecheck passes",
+      "DONE: siteConfig exports typed app constants"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-004",
+    "category": "foundation",
+    "description": "Configure Layout Metadata using site config",
+    "steps": [
+      "Update src/app/layout.tsx to import siteConfig",
+      "Set metadata.title using siteConfig.name",
+      "Set metadata.description using siteConfig.description",
+      "Add openGraph defaults with title, description, url, siteName",
+      "Add twitter card defaults with card: 'summary_large_image'",
+      "Reference favicon.ico and apple-touch-icon.png in icons",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: View page source in browser - meta tags present",
+      "DONE: Layout uses siteConfig for SEO metadata"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-005",
+    "category": "foundation",
+    "description": "Configure Tailwind v4 with CSS-first configuration",
+    "steps": [
+      "Use Context7 to look up Tailwind v4 CSS-first config docs",
+      "Run bun add -D @tailwindcss/postcss tailwindcss postcss",
+      "Delete tailwind.config.ts if exists (not needed in v4)",
+      "Create postcss.config.mjs with @tailwindcss/postcss plugin",
+      "Update globals.css: @import 'tailwindcss' at top",
+      "Run bun add tw-animate-css, add @import 'tw-animate-css' in globals.css",
+      "Add @theme block in globals.css for custom theme (colors, radius)",
+      "Use OKLch color format for modern color handling",
+      "Add @custom-variant dark (&:is(.dark *)) for dark mode",
+      "Configure CSS variables compatible with shadcn (--background, --foreground, etc.)",
+      "VERIFY: bun run dev - Tailwind classes apply correctly",
+      "VERIFY: Dark mode classes work with .dark on html element",
+      "DONE: Tailwind v4 configured with CSS-first approach"
+    ],
+    "passes": false
+  },
+  {
+    "id": "FOUND-006",
+    "category": "foundation",
+    "description": "Add Security Headers in next.config.ts",
+    "steps": [
+      "Update next.config.ts to add security headers",
+      "Add X-Frame-Options: DENY to prevent clickjacking",
+      "Add X-Content-Type-Options: nosniff to prevent MIME sniffing",
+      "Add Referrer-Policy: strict-origin-when-cross-origin",
+      "Add comments explaining each header's purpose",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Run curl -I http://localhost:3000 - headers present in response",
+      "DONE: Security headers configured in next.config.ts"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DB-001",
+    "category": "database",
+    "description": "Set Up Drizzle ORM with PostgreSQL",
+    "steps": [
+      "Use Context7 to look up Drizzle ORM latest docs for PostgreSQL setup",
+      "Run bun add drizzle-orm postgres",
+      "Run bun add -D drizzle-kit",
+      "Create src/db/index.ts exporting db instance using postgres driver",
+      "Use DATABASE_URL from env.ts",
+      "Create drizzle.config.ts with schema path and tablesFilter using TABLE_PREFIX",
+      "Add package.json scripts: db:push, db:studio, db:generate, db:migrate",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run db:push connects to database (requires DATABASE_URL set)",
+      "DONE: Drizzle ORM configured with PostgreSQL connection"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DB-002",
+    "category": "database",
+    "description": "Create Schema Common Helpers",
+    "steps": [
+      "Create src/db/schema/common.ts",
+      "Import pgTableCreator from drizzle-orm/pg-core",
+      "Export pgTable wrapper that prepends TABLE_PREFIX from env",
+      "Export timestamps helper returning createdAt/updatedAt columns with defaults",
+      "Export id helper returning text primary key with nanoid default",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Schema helpers export pgTable wrapper with prefix support"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DB-003",
+    "category": "database",
+    "description": "Create Auth Schema for better-auth",
+    "steps": [
+      "Use Context7 to look up better-auth drizzle adapter schema requirements",
+      "Create src/db/schema/auth.schema.ts",
+      "Use pgTable wrapper from common.ts",
+      "Create user table: id, name, email (unique), emailVerified, image, timestamps",
+      "Create session table: id, userId (FK), token, expiresAt, timestamps",
+      "Create account table: id, userId (FK), provider, providerAccountId, accessToken, refreshToken, timestamps",
+      "Create verification table: id, identifier, token, expiresAt",
+      "Add proper indexes on foreign keys and lookup fields",
+      "Export relations using drizzle relations()",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run db:push creates tables in database",
+      "DONE: Auth schema compatible with better-auth drizzle adapter"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DB-004",
+    "category": "database",
+    "description": "Create Example Posts Schema showing patterns",
+    "steps": [
+      "Create src/db/schema/posts.schema.ts",
+      "Use pgTable wrapper from common.ts",
+      "Create posts table: id, title, content, published (boolean), userId (FK to user), timestamps",
+      "Add index on userId",
+      "Add comments explaining the pgTable wrapper pattern",
+      "Export postsRelations linking to user table",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Example posts schema demonstrates table patterns"
+    ],
+    "passes": false
+  },
+  {
+    "id": "DB-005",
+    "category": "database",
+    "description": "Create Schema Barrel Export",
+    "steps": [
+      "Create src/db/schema/index.ts",
+      "Export all tables from auth.schema.ts",
+      "Export all tables from posts.schema.ts",
+      "Export all relations",
+      "VERIFY: import * as schema from '@/db/schema' works",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Schema barrel export provides single import point"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-001",
+    "category": "auth",
+    "description": "Set Up better-auth Core with Drizzle adapter",
+    "steps": [
+      "Use Context7 to look up better-auth latest docs",
+      "Run bun add better-auth",
+      "Create src/lib/auth.ts",
+      "Import betterAuth from better-auth",
+      "Import drizzleAdapter from better-auth/adapters/drizzle",
+      "Configure auth with drizzleAdapter passing db instance and schema",
+      "Set baseURL from env.NEXT_PUBLIC_BASE_URL",
+      "Export auth instance",
+      "VERIFY: bun run typecheck passes",
+      "DONE: better-auth configured with Drizzle adapter"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-002",
+    "category": "auth",
+    "description": "Add Email/Password Auth plugin",
+    "steps": [
+      "Use Context7 to look up better-auth emailAndPassword plugin",
+      "Update src/lib/auth.ts to add emailAndPassword plugin",
+      "Configure enabled: true",
+      "Password hashing is handled automatically by better-auth",
+      "Add comment noting email verification can be enabled later",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Email/password auth plugin enabled"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-003",
+    "category": "auth",
+    "description": "Add Magic Link Auth plugin",
+    "steps": [
+      "Use Context7 to look up better-auth magicLink plugin",
+      "Update src/lib/auth.ts to add magicLink plugin",
+      "Configure sendMagicLink callback (placeholder - wired to Resend later)",
+      "Set token expiry to 10 minutes",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Magic link auth plugin enabled with sendEmail placeholder"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-004",
+    "category": "auth",
+    "description": "Add GitHub OAuth provider",
+    "steps": [
+      "Use Context7 to look up better-auth socialProviders",
+      "Update src/lib/auth.ts to add github socialProvider",
+      "Use GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET from env",
+      "Add comment documenting callback URL: {baseURL}/api/auth/callback/github",
+      "VERIFY: bun run typecheck passes",
+      "DONE: GitHub OAuth provider configured"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-005",
+    "category": "auth",
+    "description": "Create Auth Client for client-side auth",
+    "steps": [
+      "Use Context7 to look up better-auth/react client",
+      "Create src/lib/auth-client.ts",
+      "Import createAuthClient from better-auth/react",
+      "Create and export authClient",
+      "Export useSession hook",
+      "Export signIn, signOut, signUp functions",
+      "Export signIn.social for GitHub OAuth",
+      "Export signIn.magicLink for passwordless auth",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Auth client exports hooks and helpers"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-006",
+    "category": "auth",
+    "description": "Create Auth API Route",
+    "steps": [
+      "Create src/app/api/auth/[...all]/route.ts",
+      "Import auth from @/lib/auth",
+      "CRITICAL: Next.js 16 - context.params is a Promise, must be awaited",
+      "Export GET and POST handlers using auth.handler",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: GET /api/auth/session returns session or null",
+      "DONE: Auth API route handles all auth endpoints"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-007",
+    "category": "auth",
+    "description": "Create Auth Validation Schemas",
+    "steps": [
+      "Create src/lib/validations/auth.ts",
+      "Import z from zod",
+      "Create loginSchema with email (email format) and password (min 8)",
+      "Create signupSchema with name, email, password, confirmPassword",
+      "Add password strength validation (min 8, one uppercase, one number)",
+      "Add confirmPassword refine to match password",
+      "Create magicLinkSchema with just email",
+      "Export types via z.infer<typeof schema>",
+      "TEST: Create src/lib/validations/__tests__/auth.test.ts",
+      "TEST: loginSchema rejects invalid email format",
+      "TEST: loginSchema rejects password under 8 chars",
+      "TEST: signupSchema rejects password without uppercase",
+      "TEST: signupSchema rejects password without number",
+      "TEST: signupSchema rejects mismatched confirmPassword",
+      "TEST: signupSchema accepts valid input with all requirements",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test passes",
+      "DONE: Auth validation schemas with unit tests"
+    ],
+    "passes": false
+  },
+  {
+    "id": "AUTH-008",
+    "category": "auth",
+    "description": "Create Auth Proxy for route protection (Next.js 16)",
+    "steps": [
+      "CRITICAL: Use Context7/WebSearch to verify Next.js 16 proxy.ts pattern (middleware.ts may still work)",
+      "Create proxy.ts at project root (or middleware.ts if proxy not yet stable)",
+      "Export proxy() function (or middleware() if using middleware.ts)",
+      "Define protected routes matcher: /dashboard, /settings",
+      "Check session via auth API or cookie",
+      "Redirect unauthenticated users to /login",
+      "Redirect authenticated users from /login to /dashboard",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - visit /dashboard unauthenticated, expect redirect to /login",
+      "DONE: Route protection redirects unauthenticated users"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-001",
+    "category": "api",
+    "description": "Set Up tRPC Core with context and procedures",
+    "steps": [
+      "Use Context7 to look up @trpc/tanstack-react-query latest docs",
+      "Run bun add @trpc/server @trpc/client @trpc/tanstack-react-query @tanstack/react-query superjson",
+      "Create src/trpc/init.ts",
+      "Import initTRPC from @trpc/server",
+      "Create createTRPCContext using React cache() for request deduplication",
+      "Context should fetch session from better-auth",
+      "Export createTRPCRouter, createCallerFactory from t.router, t.createCallerFactory",
+      "Export baseProcedure (public, no auth required)",
+      "Export protectedProcedure that throws TRPCError UNAUTHORIZED if no session",
+      "VERIFY: bun run typecheck passes",
+      "DONE: tRPC initialized with auth-aware context"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-002",
+    "category": "api",
+    "description": "Add tRPC Logging Middleware",
+    "steps": [
+      "Update src/trpc/init.ts to add logging middleware",
+      "Create middleware that logs procedure path and execution time",
+      "Log at debug level in production, info in development",
+      "Sanitize sensitive input data before logging (remove password fields)",
+      "Apply middleware to baseProcedure",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Call a procedure, see log output in console",
+      "DONE: tRPC procedures log path and duration"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-003",
+    "category": "api",
+    "description": "Add Rate Limiting with Upstash",
+    "steps": [
+      "Run bun add @upstash/ratelimit @upstash/redis",
+      "Create src/lib/rate-limit.ts",
+      "Import Ratelimit from @upstash/ratelimit and Redis from @upstash/redis",
+      "Check if UPSTASH_REDIS_REST_URL exists in env",
+      "Export ratelimit instance with slidingWindow: 10 requests per 10 seconds",
+      "Export null if env vars not set (graceful skip)",
+      "Update src/trpc/init.ts to add rateLimitedProcedure",
+      "Rate limit by IP or user ID if authenticated",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Rate limiting middleware available for sensitive procedures"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-004",
+    "category": "api",
+    "description": "Create tRPC Query Client configuration",
+    "steps": [
+      "Create src/trpc/query-client.ts",
+      "Import QueryClient from @tanstack/react-query",
+      "Import superjson for serialization",
+      "Export makeQueryClient function",
+      "Set defaultOptions.queries.staleTime: 30 * 1000 for SSR",
+      "Configure retry: skip UNAUTHORIZED errors, max 3 retries otherwise",
+      "Configure dehydrate.shouldDehydrateQuery to include pending queries",
+      "Configure dehydrate.serializeData using superjson.serialize",
+      "Configure hydrate.deserializeData using superjson.deserialize",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Query client configured for SSR with superjson"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-005",
+    "category": "api",
+    "description": "Create tRPC Client Provider",
+    "steps": [
+      "Use Context7 to look up @trpc/tanstack-react-query createTRPCContext pattern",
+      "Create src/trpc/client.tsx with 'use client' directive",
+      "Import createTRPCContext from @trpc/tanstack-react-query",
+      "Create TRPCProvider and useTRPC using createTRPCContext<AppRouter>()",
+      "Create TRPCReactProvider component wrapping QueryClientProvider and TRPCProvider",
+      "Use createTRPCClient with httpBatchLink and superjson transformer",
+      "Create getQueryClient with browser vs server singleton pattern",
+      "Create getUrl() helper: relative URL on client, absolute on server",
+      "Include ReactQueryDevtools in development",
+      "VERIFY: bun run typecheck passes",
+      "DONE: tRPC React provider ready for layout.tsx"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-006",
+    "category": "api",
+    "description": "Create tRPC Server Helpers",
+    "steps": [
+      "Use Context7 to look up @trpc/tanstack-react-query server helpers",
+      "Create src/trpc/server.tsx with 'server-only' import",
+      "Import createTRPCOptionsProxy from @trpc/tanstack-react-query",
+      "Export trpc proxy using createTRPCOptionsProxy",
+      "Export getQueryClient using React cache() for request deduplication",
+      "Export caller via appRouter.createCaller(createTRPCContext)",
+      "Export HydrateClient component wrapping HydrationBoundary with dehydrate(queryClient)",
+      "Export prefetch() helper handling regular and infinite queries",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Server-side tRPC helpers for RSC"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-007",
+    "category": "api",
+    "description": "Create User Router with example procedures",
+    "steps": [
+      "Create src/trpc/routers/user.ts",
+      "Import createTRPCRouter, protectedProcedure from init.ts",
+      "Create userRouter with createTRPCRouter",
+      "Add me procedure: protectedProcedure returning ctx.session.user",
+      "Add updateProfile procedure: protectedProcedure with z.object({name}) input, updates user in db",
+      "Add deleteAccount procedure: protectedProcedure with confirmation input, deletes user",
+      "Add comments documenting the pattern",
+      "TEST: Create src/trpc/routers/__tests__/user.test.ts",
+      "TEST: user.me returns user data when authenticated (test the contract, not internals)",
+      "TEST: user.me throws UNAUTHORIZED when session is null",
+      "TEST: user.updateProfile updates name and returns updated user",
+      "TEST: user.deleteAccount with wrong confirmation throws error",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test passes",
+      "DONE: User router with unit tests for procedure behavior"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-008",
+    "category": "api",
+    "description": "Create App Router combining all routers",
+    "steps": [
+      "Create src/trpc/routers/_app.ts",
+      "Import createTRPCRouter from init.ts",
+      "Import userRouter from user.ts",
+      "Export appRouter merging all routers",
+      "Export AppRouter type for client typing",
+      "VERIFY: bun run typecheck passes",
+      "DONE: App router exports merged router and types"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-009",
+    "category": "api",
+    "description": "Create tRPC API Route",
+    "steps": [
+      "Create src/app/api/trpc/[trpc]/route.ts",
+      "Import fetchRequestHandler from @trpc/server/adapters/fetch",
+      "Import appRouter and createTRPCContext",
+      "CRITICAL: Next.js 16 - context.params is a Promise, must be awaited",
+      "Export GET and POST handlers using fetchRequestHandler",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: GET /api/trpc/user.me returns 401 when unauthenticated",
+      "DONE: tRPC API route handles all procedures"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-010",
+    "category": "api",
+    "description": "Create tRPC Type Exports",
+    "steps": [
+      "Create src/trpc/index.ts",
+      "Import inferRouterInputs, inferRouterOutputs from @trpc/server",
+      "Import AppRouter type from routers/_app",
+      "Export RouterInputs = inferRouterInputs<AppRouter>",
+      "Export RouterOutputs = inferRouterOutputs<AppRouter>",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Router types exported for type-safe procedure calls"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-011",
+    "category": "api",
+    "description": "Create Common Validation Schemas",
+    "steps": [
+      "Create src/lib/validations/common.ts",
+      "Create paginationSchema: z.object({ page: z.number().min(1), limit: z.number().min(1).max(100) })",
+      "Create idSchema: z.object({ id: z.string() })",
+      "Create src/lib/validations/index.ts barrel export",
+      "Export all schemas from common.ts and auth.ts",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Common validation schemas exported"
+    ],
+    "passes": false
+  },
+  {
+    "id": "API-012",
+    "category": "api",
+    "description": "Create Health Check Endpoint",
+    "steps": [
+      "Create src/app/api/health/route.ts",
+      "Export GET handler returning JSON with status, timestamp, version",
+      "Optionally ping database with SELECT 1 to verify connectivity",
+      "Return 200 OK on success, 503 if database unreachable",
+      "VERIFY: GET /api/health returns 200 with status: 'ok'",
+      "DONE: Health check endpoint for monitoring"
+    ],
+    "passes": false
+  },
+  {
+    "id": "EMAIL-001",
+    "category": "email",
+    "description": "Set Up Resend email service",
+    "steps": [
+      "Run bun add resend",
+      "Create src/modules/email/server/email.service.ts",
+      "Import Resend from resend",
+      "Create resend instance with RESEND_API_KEY from env",
+      "Export sendEmail function accepting to, subject, react (JSX) params",
+      "Use FROM_EMAIL from env as sender",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Resend email service ready for templates"
+    ],
+    "passes": false
+  },
+  {
+    "id": "EMAIL-002",
+    "category": "email",
+    "description": "Create React Email Templates",
+    "steps": [
+      "Run bun add @react-email/components",
+      "Create src/modules/email/ui/verification-email.tsx with verificationUrl prop",
+      "Create src/modules/email/ui/reset-password-email.tsx with resetUrl prop",
+      "Create src/modules/email/ui/welcome-email.tsx with userName prop",
+      "Use @react-email/components: Html, Head, Body, Container, Text, Button, Link",
+      "Style templates with inline styles for email client compatibility",
+      "Make templates responsive",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Email templates ready for auth flows"
+    ],
+    "passes": false
+  },
+  {
+    "id": "EMAIL-003",
+    "category": "email",
+    "description": "Wire Emails to better-auth",
+    "steps": [
+      "Update src/lib/auth.ts to configure sendEmail option",
+      "Import sendEmail from email.service.ts",
+      "Import email templates",
+      "Handle type: 'email-verification' - render VerificationEmail, send via sendEmail",
+      "Handle type: 'password-reset' - render ResetPasswordEmail, send via sendEmail",
+      "Handle type: 'magic-link' - render magic link email, send via sendEmail",
+      "VERIFY: bun run typecheck passes",
+      "DONE: better-auth sends emails via Resend with React templates"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-001",
+    "category": "ui",
+    "description": "Install Core shadcn Components",
+    "steps": [
+      "Run bunx --bun shadcn@latest init (accept defaults, use New York style)",
+      "Run bunx --bun shadcn@latest add button",
+      "Run bunx --bun shadcn@latest add input",
+      "Run bunx --bun shadcn@latest add label",
+      "Run bunx --bun shadcn@latest add card",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - create temp test page importing Button, renders without error",
+      "DONE: Core shadcn components installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-002",
+    "category": "ui",
+    "description": "Add Loading State to Button",
+    "steps": [
+      "Update src/components/ui/button.tsx",
+      "Add loading prop to ButtonProps interface",
+      "Import Loader2 from lucide-react",
+      "When loading=true, show Loader2 with animate-spin before children",
+      "Add aria-busy={loading} for accessibility",
+      "Set disabled={loading || disabled} to prevent clicks while loading",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - Button with loading shows spinner",
+      "DONE: Button supports loading state with spinner"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-003",
+    "category": "ui",
+    "description": "Install Form Components with react-hook-form",
+    "steps": [
+      "Run bun add react-hook-form @hookform/resolvers",
+      "Run bunx --bun shadcn@latest add form",
+      "Form component uses zodResolver from @hookform/resolvers/zod",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Form components with Zod validation ready"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-004",
+    "category": "ui",
+    "description": "Install Dialog Components",
+    "steps": [
+      "Run bunx --bun shadcn@latest add dialog",
+      "Run bunx --bun shadcn@latest add alert-dialog",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Dialog and AlertDialog components installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-005",
+    "category": "ui",
+    "description": "Install Dropdown and Select",
+    "steps": [
+      "Run bunx --bun shadcn@latest add dropdown-menu",
+      "Run bunx --bun shadcn@latest add select",
+      "VERIFY: bun run typecheck passes",
+      "DONE: DropdownMenu and Select components installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-006",
+    "category": "ui",
+    "description": "Install Additional Form Controls",
+    "steps": [
+      "Run bunx --bun shadcn@latest add textarea",
+      "Run bunx --bun shadcn@latest add checkbox",
+      "Run bunx --bun shadcn@latest add tabs",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Textarea, Checkbox, Tabs components installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-007",
+    "category": "ui",
+    "description": "Install Display Components",
+    "steps": [
+      "Run bunx --bun shadcn@latest add badge",
+      "Run bunx --bun shadcn@latest add avatar",
+      "Run bunx --bun shadcn@latest add alert",
+      "Run bunx --bun shadcn@latest add separator",
+      "Run bunx --bun shadcn@latest add tooltip",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Badge, Avatar, Alert, Separator, Tooltip installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-008",
+    "category": "ui",
+    "description": "Create FormSuccess and FormError Components",
+    "steps": [
+      "Create src/components/form-success.tsx",
+      "Import Alert from ui/alert and CheckCircle from lucide-react",
+      "Accept message prop, render Alert with green success styling",
+      "Create src/components/form-error.tsx",
+      "Import Alert from ui/alert and AlertCircle from lucide-react",
+      "Accept message prop, render Alert with variant='destructive'",
+      "VERIFY: bun run typecheck passes",
+      "DONE: FormSuccess and FormError feedback components"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-009",
+    "category": "ui",
+    "description": "Create Theme Toggle for dark mode",
+    "steps": [
+      "Run bun add next-themes",
+      "Create src/components/theme-toggle.tsx",
+      "Import useTheme from next-themes",
+      "Import Sun, Moon icons from lucide-react",
+      "Create toggle button switching between light/dark themes",
+      "Update src/app/layout.tsx to wrap children with ThemeProvider from next-themes",
+      "Add suppressHydrationWarning to html tag to prevent flash",
+      "Set attribute='class' on ThemeProvider",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - click theme toggle, dark class toggles on html",
+      "DONE: Theme toggle switches between light/dark mode"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-010",
+    "category": "ui",
+    "description": "Install shadcn Sidebar Components",
+    "steps": [
+      "Run bunx --bun shadcn@latest add sidebar",
+      "Components installed: Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarInset",
+      "VERIFY: bun run typecheck passes",
+      "DONE: shadcn Sidebar components installed"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-011",
+    "category": "ui",
+    "description": "Create App Sidebar Component",
+    "steps": [
+      "Create src/components/app-sidebar.tsx",
+      "Import Sidebar components from ui/sidebar",
+      "Import siteConfig for app name",
+      "Import useSession from auth-client for user info",
+      "SidebarHeader: logo/app name from siteConfig",
+      "SidebarContent: navigation items - Dashboard (/dashboard), Settings (/settings)",
+      "SidebarFooter: user avatar, name, logout button, theme toggle",
+      "Make collapsible on mobile using SidebarTrigger",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - sidebar shows nav items, user info",
+      "DONE: App sidebar with navigation and user menu"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-012",
+    "category": "ui",
+    "description": "Create Dashboard Layout with sidebar",
+    "steps": [
+      "Create src/app/(dashboard)/layout.tsx",
+      "Import SidebarProvider, SidebarInset from ui/sidebar",
+      "Import AppSidebar component",
+      "Wrap children with SidebarProvider",
+      "Place AppSidebar as first child",
+      "Wrap main content in SidebarInset",
+      "Add header with SidebarTrigger and breadcrumbs",
+      "Ensure responsive: sidebar collapses on mobile",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - dashboard layout shows sidebar, content area",
+      "DONE: Dashboard layout with sidebar for authenticated pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "UI-013",
+    "category": "ui",
+    "description": "Create Public Header Component",
+    "steps": [
+      "Create src/components/public-header.tsx",
+      "Import siteConfig for logo/name",
+      "Import Link from next/link",
+      "Import ThemeToggle component",
+      "Logo/name linking to home",
+      "Login button linking to /login",
+      "Signup button linking to /signup",
+      "Theme toggle on right side",
+      "Clean, minimal design with proper spacing",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - header shows on /login page",
+      "DONE: Public header for unauthenticated pages"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-001",
+    "category": "pages",
+    "description": "Create Login Page",
+    "steps": [
+      "Create src/app/login/page.tsx",
+      "Import Form components and auth validation schemas",
+      "Import signIn from auth-client",
+      "Email/password form using react-hook-form with zodResolver",
+      "GitHub OAuth button calling signIn.social({provider: 'github'})",
+      "Link to /login/magic-link for passwordless option",
+      "Link to /signup for new users",
+      "Link to /auth/forgot-password",
+      "Loading states on form submission",
+      "Error states showing validation/auth errors",
+      "Include PublicHeader component",
+      "E2E: Create e2e/auth/login.spec.ts",
+      "E2E: Test form shows validation error for invalid email format",
+      "E2E: Test form shows validation error for password too short",
+      "E2E: Test GitHub button redirects to GitHub OAuth (check URL contains github.com)",
+      "E2E: Test 'Sign up' link navigates to /signup",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test:e2e passes",
+      "DONE: Login page with E2E tests for user flows"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-002",
+    "category": "pages",
+    "description": "Create Signup Page",
+    "steps": [
+      "Create src/app/signup/page.tsx",
+      "Import Form components and signupSchema",
+      "Import signUp from auth-client",
+      "Form fields: name, email, password, confirmPassword",
+      "Use react-hook-form with zodResolver(signupSchema)",
+      "Submit calls signUp.email()",
+      "Link back to /login",
+      "Include PublicHeader component",
+      "E2E: Create e2e/auth/signup.spec.ts",
+      "E2E: Test form shows all fields (name, email, password, confirmPassword)",
+      "E2E: Test password mismatch shows validation error",
+      "E2E: Test weak password shows strength requirement error",
+      "E2E: Test 'Login' link navigates to /login",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test:e2e passes",
+      "DONE: Signup page with E2E tests for validation"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-003",
+    "category": "pages",
+    "description": "Create Magic Link Page",
+    "steps": [
+      "Create src/app/login/magic-link/page.tsx",
+      "Import Form components and magicLinkSchema",
+      "Import signIn from auth-client",
+      "Email form with submit calling signIn.magicLink()",
+      "Success message: 'Check your email for a login link'",
+      "Link back to /login for password login",
+      "Include PublicHeader component",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - magic link form renders",
+      "DONE: Magic link login page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-004",
+    "category": "pages",
+    "description": "Create Forgot Password Page",
+    "steps": [
+      "Create src/app/auth/forgot-password/page.tsx",
+      "Email form requesting password reset",
+      "Submit calls auth client forgetPassword method",
+      "Show success message regardless of email existence (security)",
+      "Link back to /login",
+      "Include PublicHeader component",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - forgot password form renders",
+      "DONE: Forgot password page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-005",
+    "category": "pages",
+    "description": "Create Reset Password Page",
+    "steps": [
+      "Create src/app/auth/reset-password/page.tsx",
+      "CRITICAL: Next.js 16 - searchParams is a Promise, must be awaited",
+      "Get token from searchParams",
+      "Form: new password, confirm password fields",
+      "Submit calls auth client resetPassword with token",
+      "Redirect to /login on success with success message",
+      "Include PublicHeader component",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - reset form renders when given token param",
+      "DONE: Reset password page handling token"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-006",
+    "category": "pages",
+    "description": "Create Email Verification Page",
+    "steps": [
+      "Create src/app/auth/verify-email/page.tsx",
+      "CRITICAL: Next.js 16 - searchParams is a Promise, must be awaited",
+      "Get token from searchParams",
+      "Call auth client verifyEmail on mount",
+      "Show success state with redirect to /dashboard",
+      "Show error state if token invalid/expired",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Playwright - verification page renders states correctly",
+      "DONE: Email verification callback page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-007",
+    "category": "pages",
+    "description": "Create Dashboard Page",
+    "steps": [
+      "Create src/app/(dashboard)/dashboard/page.tsx",
+      "Import useTRPC from client for user.me query",
+      "Show welcome message with user name",
+      "Show user email",
+      "Placeholder content area for future app features",
+      "Page inherits sidebar layout from (dashboard) group",
+      "E2E: Create e2e/dashboard/dashboard.spec.ts",
+      "E2E: Test unauthenticated user is redirected to /login",
+      "E2E: Test authenticated user sees welcome message with their name",
+      "E2E: Test sidebar navigation is visible",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test:e2e passes",
+      "DONE: Dashboard page with E2E tests for auth and content"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-008",
+    "category": "pages",
+    "description": "Create Settings Page",
+    "steps": [
+      "Create src/app/(dashboard)/settings/page.tsx",
+      "Import Tabs components for tabbed interface",
+      "Profile tab: display name, email, update name form",
+      "Security tab: change password option (link or form)",
+      "Danger zone section: delete account with AlertDialog confirmation",
+      "Use user.updateProfile and user.deleteAccount procedures",
+      "Page inherits sidebar layout from (dashboard) group",
+      "E2E: Create e2e/dashboard/settings.spec.ts",
+      "E2E: Test tabs switch between Profile and Security sections",
+      "E2E: Test profile tab displays current user name and email",
+      "E2E: Test delete account shows confirmation dialog before proceeding",
+      "E2E: Test cancel on delete dialog closes it without action",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: bun run test:e2e passes",
+      "DONE: Settings page with E2E tests for user interactions"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-009",
+    "category": "pages",
+    "description": "Create 404 Not Found Page",
+    "steps": [
+      "Create src/app/not-found.tsx",
+      "Show helpful 'Page not found' message",
+      "Link back to home (/)",
+      "Use consistent styling with rest of app",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: Visit /nonexistent-page, see 404 page",
+      "DONE: Custom 404 page"
+    ],
+    "passes": false
+  },
+  {
+    "id": "PAGES-010",
+    "category": "pages",
+    "description": "Create Error Page",
+    "steps": [
+      "Create src/app/error.tsx as client component ('use client')",
+      "Accept error and reset props from Next.js",
+      "Show error message (only in dev for security)",
+      "Retry button calling reset()",
+      "Link to home as fallback",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Error boundary page with retry"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-001",
+    "category": "testing",
+    "description": "Set Up Vitest for unit testing",
+    "steps": [
+      "Run bun add -D vitest @testing-library/react @testing-library/jest-dom jsdom @vitejs/plugin-react",
+      "Create vitest.config.ts with React plugin",
+      "Configure environment: jsdom",
+      "Configure setupFiles for jest-dom matchers",
+      "Add package.json scripts: test, test:watch, test:coverage",
+      "VERIFY: bun run test passes (or shows no tests yet)",
+      "DONE: Vitest configured for React testing"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-002",
+    "category": "testing",
+    "description": "Create Test Utilities with providers",
+    "steps": [
+      "Create src/test/utils.tsx",
+      "Import render from @testing-library/react",
+      "Create wrapper component with TRPCReactProvider and QueryClientProvider",
+      "Export renderWithProviders function wrapping components",
+      "Re-export everything from @testing-library/react",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Test utilities ready for component testing"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-003",
+    "category": "testing",
+    "description": "Set Up MSW v2 for API mocking",
+    "steps": [
+      "Run bun add -D msw",
+      "Create src/mocks/handlers.ts using http and HttpResponse from msw (v2 API)",
+      "Add example handler for /api/trpc/user.me",
+      "Create src/mocks/server.ts using setupServer from msw/node",
+      "Create src/mocks/browser.ts using setupWorker from msw/browser",
+      "Update vitest setup to start server before tests",
+      "VERIFY: bun run typecheck passes",
+      "DONE: MSW v2 configured for test mocking"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-004",
+    "category": "testing",
+    "description": "Add Coverage Thresholds",
+    "steps": [
+      "Update vitest.config.ts to add coverage config",
+      "Set provider: 'v8'",
+      "Set thresholds: statements 70, branches 70, functions 70, lines 70",
+      "VERIFY: bun run test:coverage shows coverage report",
+      "DONE: Coverage thresholds configured at 70%"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-005",
+    "category": "testing",
+    "description": "Document Testing Patterns in CLAUDE.md",
+    "steps": [
+      "Update CLAUDE.md with Testing Patterns section",
+      "Document tRPC procedure testing: createCallerFactory pattern with mocked context",
+      "Document Zod schema testing: test validation rules, not schema structure",
+      "Document E2E testing: user flows, not component internals",
+      "Document MSW handler patterns: mock API responses for integration tests",
+      "Include example code snippets for each pattern",
+      "VERIFY: CLAUDE.md testing section is clear and actionable",
+      "DONE: Testing patterns documented for future development"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-006",
+    "category": "testing",
+    "description": "Set Up Playwright for E2E testing",
+    "steps": [
+      "Run bun add -D @playwright/test",
+      "Run bunx playwright install",
+      "Create playwright.config.ts with baseURL: localhost:3000",
+      "Configure webServer to run bun dev",
+      "Create e2e/ directory for test files",
+      "Add package.json scripts: test:e2e, test:e2e:ui",
+      "VERIFY: bun run test:e2e runs (may have 0 tests)",
+      "DONE: Playwright configured for E2E testing"
+    ],
+    "passes": false
+  },
+  {
+    "id": "TEST-007",
+    "category": "testing",
+    "description": "Create E2E Tests for smoke and auth",
+    "steps": [
+      "Create e2e/smoke.spec.ts testing homepage loads",
+      "Test: visit /, expect page title or element",
+      "Create e2e/auth.spec.ts testing login flow",
+      "Test: visit /login, see form",
+      "Test: visit /dashboard unauthenticated, redirect to /login",
+      "VERIFY: bun run test:e2e passes",
+      "DONE: Basic E2E tests for smoke and auth flow"
+    ],
+    "passes": false
+  },
+  {
+    "id": "STORYBOOK-001",
+    "category": "storybook",
+    "description": "Initialize Storybook 8",
+    "steps": [
+      "Run bunx storybook@latest init",
+      "Configure for Next.js and Tailwind CSS",
+      "Update .storybook/main.ts with framework: '@storybook/nextjs'",
+      "Update .storybook/preview.ts to import globals.css",
+      "Add package.json scripts: storybook, build-storybook",
+      "VERIFY: bun run storybook starts without errors",
+      "DONE: Storybook 8 configured with Next.js and Tailwind"
+    ],
+    "passes": false
+  },
+  {
+    "id": "STORYBOOK-002",
+    "category": "storybook",
+    "description": "Create Component Stories",
+    "steps": [
+      "Create src/components/ui/button.stories.tsx",
+      "Add stories for all Button variants (default, destructive, outline, etc.)",
+      "Add story for loading state",
+      "Create src/components/ui/form.stories.tsx",
+      "Add story showing form with validation errors",
+      "VERIFY: bun run storybook shows stories",
+      "DONE: Button and Form stories document component usage"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ANALYTICS-001",
+    "category": "analytics",
+    "description": "Add PostHog Integration",
+    "steps": [
+      "Run bun add posthog-js",
+      "Create src/components/posthog-provider.tsx",
+      "Import posthog from posthog-js",
+      "Import PostHogProvider from posthog-js/react",
+      "Initialize posthog only if NEXT_PUBLIC_POSTHOG_KEY exists",
+      "Export provider component wrapping children",
+      "Update src/app/layout.tsx to include PostHogProvider",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: If key set, PostHog network requests visible in dev tools",
+      "DONE: PostHog analytics integrated (optional based on env)"
+    ],
+    "passes": false
+  },
+  {
+    "id": "ANALYTICS-002",
+    "category": "analytics",
+    "description": "Create Analytics Utilities",
+    "steps": [
+      "Create src/lib/analytics.ts",
+      "Import posthog from posthog-js",
+      "Define EventName type union for allowed events",
+      "Export track(event: EventName, properties?: object) function",
+      "Export identify(userId: string, traits?: object) function",
+      "Guard functions to no-op if posthog not initialized",
+      "VERIFY: bun run typecheck passes",
+      "DONE: Typed analytics helpers for event tracking"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-001",
+    "category": "ci",
+    "description": "Create GitHub Actions CI Workflow",
+    "steps": [
+      "Create .github/workflows/ci.yml",
+      "Trigger on pull_request and push to main",
+      "Use actions/checkout, oven-sh/setup-bun",
+      "Run bun install",
+      "Run bun run lint",
+      "Run bun run typecheck",
+      "Run bun run test --coverage",
+      "Run bun run build",
+      "Upload coverage report as artifact",
+      "VERIFY: Push branch, GitHub Actions runs checks",
+      "DONE: CI workflow runs lint, typecheck, test, build"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-002",
+    "category": "ci",
+    "description": "Add Storybook to CI",
+    "steps": [
+      "Update .github/workflows/ci.yml",
+      "Add step: Run bun run build-storybook",
+      "Workflow fails if Storybook build has errors",
+      "VERIFY: CI workflow includes Storybook build",
+      "DONE: Storybook build verified in CI"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-003",
+    "category": "ci",
+    "description": "Write README documentation",
+    "steps": [
+      "Create/update README.md",
+      "Quick start section: clone, bun install, copy .env.example, setup db, bun dev",
+      "Project structure section explaining key directories",
+      "Available scripts section documenting all bun commands",
+      "Tech stack section with links to docs",
+      "Auth setup section explaining GitHub OAuth callback URL setup",
+      "VERIFY: README renders correctly on GitHub",
+      "DONE: Comprehensive README for onboarding"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-004",
+    "category": "ci",
+    "description": "Create Setup Script",
+    "steps": [
+      "Create scripts/setup.ts",
+      "Check if .env exists, if not copy from .env.example",
+      "Run bun install",
+      "Check required env vars, prompt if missing",
+      "Run bun run db:push to setup database",
+      "Add package.json script: setup",
+      "VERIFY: bun run setup works on fresh clone",
+      "DONE: Automated setup script for new developers"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-005",
+    "category": "ci",
+    "description": "Create CLAUDE.md for AI assistants",
+    "steps": [
+      "Create CLAUDE.md at project root",
+      "Commands section with all bun scripts",
+      "Architecture overview section",
+      "Key directories explanation",
+      "Data flow patterns (tRPC, auth, db)",
+      "Testing patterns section",
+      "VERIFY: File exists with useful content",
+      "DONE: CLAUDE.md provides AI assistant context"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-006",
+    "category": "ci",
+    "description": "Configure VSCode settings",
+    "steps": [
+      "Create .vscode/settings.json",
+      "Configure Biome as default formatter",
+      "Add Tailwind classRegex for class sorting",
+      "Create .vscode/extensions.json",
+      "Recommend: biomejs.biome, yoavbls.pretty-ts-errors, bradlc.vscode-tailwindcss",
+      "VERIFY: Files created and valid JSON",
+      "DONE: VSCode configured for consistent DX"
+    ],
+    "passes": false
+  },
+  {
+    "id": "CI-007",
+    "category": "ci",
+    "description": "Update package.json Metadata",
+    "steps": [
+      "Update package.json name to project name",
+      "Update description field",
+      "Add repository field with GitHub URL",
+      "Add author field",
+      "Add license field (MIT or as appropriate)",
+      "VERIFY: bun run typecheck passes",
+      "DONE: package.json has proper metadata"
+    ],
+    "passes": false
+  }
+]

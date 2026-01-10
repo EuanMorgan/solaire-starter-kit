@@ -96,3 +96,20 @@ Files changed:
 - src/db/schema/index.ts (new - placeholder)
 - drizzle.config.ts (new)
 - package.json (scripts + deps)
+
+## DB-002: Schema Common Helpers - COMPLETE
+
+- Added nanoid@5.1.6 for ID generation
+- Created src/db/schema/common.ts with:
+  - pgTable: wrapper using pgTableCreator, prepends TABLE_PREFIX from env
+  - id(): text primary key with nanoid() default (21-char URL-safe)
+  - timestamps(): createdAt/updatedAt with timezone, $onUpdate for updatedAt
+- Updated schema/index.ts to export helpers
+- Fixed lint: drizzle.config.ts non-null assertion -> type assertion
+- Typecheck + lint pass
+
+Files changed:
+- src/db/schema/common.ts (new)
+- src/db/schema/index.ts (updated exports)
+- drizzle.config.ts (lint fix)
+- package.json (nanoid dep)

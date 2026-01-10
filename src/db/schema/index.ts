@@ -1,2 +1,4 @@
-// Schema exports - will be populated in DB-002+
-export {};
+// Common helpers
+export { id, pgTable, timestamps } from "./common";
+
+// Schema exports - tables will be added in subsequent PRD items

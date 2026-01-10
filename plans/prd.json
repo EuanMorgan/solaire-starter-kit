@@ -148,7 +148,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Schema helpers export pgTable wrapper with prefix support"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DB-003",

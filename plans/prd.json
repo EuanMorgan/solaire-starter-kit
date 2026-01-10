@@ -909,7 +909,7 @@
       "VERIFY: bun run test:e2e passes",
       "DONE: Signup page with E2E tests for validation"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-003",

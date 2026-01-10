@@ -774,3 +774,23 @@ Files:
 - src/app/(auth)/verify-email/page.tsx (new placeholder)
 - src/proxy.ts (updated matcher)
 - e2e/auth/login.spec.ts (updated route path)
+
+## PAGES-002: Create Signup Page - COMPLETE
+
+- Created src/app/(auth)/signup/page.tsx with full form
+- Form fields: name, email, password, confirmPassword
+- react-hook-form + zodResolver(signupSchema) for validation
+- signUp.email() on submit, redirects to /dashboard on success
+- Error handling with FormError component
+- Link back to /login
+- E2E tests: e2e/auth/signup.spec.ts with 5 tests:
+  - Shows all form fields
+  - Password mismatch shows validation error
+  - Weak password (no uppercase) shows error
+  - Weak password (no number) shows error
+  - 'Sign in' link navigates to /login
+- All checks pass: typecheck, lint, 16 unit tests, 12 E2E tests
+
+Files:
+- src/app/(auth)/signup/page.tsx (updated from placeholder)
+- e2e/auth/signup.spec.ts (new)

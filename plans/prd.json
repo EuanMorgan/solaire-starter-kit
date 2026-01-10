@@ -942,7 +942,7 @@
       "VERIFY: Playwright - forgot password form renders",
       "DONE: Forgot password page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-005",

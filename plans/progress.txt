@@ -812,3 +812,21 @@ Files:
 Files:
 - src/app/(auth)/login/magic-link/page.tsx (updated from placeholder)
 - e2e/auth/magic-link.spec.ts (new)
+
+## PAGES-004: Create Forgot Password Page - COMPLETE
+
+- Created src/app/(auth)/forgot-password/page.tsx with full form
+- Email form using react-hook-form + zodResolver(magicLinkSchema) for email-only validation
+- authClient.requestPasswordReset() (not forgetPassword - checked better-auth docs)
+- Success message: "If an account exists with that email, you will receive a password reset link"
+- Shows success regardless of email existence (security best practice)
+- Link back to /login
+- E2E tests: e2e/auth/forgot-password.spec.ts with 3 tests:
+  - Renders forgot password form (title, email field, submit button)
+  - Shows validation error for empty email
+  - 'Back to login' link navigates to /login
+- All checks pass: typecheck, lint, 16 unit tests, 18 E2E tests
+
+Files:
+- src/app/(auth)/forgot-password/page.tsx (updated from placeholder)
+- e2e/auth/forgot-password.spec.ts (new)

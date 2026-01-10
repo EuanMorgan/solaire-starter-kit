@@ -18,6 +18,25 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      exclude: [
+        "node_modules/",
+        "src/test/",
+        "src/mocks/",
+        "src/stories/",
+        "**/*.d.ts",
+        "**/*.config.*",
+        "src/components/ui/",
+      ],
+      thresholds: {
+        statements: 70,
+        branches: 70,
+        functions: 70,
+        lines: 70,
+      },
+    },
     projects: [
       // Unit tests project
       {
@@ -27,25 +46,6 @@ export default defineConfig({
           environment: "jsdom",
           setupFiles: ["./src/test/setup.ts"],
           include: ["src/**/*.test.{ts,tsx}"],
-          coverage: {
-            provider: "v8",
-            reporter: ["text", "json", "html"],
-            exclude: [
-              "node_modules/",
-              "src/test/",
-              "src/mocks/",
-              "src/stories/",
-              "**/*.d.ts",
-              "**/*.config.*",
-              "src/components/ui/",
-            ],
-            thresholds: {
-              statements: 70,
-              branches: 70,
-              functions: 70,
-              lines: 70,
-            },
-          },
         },
       },
       // Storybook tests project

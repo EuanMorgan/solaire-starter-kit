@@ -1099,3 +1099,24 @@ Files:
 - Already completed in TEST-005
 - CLAUDE.md exists with comprehensive docs: Commands, Architecture, Testing Patterns
 - Marking as complete in PRD
+
+## STORYBOOK-002: Create Component Stories - COMPLETE
+
+- Created src/components/ui/button.stories.tsx with 17 stories:
+  - All variants: default, destructive, outline, secondary, ghost, link
+  - All sizes: sm, default, lg, icon, icon-sm, icon-lg
+  - Loading state, loading destructive, disabled
+  - With icon, icon only, icon small
+  - AllVariants + AllSizes combo stories
+- Created src/components/ui/form.stories.tsx with 3 stories:
+  - Default: login form (email + password)
+  - WithValidationErrors: form with validation errors displayed
+  - SignupForm: signup form with name, email, password, confirmPassword
+- Fixed vitest.config.ts: moved coverage config to root level (was incorrectly inside project config causing TS error)
+- Verified via Playwright MCP: all stories render correctly in Storybook
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- src/components/ui/button.stories.tsx (new)
+- src/components/ui/form.stories.tsx (new)
+- vitest.config.ts (fixed coverage config location)

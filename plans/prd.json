@@ -1186,7 +1186,7 @@
       "VERIFY: bun run storybook shows stories",
       "DONE: Button and Form stories document component usage"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ANALYTICS-001",

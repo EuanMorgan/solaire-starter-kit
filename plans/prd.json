@@ -133,7 +133,7 @@
       "VERIFY: bun run db:push connects to database (requires DATABASE_URL set)",
       "DONE: Drizzle ORM configured with PostgreSQL connection"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DB-002",

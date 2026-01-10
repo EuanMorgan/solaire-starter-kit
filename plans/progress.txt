@@ -76,3 +76,23 @@ Files changed:
 
 Files changed:
 - next.config.ts (added headers function)
+
+## DB-001: Drizzle ORM Setup - COMPLETE
+
+- Installed drizzle-orm@0.45.1 + postgres@3.4.8 (postgres.js driver)
+- Installed drizzle-kit@0.31.8 as devDep
+- Created src/db/index.ts with db instance using postgres driver + DATABASE_URL from env
+- Created drizzle.config.ts with:
+  - dialect: postgresql
+  - schema: ./src/db/schema/index.ts
+  - tablesFilter using TABLE_PREFIX env var
+- Added db scripts: db:push, db:studio, db:generate, db:migrate
+- Created placeholder src/db/schema/index.ts for future schemas
+- db:push attempts connection (auth fails due to local pg not running - expected)
+- Typecheck passes
+
+Files changed:
+- src/db/index.ts (new)
+- src/db/schema/index.ts (new - placeholder)
+- drizzle.config.ts (new)
+- package.json (scripts + deps)

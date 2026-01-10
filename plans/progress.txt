@@ -1053,3 +1053,18 @@ Files:
 
 Files:
 - .github/workflows/ci.yml (new)
+
+## CI-003: Write README documentation - COMPLETE
+
+- Updated README.md with comprehensive onboarding docs
+- Tech Stack: table format with links to all major deps
+- Quick Start: clone, install, copy .env.example, docker-compose, db:push, db:seed, bun dev
+- Scripts: all bun commands documented with correct `bun run` prefix
+- Project Structure: explains src/ dirs, e2e/, .github/workflows/
+- Environment Variables: table format with required/optional flags
+- GitHub OAuth Setup: step-by-step with callback URL explicitly stated
+- Architecture: auth flow, API flow, route protection explained
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- README.md (updated)

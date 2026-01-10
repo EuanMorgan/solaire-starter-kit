@@ -1,221 +1,155 @@
 # Solaire
 
-A modern, opinionated SaaS starter template. Built for devs who hate boilerplate.
+A modern Next.js 16 SaaS starter with auth, API, and database pre-configured.
 
-## What's Included
+## Tech Stack
 
-### Core Stack
-
-- **Next.js 16** with App Router, React 19, and Turbopack
-- **PostgreSQL** with Drizzle ORM for type-safe database operations
-- **tRPC 11** for end-to-end type safety, server-prefetched for speed
-- **TypeScript** in strict mode throughout
-
-### Authentication
-
-- **Better Auth** with multiple strategies:
-  - Email/password with verification
-  - Magic link (passwordless)
-  - GitHub OAuth
-- Protected routes via middleware
-- Session management out of the box
-
-### Styling & UI
-
-- **Tailwind CSS v4** for utility-first styling
-- **shadcn/ui** components (pre-installed: Button, Card, Input, Form, Dialog, Toast, etc.)
-- Dark mode ready
-
-### Email
-
-- **Resend** for transactional emails
-- **React Email** templates (verification, password reset, welcome)
-- Module pattern: `src/modules/email/{server,ui}`
-
-### Testing
-
-- **Vitest** for unit tests with React Testing Library
-- **Playwright** for E2E tests
-- **MSW** for API mocking
-- Coverage thresholds configured
-
-### Developer Experience
-
-- **Biome** for linting and formatting (fast, all-in-one)
-- **T3 Env** for validated environment variables
-- **GitHub Actions** CI pipeline (typecheck, lint, test, e2e)
-- **Storybook** for component development
-- **Posthog** for analytics and session replay
-- Opinionated VSCode settings included
-
-### Automation (Ralph)
-
-- AI-powered task automation with Claude CLI
-- Pushover notifications on completion
-- PRD-driven development workflow
-- See `plans/` directory for setup
+| Category | Technology |
+|----------|------------|
+| Framework | [Next.js 16](https://nextjs.org/) with App Router, React 19 |
+| Database | [PostgreSQL](https://www.postgresql.org/) + [Drizzle ORM](https://orm.drizzle.team/) |
+| API | [tRPC v11](https://trpc.io/) with [@trpc/tanstack-react-query](https://trpc.io/docs/client/react) |
+| Auth | [better-auth](https://www.better-auth.com/) (email/password, magic link, GitHub OAuth) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
+| Email | [Resend](https://resend.com/) + [React Email](https://react.email/) |
+| Testing | [Vitest](https://vitest.dev/) + [Playwright](https://playwright.dev/) + [MSW](https://mswjs.io/) |
+| Linting | [Biome](https://biomejs.dev/) |
 
 ## Quick Start
 
 ```bash
 # Clone and install
-git clone <your-repo>
+git clone https://github.com/yourusername/solaire.git
 cd solaire
 bun install
 
 # Set up environment
 cp .env.example .env
-# Fill in DATABASE_URL, BETTER_AUTH_SECRET, etc.
+# Edit .env with your values
 
-# Start Postgres (Docker)
+# Start PostgreSQL (Docker)
 docker-compose up -d
 
 # Push schema to database
-bun db:push
+bun run db:push
 
-# Start developing
+# Seed test user
+bun run db:seed
+
+# Start dev server
 bun dev
 ```
 
-## Commands
+Visit [http://localhost:3000](http://localhost:3000). Login with `test@example.com` / `password123`.
+
+## Scripts
 
 ```bash
 # Development
-bun dev              # Start dev server (Turbopack)
-bun build            # Production build
-bun start            # Start production server
+bun dev                  # Start dev server
+bun run build            # Production build
+bun run start            # Start production server
 
 # Database
-bun db:push          # Push schema to DB
-bun db:studio        # Open Drizzle Studio
-bun db:generate      # Generate migrations
-bun db:migrate       # Run migrations
+bun run db:push          # Push schema to database
+bun run db:studio        # Open Drizzle Studio
+bun run db:generate      # Generate migrations
+bun run db:migrate       # Run migrations
+bun run db:seed          # Seed test user
 
 # Testing
-bun test             # Run unit tests
-bun test:watch       # Watch mode
-bun test:e2e         # Run Playwright E2E
-bun test:e2e:ui      # Playwright with UI
+bun run test             # Run unit tests
+bun run test:watch       # Unit tests in watch mode
+bun run test:coverage    # Unit tests with coverage
+bun run test:e2e         # Run Playwright E2E
+bun run test:e2e:ui      # Playwright with UI
 
 # Code Quality
-bun lint             # Check with Biome
-bun lint:fix         # Auto-fix issues
-bun typecheck        # TypeScript check
-
-# Storybook
-bun storybook        # Start Storybook dev
-bun storybook:build  # Build static Storybook
+bun run typecheck        # TypeScript check
+bun run lint             # Biome linter
+bun run format           # Biome formatter
 ```
 
 ## Project Structure
 
 ```
 src/
-├── app/                 # Next.js App Router pages
-│   ├── (auth)/          # Auth pages (login, signup, etc.)
-│   ├── dashboard/       # Protected dashboard
-│   └── api/             # API routes (tRPC, auth)
+├── app/                 # Next.js App Router
+│   ├── (auth)/          # Auth pages (login, signup) - minimal layout
+│   ├── (dashboard)/     # Protected pages - sidebar layout
+│   └── api/             # API routes (auth, trpc, health)
 ├── components/          # React components
 │   └── ui/              # shadcn/ui components
-├── db/
-│   └── schema/          # Drizzle schemas (modular)
-│       ├── auth.schema.ts
-│       ├── common.ts
-│       └── index.ts
-├── lib/
-│   ├── auth.ts          # Better Auth config
-│   ├── analytics.ts     # Posthog helpers
+├── config/              # App configuration (site.ts)
+├── db/                  # Drizzle ORM
+│   └── schema/          # Database schemas
+├── lib/                 # Utilities
+│   ├── auth.ts          # better-auth server config
+│   ├── auth-client.ts   # better-auth client
 │   └── validations/     # Zod schemas
-├── modules/
-│   └── email/
-│       ├── server/      # Email service (Resend)
-│       └── ui/          # React Email templates
-├── trpc/
-│   ├── routers/         # tRPC routers
-│   ├── client.ts        # Client hooks
-│   ├── server.ts        # Server caller
-│   └── init.ts          # tRPC init + middleware
-├── mocks/               # MSW handlers
-└── test/                # Test utilities
+├── mocks/               # MSW mock handlers
+├── modules/             # Feature modules
+│   └── email/           # Email service & templates
+├── test/                # Test utilities
+└── trpc/                # tRPC setup
+    └── routers/         # tRPC routers
 
-plans/                   # Ralph automation
-├── ralph.sh             # Main automation script
-├── notify.sh            # Pushover notifications
-├── prd.json             # Task definitions
-└── progress.txt         # Session log
-
-e2e/                     # Playwright tests
+e2e/                     # Playwright E2E tests
 .github/workflows/       # CI pipeline
-.vscode/                 # Editor settings
 ```
 
 ## Environment Variables
 
-```env
-# Required
-DATABASE_URL=postgres://user:pass@localhost:5434/solaire
-BETTER_AUTH_SECRET=your-secret-key
-NEXT_PUBLIC_BASE_URL=http://127.0.0.1:3000
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `TABLE_PREFIX` | Yes | Table name prefix (e.g., `solaire_`) |
+| `BETTER_AUTH_SECRET` | Yes | Auth token signing secret (32+ chars) |
+| `NEXT_PUBLIC_BASE_URL` | Yes | App URL (e.g., `http://localhost:3000`) |
+| `GITHUB_CLIENT_ID` | No | GitHub OAuth app ID |
+| `GITHUB_CLIENT_SECRET` | No | GitHub OAuth app secret |
+| `RESEND_API_KEY` | No | Resend API key for emails |
+| `FROM_EMAIL` | No | Sender email address |
+| `UPSTASH_REDIS_REST_URL` | No | Upstash Redis for rate limiting |
+| `UPSTASH_REDIS_REST_TOKEN` | No | Upstash Redis token |
+| `NEXT_PUBLIC_POSTHOG_KEY` | No | PostHog analytics key |
 
-# Auth Providers (optional)
-GITHUB_CLIENT_ID=
-GITHUB_CLIENT_SECRET=
+See `.env.example` for all variables with descriptions.
 
-# Email (optional, for transactional emails)
-RESEND_API_KEY=
-FROM_EMAIL=noreply@yourdomain.com
+## GitHub OAuth Setup
 
-# Analytics (optional)
-NEXT_PUBLIC_POSTHOG_KEY=
-NEXT_PUBLIC_POSTHOG_HOST=
+1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
+2. Click **New OAuth App**
+3. Fill in:
+   - **Application name**: Your app name
+   - **Homepage URL**: `http://localhost:3000`
+   - **Authorization callback URL**: `http://localhost:3000/api/auth/callback/github`
+4. Click **Register application**
+5. Copy **Client ID** and generate a **Client Secret**
+6. Add to `.env`:
+   ```
+   GITHUB_CLIENT_ID=your_client_id
+   GITHUB_CLIENT_SECRET=your_client_secret
+   ```
 
-# Automation (optional)
-PUSHOVER_TOKEN=
-PUSHOVER_USER=
+For production, update URLs to your domain.
+
+## Architecture
+
+### Auth Flow
+```
+Client → better-auth client → /api/auth/[...all] → better-auth server → Drizzle → PostgreSQL
 ```
 
-## Ralph Automation
-
-Ralph is a Claude CLI-based automation system for PRD-driven development:
-
-```bash
-# Run 5 task iterations
-./plans/ralph.sh 5
-
-# Single iteration
-./plans/ralph.sh 1
+### API Flow
+```
+Client → useTRPC() hook → /api/trpc/[trpc] → tRPC router → procedure → Drizzle → PostgreSQL
 ```
 
-**How it works:**
-
-1. Reads tasks from `plans/prd.json`
-2. Claude picks and implements the next task
-3. Logs progress to `plans/progress.txt`
-4. Sends Pushover notification on completion
-
-**Setup:**
-
-1. Install [Claude CLI](https://claude.ai/code)
-2. Add `PUSHOVER_TOKEN` and `PUSHOVER_USER` to `.env` (optional)
-3. Define tasks in `plans/prd.json`
-
-## Extending
-
-### Adding a new OAuth provider
-
-1. Add client ID/secret to `src/env.ts`
-2. Add provider to `src/lib/auth.ts`
-3. Add button to login page
-
-### Adding Stripe (common extension)
-
-See [Stripe Next.js guide](https://stripe.com/docs/stripe-js/react) - not included to keep boilerplate minimal.
-
-### Adding a new database table
-
-1. Create `src/db/schema/your-table.schema.ts`
-2. Export from `src/db/schema/index.ts`
-3. Run `bun db:push`
+### Route Protection
+`src/proxy.ts` handles redirects:
+- `/dashboard`, `/settings` → redirect to `/login` if unauthenticated
+- `/login`, `/signup` → redirect to `/dashboard` if authenticated
 
 ## License
 

@@ -24,3 +24,12 @@ Files changed:
 
 Files changed:
 - .env.example (updated)
+
+## FOUND-003: Site Config - COMPLETE
+
+- Created src/config/site.ts with SiteConfig interface
+- Exports siteConfig with name, description, url (from env.NEXT_PUBLIC_BASE_URL), links.github
+- Typecheck passes
+
+Files changed:
+- src/config/site.ts (new)

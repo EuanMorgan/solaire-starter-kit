@@ -61,7 +61,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: siteConfig exports typed app constants"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-004",

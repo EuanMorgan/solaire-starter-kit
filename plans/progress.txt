@@ -1151,3 +1151,23 @@ Files:
 Files:
 - .vscode/settings.json (new)
 - .vscode/extensions.json (new)
+
+## ANALYTICS-001: Add PostHog Integration - COMPLETE
+
+- Installed posthog-js@1.318.1
+- Created src/components/posthog-provider.tsx with:
+  - "use client" directive for client-side initialization
+  - PostHogProvider from posthog-js/react
+  - Init in useEffect only if NEXT_PUBLIC_POSTHOG_KEY exists
+  - capture_pageview: "history_change" for auto SPA pageviews
+  - capture_pageleave: "if_capture_pageview" for leave tracking
+  - Falls back to https://us.i.posthog.com if no custom host
+  - Renders children without provider wrapper when key not set
+- Updated src/app/layout.tsx to wrap app with PostHogProvider
+- Verified via Playwright: page loads, no PostHog requests when key not set (correct)
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- src/components/posthog-provider.tsx (new)
+- src/app/layout.tsx (updated)
+- package.json (posthog-js dep)

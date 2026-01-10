@@ -1204,7 +1204,7 @@
       "VERIFY: If key set, PostHog network requests visible in dev tools",
       "DONE: PostHog analytics integrated (optional based on env)"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "ANALYTICS-002",

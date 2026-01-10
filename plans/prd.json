@@ -115,7 +115,7 @@
       "VERIFY: Run curl -I http://localhost:3000 - headers present in response",
       "DONE: Security headers configured in next.config.ts"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DB-001",

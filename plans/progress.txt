@@ -64,3 +64,15 @@ Files changed:
 Files changed:
 - src/app/globals.css (complete rewrite)
 - package.json (tw-animate-css dep)
+
+## FOUND-006: Security Headers - COMPLETE
+
+- Added headers() async fn to next.config.ts
+- X-Frame-Options: DENY - prevents clickjacking
+- X-Content-Type-Options: nosniff - prevents MIME sniffing
+- Referrer-Policy: strict-origin-when-cross-origin - controls referrer info
+- Verified via curl -I: all 3 headers present in response
+- Typecheck passes
+
+Files changed:
+- next.config.ts (added headers function)

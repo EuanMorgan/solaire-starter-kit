@@ -738,7 +738,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: shadcn Sidebar components installed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-011",

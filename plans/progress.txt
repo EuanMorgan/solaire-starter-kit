@@ -599,3 +599,22 @@ Files changed:
 - src/app/layout.tsx (updated)
 - src/app/page.tsx (added ThemeToggle)
 - package.json (next-themes dep)
+
+## UI-010: Install shadcn Sidebar Components - COMPLETE
+
+- Installed sidebar via `bunx shadcn@latest add sidebar`
+- Components installed: Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger, SidebarInset + more
+- Also installed: Sheet, Skeleton, use-mobile hook (sidebar dependencies)
+- Applied Biome lint fixes (import type, semicolons, import order)
+- Added biome-ignore for cookie assignment + exhaustive deps (shadcn patterns)
+- Re-added loading state to Button (was overwritten by shadcn add)
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/sidebar.tsx (new)
+- src/components/ui/sheet.tsx (new)
+- src/components/ui/skeleton.tsx (new)
+- src/hooks/use-mobile.ts (new)
+- src/components/ui/button.tsx (restored loading prop)
+- src/components/ui/input.tsx, separator.tsx, tooltip.tsx (updated by shadcn)
+- package.json (@radix-ui/react-dialog dep for sheet)

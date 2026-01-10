@@ -1131,3 +1131,23 @@ Files:
 
 Files:
 - .github/workflows/ci.yml (updated)
+
+## CI-006: Configure VSCode settings - COMPLETE
+
+- Created .vscode/settings.json with:
+  - Biome as default formatter for TS/TSX/JS/JSX/JSON
+  - Format on save enabled
+  - source.fixAll.biome code action on save
+  - Tailwind classRegex for cva/cx class sorting
+  - tailwindCSS.includeLanguages for TSX support
+  - TypeScript workspace SDK enabled
+- Created .vscode/extensions.json with recommendations:
+  - biomejs.biome (formatter/linter)
+  - yoavbls.pretty-ts-errors (better TS error display)
+  - bradlc.vscode-tailwindcss (Tailwind intellisense)
+- Fixed deprecated quickfix.biome -> source.fixAll.biome per Biome suggestion
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- .vscode/settings.json (new)
+- .vscode/extensions.json (new)

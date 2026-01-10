@@ -1315,7 +1315,7 @@
       "VERIFY: Files created and valid JSON",
       "DONE: VSCode configured for consistent DX"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CI-007",

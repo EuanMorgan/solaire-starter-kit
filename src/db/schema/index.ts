@@ -1,4 +1,12 @@
+// Auth schema
+export {
+  account,
+  accountRelations,
+  session,
+  sessionRelations,
+  user,
+  userRelations,
+  verification,
+} from "./auth.schema";
 // Common helpers
 export { id, pgTable, timestamps } from "./common";
-
-// Schema exports - tables will be added in subsequent PRD items

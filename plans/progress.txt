@@ -113,3 +113,21 @@ Files changed:
 - src/db/schema/index.ts (updated exports)
 - drizzle.config.ts (lint fix)
 - package.json (nanoid dep)
+
+## DB-003: Auth Schema for better-auth - COMPLETE
+
+- Looked up better-auth schema requirements via WebSearch (Context7 quota exceeded)
+- Created src/db/schema/auth.schema.ts with:
+  - user: id, name, email (unique), emailVerified, image, timestamps
+  - session: id, userId (FK), token (unique), expiresAt, ipAddress, userAgent, timestamps
+  - account: id, userId (FK), accountId, providerId, accessToken, refreshToken, accessTokenExpiresAt, refreshTokenExpiresAt, scope, idToken, password, timestamps
+  - verification: id, identifier, value, expiresAt, timestamps
+- Added indexes: user_email, session_user_id, session_token, account_user_id, account_provider, verification_identifier
+- Created relations: userRelations (has many sessions/accounts), sessionRelations, accountRelations
+- Updated schema/index.ts barrel export
+- Typecheck + lint pass
+- db:push attempts connection (requires valid DATABASE_URL)
+
+Files changed:
+- src/db/schema/auth.schema.ts (new)
+- src/db/schema/index.ts (updated exports)

@@ -168,7 +168,7 @@
       "VERIFY: bun run db:push creates tables in database",
       "DONE: Auth schema compatible with better-auth drizzle adapter"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "DB-004",

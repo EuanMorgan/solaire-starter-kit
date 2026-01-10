@@ -1034,3 +1034,22 @@ Files:
 
 Files:
 - CLAUDE.md (new)
+
+## CI-001: Create GitHub Actions CI Workflow - COMPLETE
+
+- Created .github/workflows/ci.yml with 4 parallel jobs:
+  - lint: runs bun run lint
+  - typecheck: runs bun run typecheck
+  - test: runs bun run test:coverage + uploads coverage artifact
+  - build: runs bun run build
+- Triggers on push to main + PRs to main
+- Uses oven-sh/setup-bun@v2 for Bun runtime
+- Uses actions/checkout@v4, actions/upload-artifact@v4
+- Sets SKIP_ENV_VALIDATION=true to skip env validation in CI
+- Uses --frozen-lockfile for reproducible installs
+- Coverage uploaded as artifact with 7-day retention
+- Verified locally: all checks pass (lint, typecheck, 21 unit tests, 49 E2E tests)
+- Note: Full CI verification requires push to GitHub (PRD step says "VERIFY: Push branch")
+
+Files:
+- .github/workflows/ci.yml (new)

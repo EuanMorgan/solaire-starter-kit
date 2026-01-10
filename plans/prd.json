@@ -651,7 +651,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Dialog and AlertDialog components installed"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-005",

@@ -495,3 +495,19 @@ Files changed:
 - src/components/ui/button.tsx (updated by shadcn)
 - src/components/ui/label.tsx (updated by shadcn)
 - package.json (react-hook-form, @hookform/resolvers deps)
+
+## UI-004: Install Dialog Components - COMPLETE
+
+- Installed shadcn dialog via `bunx shadcn@latest add dialog`
+- Installed shadcn alert-dialog via `bunx shadcn@latest add alert-dialog --overwrite`
+- Dialog: DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose
+- AlertDialog: AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel
+- Applied Biome lint fixes (semicolons, import type, import order)
+- Verified via Playwright: both Dialog and AlertDialog render + function correctly
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/ui/dialog.tsx (new)
+- src/components/ui/alert-dialog.tsx (new)
+- src/components/ui/button.tsx (updated by shadcn)
+- package.json (@radix-ui/react-dialog, @radix-ui/react-alert-dialog deps)

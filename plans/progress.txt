@@ -576,3 +576,26 @@ Files changed:
 Files changed:
 - src/components/form-success.tsx (new)
 - src/components/form-error.tsx (new)
+
+## UI-009: Theme Toggle for Dark Mode - COMPLETE
+
+- Installed next-themes@0.4.6
+- Created src/components/theme-provider.tsx wrapping NextThemesProvider
+- Created src/components/theme-toggle.tsx:
+  - useTheme hook for theme state
+  - Sun/Moon icons with CSS transitions
+  - Ghost button variant
+- Updated src/app/layout.tsx:
+  - Added ThemeProvider wrapper with attribute="class"
+  - Added suppressHydrationWarning to html tag
+  - defaultTheme="system", enableSystem, disableTransitionOnChange
+- Added ThemeToggle to home page for demo
+- Verified via Playwright: click toggle, dark class toggles on html element
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/components/theme-provider.tsx (new)
+- src/components/theme-toggle.tsx (new)
+- src/app/layout.tsx (updated)
+- src/app/page.tsx (added ThemeToggle)
+- package.json (next-themes dep)

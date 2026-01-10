@@ -726,7 +726,7 @@
       "VERIFY: Playwright - click theme toggle, dark class toggles on html",
       "DONE: Theme toggle switches between light/dark mode"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "UI-010",

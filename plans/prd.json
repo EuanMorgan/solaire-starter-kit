@@ -1035,7 +1035,7 @@
       "VERIFY: Visit /nonexistent-page, see 404 page",
       "DONE: Custom 404 page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-010",
@@ -1050,7 +1050,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Error boundary page with retry"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TEST-001",

@@ -928,3 +928,29 @@ Files:
 Files:
 - src/app/(dashboard)/settings/page.tsx (updated from placeholder)
 - e2e/dashboard/settings.spec.ts (new)
+
+## PAGES-009: Create 404 Not Found Page - COMPLETE
+
+- Created src/app/not-found.tsx with:
+  - 404 heading + "Page not found" message
+  - "Go home" button linking to /
+  - Centered layout, consistent styling
+- Verified via Playwright: /nonexistent-page shows 404 page
+- Typecheck + lint + tests pass
+
+Files:
+- src/app/not-found.tsx (new)
+
+## PAGES-010: Create Error Page - COMPLETE
+
+- Created src/app/error.tsx with:
+  - "use client" directive (required for error boundaries)
+  - Error + reset props from Next.js
+  - Shows error.message in dev only (security)
+  - "Try again" button calls reset()
+  - "Go home" link as fallback
+  - biome-ignore for noShadowRestrictedNames (Next.js convention)
+- Typecheck + lint + all tests pass (21 unit, 45 E2E)
+
+Files:
+- src/app/error.tsx (new)

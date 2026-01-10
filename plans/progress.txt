@@ -1019,3 +1019,18 @@ Files:
 Files:
 - vitest.config.ts (added coverage config)
 - package.json (@vitest/coverage-v8 devDep)
+
+## TEST-005: Document Testing Patterns in CLAUDE.md - COMPLETE
+
+- Created CLAUDE.md at project root with comprehensive documentation
+- Sections: Commands, Architecture, Directory Structure, Data Flow, Testing Patterns, Key Conventions
+- Testing Patterns documented:
+  - tRPC procedure testing: createCaller with mocked context, vi.mock for env/db/rate-limit
+  - Zod schema testing: safeParse pattern, test behavior not structure
+  - E2E with Playwright: loginAsTestUser helper, user flow testing
+  - MSW v2: http/HttpResponse handlers, server.use for overrides
+- Each pattern includes working code examples from codebase
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- CLAUDE.md (new)

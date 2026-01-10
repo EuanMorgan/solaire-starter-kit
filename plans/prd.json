@@ -959,7 +959,7 @@
       "VERIFY: Playwright - reset form renders when given token param",
       "DONE: Reset password page handling token"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-006",

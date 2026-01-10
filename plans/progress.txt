@@ -830,3 +830,28 @@ Files:
 Files:
 - src/app/(auth)/forgot-password/page.tsx (updated from placeholder)
 - e2e/auth/forgot-password.spec.ts (new)
+
+## PAGES-005: Create Reset Password Page - COMPLETE
+
+- Created src/app/(auth)/reset-password/page.tsx with full form
+- Uses useSearchParams from next/navigation (client component pattern)
+- Shows "Invalid Link" state when no token provided with link to /forgot-password
+- Form: password, confirmPassword fields using react-hook-form + zodResolver(resetPasswordSchema)
+- Added resetPasswordSchema to auth.ts validation (password + confirmPassword with match refinement)
+- authClient.resetPassword({ newPassword, token }) on submit
+- Success message + redirect to /login after 2 seconds
+- E2E tests: e2e/auth/reset-password.spec.ts with 8 tests:
+  - Shows invalid link when no token
+  - 'Request new link' navigates to /forgot-password
+  - Renders form with token param
+  - Validation: too short, no uppercase, no number, mismatch
+  - 'Back to login' navigates to /login
+- Unit tests: added 5 tests for resetPasswordSchema
+- All checks pass: typecheck, lint, 21 unit tests, 26 E2E tests
+
+Files:
+- src/app/(auth)/reset-password/page.tsx (updated from placeholder)
+- src/lib/validations/auth.ts (added resetPasswordSchema)
+- src/lib/validations/index.ts (added export)
+- src/lib/validations/__tests__/auth.test.ts (added tests)
+- e2e/auth/reset-password.spec.ts (new)

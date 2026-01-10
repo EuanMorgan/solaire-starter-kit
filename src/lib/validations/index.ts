@@ -3,6 +3,8 @@ export {
   loginSchema,
   type MagicLinkInput,
   magicLinkSchema,
+  type ResetPasswordInput,
+  resetPasswordSchema,
   type SignupInput,
   signupSchema,
 } from "./auth";

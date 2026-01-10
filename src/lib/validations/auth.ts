@@ -37,6 +37,17 @@ export const magicLinkSchema = z.object({
   email: z.email("Invalid email address"),
 });
 
+export const resetPasswordSchema = z
+  .object({
+    password: passwordSchema,
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type SignupInput = z.infer<typeof signupSchema>;
 export type MagicLinkInput = z.infer<typeof magicLinkSchema>;
+export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;

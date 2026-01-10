@@ -160,3 +160,20 @@ Files changed:
 
 Files changed:
 - src/db/schema/index.ts (updated)
+
+## AUTH-001: better-auth Core with Drizzle Adapter - COMPLETE
+
+- Installed better-auth@1.4.10
+- Created src/lib/auth.ts with:
+  - betterAuth configured with drizzleAdapter
+  - provider: "pg" for PostgreSQL
+  - schema mapped: user, session, account, verification tables
+  - baseURL from env.NEXT_PUBLIC_BASE_URL
+  - secret from env.BETTER_AUTH_SECRET
+- Updated src/db/index.ts to pass schema to drizzle() for relations support
+- Typecheck passes
+
+Files changed:
+- src/lib/auth.ts (new)
+- src/db/index.ts (added schema)
+- package.json (better-auth dep)

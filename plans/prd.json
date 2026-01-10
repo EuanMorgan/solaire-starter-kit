@@ -217,7 +217,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: better-auth configured with Drizzle adapter"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-002",

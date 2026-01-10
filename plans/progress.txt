@@ -954,3 +954,17 @@ Files:
 
 Files:
 - src/app/error.tsx (new)
+
+## TEST-007: Create E2E Tests for smoke and auth - COMPLETE
+
+- Created e2e/smoke.spec.ts with 4 tests:
+  - Homepage loads successfully (checks title)
+  - Homepage shows main content (Next.js logo, Documentation link)
+  - Login page is accessible
+  - Dashboard redirects unauthenticated to /login
+- Auth tests already existed in e2e/auth/login.spec.ts (7 tests)
+- Dashboard redirect test existed in e2e/dashboard/dashboard.spec.ts
+- All 49 E2E tests pass
+
+Files:
+- e2e/smoke.spec.ts (new)

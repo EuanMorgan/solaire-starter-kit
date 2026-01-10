@@ -1156,7 +1156,7 @@
       "VERIFY: bun run test:e2e passes",
       "DONE: Basic E2E tests for smoke and auth flow"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "STORYBOOK-001",

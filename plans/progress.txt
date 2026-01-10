@@ -262,3 +262,25 @@ Files changed:
 Files changed:
 - src/lib/validations/auth.ts (new)
 - src/lib/validations/__tests__/auth.test.ts (new)
+
+## AUTH-008: Auth Proxy for Route Protection - COMPLETE
+
+- Next.js 16 uses proxy.ts (not middleware.ts) per official docs
+- Uses getSessionCookie from better-auth/cookies for cookie-only check (fast, no DB call)
+- Created src/proxy.ts with:
+  - Protected routes: /dashboard, /settings -> redirect to /login if no session
+  - Auth routes: /login, /signup -> redirect to /dashboard if session exists
+  - Matcher config for all protected + auth routes
+- Created placeholder pages: /login, /signup, /dashboard, /settings
+- Verified via Playwright MCP:
+  - /dashboard unauthenticated -> redirects to /login
+  - /settings unauthenticated -> redirects to /login
+  - /login renders for unauthenticated users
+- Typecheck + lint + tests pass
+
+Files changed:
+- src/proxy.ts (new)
+- src/app/login/page.tsx (new - placeholder)
+- src/app/signup/page.tsx (new - placeholder)
+- src/app/dashboard/page.tsx (new - placeholder)
+- src/app/settings/page.tsx (new - placeholder)

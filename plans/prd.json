@@ -337,7 +337,7 @@
       "VERIFY: Playwright - visit /dashboard unauthenticated, expect redirect to /login",
       "DONE: Route protection redirects unauthenticated users"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "API-001",

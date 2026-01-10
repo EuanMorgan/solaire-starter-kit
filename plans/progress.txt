@@ -855,3 +855,28 @@ Files:
 - src/lib/validations/index.ts (added export)
 - src/lib/validations/__tests__/auth.test.ts (added tests)
 - e2e/auth/reset-password.spec.ts (new)
+
+## PAGES-006: Create Email Verification Page - COMPLETE
+
+- Created src/app/(auth)/verify-email/page.tsx with:
+  - useSearchParams to get error param (better-auth handles token validation)
+  - Success state: shows "Email verified!" with checkmark icon
+  - Auto-redirect to /dashboard after 3 second countdown
+  - Error state: shows "Verification failed" with error message
+  - Handles invalid_token error specifically, generic message for others
+  - "Go to Dashboard" button on success, "Back to login" on error
+- Note: better-auth auto-verifies token via API route before redirecting to callback URL
+  - No client-side verifyEmail call needed - verification happens at /api/auth/verify-email
+  - Callback URL receives ?error=invalid_token if verification failed
+- E2E tests: e2e/auth/verify-email.spec.ts with 6 tests:
+  - Success state renders correctly
+  - Error state with invalid_token
+  - Generic error for unknown errors
+  - Dashboard link has correct href
+  - Login link has correct href
+  - Countdown display visible
+- All checks pass: typecheck, lint, 21 unit tests, 32 E2E tests
+
+Files:
+- src/app/(auth)/verify-email/page.tsx (updated from placeholder)
+- e2e/auth/verify-email.spec.ts (new)

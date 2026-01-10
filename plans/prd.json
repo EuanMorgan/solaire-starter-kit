@@ -976,7 +976,7 @@
       "VERIFY: Playwright - verification page renders states correctly",
       "DONE: Email verification callback page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-007",

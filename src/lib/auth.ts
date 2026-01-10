@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { magicLink } from "better-auth/plugins";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { env } from "@/env";
@@ -21,4 +22,13 @@ export const auth = betterAuth({
     // Email verification can be enabled later via emailVerification config
     // requireEmailVerification: true,
   },
+  plugins: [
+    magicLink({
+      expiresIn: 600, // 10 minutes
+      sendMagicLink: async ({ email, url }) => {
+        // Placeholder - will be wired to Resend in EMAIL-003
+        console.log(`[Magic Link] Send to ${email}: ${url}`);
+      },
+    }),
+  ],
 });

@@ -246,7 +246,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Magic link auth plugin enabled with sendEmail placeholder"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-004",

@@ -319,7 +319,7 @@
       "VERIFY: bun run test passes",
       "DONE: Auth validation schemas with unit tests"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "AUTH-008",
@@ -1006,7 +1006,7 @@
       "VERIFY: bun run test passes (or shows no tests yet)",
       "DONE: Vitest configured for React testing"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TEST-002",

@@ -233,3 +233,32 @@ Files changed:
 
 Files changed:
 - src/app/api/auth/[...all]/route.ts (new)
+
+## TEST-001: Vitest Setup - COMPLETE
+
+- Installed vitest@4.0.16 + @testing-library/react + @testing-library/jest-dom + jsdom + @vitejs/plugin-react
+- Created vitest.config.ts with React plugin, jsdom env, @ alias
+- Created src/test/setup.ts importing jest-dom matchers
+- Added scripts: test, test:watch, test:coverage
+- All tests pass
+
+Files changed:
+- vitest.config.ts (new)
+- src/test/setup.ts (new)
+- package.json (scripts + devDeps)
+
+## AUTH-007: Auth Validation Schemas - COMPLETE
+
+- Created src/lib/validations/auth.ts with Zod v4
+- loginSchema: email (z.email), password (min 8)
+- signupSchema: name, email, password, confirmPassword w/ refine for match
+- Password strength: min 8, uppercase required, number required
+- magicLinkSchema: email only
+- Exported types: LoginInput, SignupInput, MagicLinkInput
+- Created src/lib/validations/__tests__/auth.test.ts with 10 tests
+- Tests: invalid email, short password, no uppercase, no number, mismatch, valid inputs
+- Typecheck + lint + all tests pass
+
+Files changed:
+- src/lib/validations/auth.ts (new)
+- src/lib/validations/__tests__/auth.test.ts (new)

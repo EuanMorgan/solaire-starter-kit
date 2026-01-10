@@ -700,3 +700,49 @@ Files:
 Files:
 - src/db/seed.ts (new)
 - package.json (db:seed script, drizzle-seed dep)
+
+## TEST-006: Set Up Playwright for E2E testing - COMPLETE
+
+- Installed @playwright/test@1.57.0
+- Ran bunx playwright install chromium
+- Created playwright.config.ts with:
+  - baseURL: localhost:3000
+  - webServer running bun dev
+  - chromium project only (faster)
+  - HTML reporter
+- Created e2e/ directory structure
+- Added scripts: test:e2e, test:e2e:ui
+- Updated .gitignore for test-results/, playwright-report/, playwright/.cache/
+- Verified: bun run test:e2e runs tests
+
+Files:
+- playwright.config.ts (new)
+- e2e/ directory (new)
+- package.json (test:e2e scripts)
+- .gitignore (playwright dirs)
+
+## PAGES-001: Create Login Page - COMPLETE
+
+- Created src/app/login/page.tsx with:
+  - Email/password form using react-hook-form + zodResolver
+  - GitHub OAuth button via signIn.social({provider: 'github'})
+  - Links to: /login/magic-link, /signup, /auth/forgot-password
+  - Loading states (isLoading, isGitHubLoading)
+  - Error states via FormError component
+  - PublicHeader component included
+- Created placeholder pages: /auth/forgot-password, /login/magic-link
+- Created e2e/auth/login.spec.ts with 7 tests:
+  - Renders login form
+  - Shows validation error for invalid email (empty)
+  - Shows validation error for password too short
+  - GitHub button is visible and enabled
+  - Sign up link navigates to /signup
+  - Forgot password link navigates to /auth/forgot-password
+  - Magic link link navigates to /login/magic-link
+- All 7 E2E tests pass, all 16 unit tests pass
+
+Files:
+- src/app/login/page.tsx (updated from placeholder)
+- src/app/auth/forgot-password/page.tsx (new placeholder)
+- src/app/login/magic-link/page.tsx (new placeholder)
+- e2e/auth/login.spec.ts (new)

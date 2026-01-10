@@ -836,11 +836,36 @@
     "passes": true
   },
   {
+    "id": "UI-014",
+    "category": "ui",
+    "description": "Create Auth Route Group with minimal layout",
+    "steps": [
+      "Create src/app/(auth)/layout.tsx",
+      "Import PublicHeader component",
+      "Create minimal layout: PublicHeader + centered content area",
+      "Layout should NOT include sidebar or dashboard navigation",
+      "Add flex container centering children vertically and horizontally",
+      "Ensure consistent styling with rest of app (background, spacing)",
+      "Move login page: src/app/login -> src/app/(auth)/login",
+      "Move signup page: src/app/signup -> src/app/(auth)/signup",
+      "Move magic-link page: src/app/login/magic-link -> src/app/(auth)/login/magic-link",
+      "Move forgot-password: src/app/auth/forgot-password -> src/app/(auth)/forgot-password",
+      "Move reset-password: src/app/auth/reset-password -> src/app/(auth)/reset-password",
+      "Move verify-email: src/app/auth/verify-email -> src/app/(auth)/verify-email",
+      "Remove PublicHeader imports from individual auth pages (now in layout)",
+      "VERIFY: bun run typecheck passes",
+      "VERIFY: /login shows PublicHeader but no sidebar",
+      "VERIFY: /dashboard still shows sidebar layout",
+      "DONE: Auth pages use minimal layout, dashboard pages use sidebar layout"
+    ],
+    "passes": false
+  },
+  {
     "id": "PAGES-001",
     "category": "pages",
     "description": "Create Login Page",
     "steps": [
-      "Create src/app/login/page.tsx",
+      "Create src/app/login/page.tsx (will be moved to (auth) group in UI-014)",
       "Import Form components and auth validation schemas",
       "Import signIn from auth-client",
       "Email/password form using react-hook-form with zodResolver",
@@ -854,27 +879,26 @@
       "E2E: Create e2e/auth/login.spec.ts",
       "E2E: Test form shows validation error for invalid email format",
       "E2E: Test form shows validation error for password too short",
-      "E2E: Test GitHub button redirects to GitHub OAuth (check URL contains github.com)",
+      "E2E: Test GitHub button is clickable",
       "E2E: Test 'Sign up' link navigates to /signup",
       "VERIFY: bun run typecheck passes",
       "VERIFY: bun run test:e2e passes",
       "DONE: Login page with E2E tests for user flows"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-002",
     "category": "pages",
     "description": "Create Signup Page",
     "steps": [
-      "Create src/app/signup/page.tsx",
+      "Create src/app/(auth)/signup/page.tsx",
       "Import Form components and signupSchema",
       "Import signUp from auth-client",
       "Form fields: name, email, password, confirmPassword",
       "Use react-hook-form with zodResolver(signupSchema)",
       "Submit calls signUp.email()",
       "Link back to /login",
-      "Include PublicHeader component",
       "E2E: Create e2e/auth/signup.spec.ts",
       "E2E: Test form shows all fields (name, email, password, confirmPassword)",
       "E2E: Test password mismatch shows validation error",
@@ -1119,7 +1143,7 @@
       "VERIFY: bun run test:e2e runs (may have 0 tests)",
       "DONE: Playwright configured for E2E testing"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TEST-007",

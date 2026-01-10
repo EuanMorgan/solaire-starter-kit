@@ -794,3 +794,21 @@ Files:
 Files:
 - src/app/(auth)/signup/page.tsx (updated from placeholder)
 - e2e/auth/signup.spec.ts (new)
+
+## PAGES-003: Create Magic Link Page - COMPLETE
+
+- Created src/app/(auth)/login/magic-link/page.tsx with full form
+- Email form using react-hook-form + zodResolver(magicLinkSchema)
+- signIn.magicLink() with callbackURL: "/dashboard"
+- Success message: "Check your email for a login link"
+- Error handling with FormError, success with FormSuccess
+- Link back to /login
+- E2E tests: e2e/auth/magic-link.spec.ts with 3 tests:
+  - Renders magic link form (title, email field, submit button)
+  - Shows validation error for empty email
+  - 'Back to password login' link navigates to /login
+- All checks pass: typecheck, lint, 16 unit tests, 15 E2E tests
+
+Files:
+- src/app/(auth)/login/magic-link/page.tsx (updated from placeholder)
+- e2e/auth/magic-link.spec.ts (new)

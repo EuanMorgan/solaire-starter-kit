@@ -926,7 +926,7 @@
       "VERIFY: Playwright - magic link form renders",
       "DONE: Magic link login page"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "PAGES-004",

@@ -1109,7 +1109,7 @@
       "VERIFY: bun run test:coverage shows coverage report",
       "DONE: Coverage thresholds configured at 70%"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "TEST-005",

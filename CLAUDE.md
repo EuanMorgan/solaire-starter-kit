@@ -256,3 +256,28 @@ test("renders user profile", async () => {
 - **Route protection**: `src/proxy.ts` redirects unauthenticated users
 - **Test user**: `test@example.com` / `password123` (run `bun run db:seed`)
 - **Table prefix**: All tables use `TABLE_PREFIX` env var for multi-tenancy
+
+## Claude Instructions
+
+### Environment Setup
+
+When setting up for local development, copy the `.env` file from `.env.local`:
+
+```bash
+cp .env.local .env
+```
+
+### Before Pushing Code
+
+**IMPORTANT**: Always run these checks before pushing any code:
+
+```bash
+bun run typecheck && bun run lint && bun run format
+```
+
+This ensures:
+1. TypeScript types are valid
+2. Code passes linting rules
+3. Code is properly formatted
+
+Fix any errors before committing and pushing.

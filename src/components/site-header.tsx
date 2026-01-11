@@ -20,11 +20,7 @@ export function SiteHeader({ session }: SiteHeaderProps) {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          {session ? (
-            <Link href="/dashboard">
-              <Button>Dashboard</Button>
-            </Link>
-          ) : (
+          {!session && (
             <>
               <Link href="/login">
                 <Button variant="ghost">Login</Button>

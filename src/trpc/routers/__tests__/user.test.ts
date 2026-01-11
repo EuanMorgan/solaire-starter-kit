@@ -10,14 +10,12 @@ vi.mock("@/env", () => ({
   },
 }));
 
-vi.mock("@/db", () => ({
-  db: {
-    update: vi.fn().mockReturnThis(),
-    set: vi.fn().mockReturnThis(),
-    where: vi.fn().mockReturnThis(),
-    returning: vi.fn().mockResolvedValue([{ id: "1", name: "Updated" }]),
-    delete: vi.fn().mockReturnThis(),
-  },
+vi.mock("@/modules/user/server", () => ({
+  getUserStats: vi.fn().mockResolvedValue({
+    accountAgeDays: 30,
+    emailVerified: true,
+    profileComplete: true,
+  }),
 }));
 
 vi.mock("@/lib/rate-limit", () => ({
@@ -56,51 +54,20 @@ const createCaller = (sessionData: MockSessionData | null) => {
 };
 
 describe("userRouter", () => {
-  describe("me", () => {
-    it("returns user data when authenticated", async () => {
+  describe("stats", () => {
+    it("returns user stats when authenticated", async () => {
       const caller = createCaller({ session: mockSession, user: mockUser });
-      const result = await caller.user.me();
-      expect(result).toEqual(mockUser);
-    });
-
-    it("throws UNAUTHORIZED when session is null", async () => {
-      const caller = createCaller(null);
-      await expect(caller.user.me()).rejects.toThrow(TRPCError);
-      await expect(caller.user.me()).rejects.toMatchObject({
-        code: "UNAUTHORIZED",
+      const result = await caller.user.stats();
+      expect(result).toEqual({
+        accountAgeDays: 30,
+        emailVerified: true,
+        profileComplete: true,
       });
-    });
-  });
-
-  describe("updateProfile", () => {
-    it("updates name and returns updated user", async () => {
-      const caller = createCaller({ session: mockSession, user: mockUser });
-      const result = await caller.user.updateProfile({ name: "New Name" });
-      expect(result).toHaveProperty("name");
     });
 
     it("throws UNAUTHORIZED when not authenticated", async () => {
       const caller = createCaller(null);
-      await expect(caller.user.updateProfile({ name: "New" })).rejects.toThrow(
-        TRPCError,
-      );
-    });
-  });
-
-  describe("deleteAccount", () => {
-    it("throws error with wrong confirmation", async () => {
-      const caller = createCaller({ session: mockSession, user: mockUser });
-      await expect(
-        caller.user.deleteAccount({ confirmation: "wrong" }),
-      ).rejects.toThrow();
-    });
-
-    it("succeeds with correct confirmation", async () => {
-      const caller = createCaller({ session: mockSession, user: mockUser });
-      const result = await caller.user.deleteAccount({
-        confirmation: "DELETE",
-      });
-      expect(result).toEqual({ success: true });
+      await expect(caller.user.stats()).rejects.toThrow(TRPCError);
     });
   });
 });

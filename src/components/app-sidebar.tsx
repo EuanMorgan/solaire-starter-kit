@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/config/site";
 import { reset, track } from "@/lib/analytics";
-import { signOut, useSession } from "@/lib/auth-client";
+import { signOut, type User } from "@/lib/auth-client";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -37,9 +37,12 @@ function getInitials(name: string | undefined | null): string {
     .slice(0, 2);
 }
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  user: User;
+}
+
+export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   const handleSignOut = async () => {
     track("user_signed_out");
@@ -88,17 +91,15 @@ export function AppSidebar() {
         <div className="flex items-center justify-between px-2 py-1">
           <div className="flex items-center gap-2 min-w-0">
             <Avatar className="size-8">
-              <AvatarImage src={session?.user?.image ?? undefined} />
-              <AvatarFallback>
-                {getInitials(session?.user?.name)}
-              </AvatarFallback>
+              <AvatarImage src={user.image ?? undefined} />
+              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col min-w-0 group-data-[collapsible=icon]:hidden">
               <span className="text-sm font-medium truncate">
-                {session?.user?.name ?? "User"}
+                {user.name ?? "User"}
               </span>
               <span className="text-xs text-muted-foreground truncate">
-                {session?.user?.email}
+                {user.email}
               </span>
             </div>
           </div>

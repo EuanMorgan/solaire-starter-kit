@@ -148,12 +148,8 @@ export default function SettingsPage() {
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList>
-          <TabsTrigger value="profile" data-testid="profile-tab">
-            Profile
-          </TabsTrigger>
-          <TabsTrigger value="security" data-testid="security-tab">
-            Security
-          </TabsTrigger>
+          <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsTrigger value="security">Security</TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="mt-6 space-y-6">
@@ -164,11 +160,11 @@ export default function SettingsPage() {
             <CardContent className="space-y-4">
               <div>
                 <p className="text-sm text-muted-foreground">Email</p>
-                <p data-testid="settings-email">{user?.email}</p>
+                <p>{user?.email}</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Current Name</p>
-                <p data-testid="settings-name">{user?.name ?? "Not set"}</p>
+                <p>{user?.name ?? "Not set"}</p>
               </div>
             </CardContent>
           </Card>
@@ -247,12 +243,7 @@ export default function SettingsPage() {
 
               <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                 <AlertDialogTrigger asChild>
-                  <Button
-                    variant="destructive"
-                    data-testid="delete-account-btn"
-                  >
-                    Delete Account
-                  </Button>
+                  <Button variant="destructive">Delete Account</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -282,7 +273,6 @@ export default function SettingsPage() {
                               <Input
                                 placeholder="DELETE"
                                 disabled={deleteAccountMutation.isPending}
-                                data-testid="delete-confirmation-input"
                                 {...field}
                               />
                             </FormControl>
@@ -300,7 +290,6 @@ export default function SettingsPage() {
                             deleteForm.reset();
                             setDeleteError(undefined);
                           }}
-                          data-testid="delete-cancel-btn"
                         >
                           Cancel
                         </AlertDialogCancel>
@@ -308,7 +297,6 @@ export default function SettingsPage() {
                           type="submit"
                           disabled={deleteAccountMutation.isPending}
                           className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                          data-testid="delete-confirm-btn"
                         >
                           {deleteAccountMutation.isPending
                             ? "Deleting..."

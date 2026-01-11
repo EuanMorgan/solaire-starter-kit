@@ -23,9 +23,13 @@ test.describe("Dashboard Page", () => {
   test("authenticated user sees their profile info", async ({ page }) => {
     await loginAsTestUser(page);
 
-    await expect(page.getByText("Your Profile")).toBeVisible();
-    await expect(page.getByTestId("user-email")).toHaveText("test@example.com");
-    await expect(page.getByTestId("user-name")).toHaveText("Test User");
+    const profileCard = page
+      .locator('[data-slot="card"]')
+      .filter({ hasText: "Your Profile" });
+
+    await expect(profileCard.getByText("Your Profile")).toBeVisible();
+    await expect(profileCard.getByText("test@example.com")).toBeVisible();
+    await expect(profileCard.getByText("Test User")).toBeVisible();
   });
 
   test("sidebar navigation is visible", async ({ page }) => {

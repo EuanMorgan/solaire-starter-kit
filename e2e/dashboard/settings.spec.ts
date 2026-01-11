@@ -22,9 +22,13 @@ test.describe("Settings Page", () => {
     await loginAsTestUser(page);
     await page.goto("/settings");
 
-    // Security tab accessible
-    await page.getByTestId("security-tab").click();
+    // Navigate to Security tab
+    await page.getByRole("tab", { name: "Security" }).click();
     await expect(page.getByText("Danger Zone")).toBeVisible();
+
+    // Navigate back to Profile tab
+    await page.getByRole("tab", { name: "Profile" }).click();
+    await expect(page.getByText("Profile Information")).toBeVisible();
   });
 
   test("delete account dialog validates confirmation input", async ({
@@ -32,16 +36,17 @@ test.describe("Settings Page", () => {
   }) => {
     await loginAsTestUser(page);
     await page.goto("/settings");
-    await page.getByTestId("security-tab").click();
+    await page.getByRole("tab", { name: "Security" }).click();
 
-    await page.getByTestId("delete-account-btn").click();
-    await expect(
-      page.getByRole("alertdialog", { name: "Are you absolutely sure?" }),
-    ).toBeVisible();
+    await page.getByRole("button", { name: "Delete Account" }).click();
+    const dialog = page.getByRole("alertdialog", {
+      name: "Are you absolutely sure?",
+    });
+    await expect(dialog).toBeVisible();
 
     // Wrong input shows validation error
-    await page.getByTestId("delete-confirmation-input").fill("delete");
-    await page.getByTestId("delete-confirm-btn").click();
+    await dialog.getByLabel(/Type.*DELETE.*to confirm/i).fill("delete");
+    await dialog.getByRole("button", { name: "Delete Account" }).click();
     await expect(
       page
         .locator('[data-slot="form-message"]')
@@ -54,17 +59,16 @@ test.describe("Settings Page", () => {
   }) => {
     await loginAsTestUser(page);
     await page.goto("/settings");
-    await page.getByTestId("security-tab").click();
+    await page.getByRole("tab", { name: "Security" }).click();
 
-    await page.getByTestId("delete-account-btn").click();
-    await expect(
-      page.getByRole("alertdialog", { name: "Are you absolutely sure?" }),
-    ).toBeVisible();
+    await page.getByRole("button", { name: "Delete Account" }).click();
+    const dialog = page.getByRole("alertdialog", {
+      name: "Are you absolutely sure?",
+    });
+    await expect(dialog).toBeVisible();
 
-    await page.getByTestId("delete-cancel-btn").click();
-    await expect(
-      page.getByRole("alertdialog", { name: "Are you absolutely sure?" }),
-    ).not.toBeVisible();
+    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await expect(dialog).not.toBeVisible();
     await expect(page).toHaveURL("/settings");
   });
 });

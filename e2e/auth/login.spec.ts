@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { loginAsTestUser } from "../helpers/auth";
 
 test.describe("Login Page", () => {
   test.beforeEach(async ({ page }) => {
@@ -59,5 +60,14 @@ test.describe("Login Page", () => {
   test("'Magic link' link navigates to /login/magic-link", async ({ page }) => {
     await page.getByRole("link", { name: /magic link/i }).click();
     await expect(page).toHaveURL("/login/magic-link");
+  });
+
+  test("successful login redirects to dashboard", async ({ page }) => {
+    await loginAsTestUser(page);
+
+    await expect(page).toHaveURL("/dashboard");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      "Welcome back",
+    );
   });
 });

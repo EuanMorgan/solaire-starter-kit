@@ -51,12 +51,12 @@ export default function DashboardPage() {
         <CardContent className="space-y-2">
           <p>
             <span className="text-muted-foreground">Email:</span>{" "}
-            <span data-testid="user-email">{user?.email}</span>
+            <span>{user?.email}</span>
           </p>
           {user?.name && (
             <p>
               <span className="text-muted-foreground">Name:</span>{" "}
-              <span data-testid="user-name">{user.name}</span>
+              <span>{user.name}</span>
             </p>
           )}
         </CardContent>

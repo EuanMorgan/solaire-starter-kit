@@ -889,7 +889,7 @@ Files:
 - Loading skeleton state, error state handling
 - Quick Actions placeholder card for future features
 - Added TRPCReactProvider to root layout for client-side tRPC queries
-- Updated playwright.config.ts baseURL to 127.0.0.1:3000 (matches NEXT_PUBLIC_BASE_URL to avoid origin errors)
+- Updated playwright.config.ts baseURL to localhost:3000 (matches NEXT_PUBLIC_BASE_URL to avoid origin errors)
 - Created e2e/helpers/auth.ts with loginAsTestUser helper
 - E2E tests: e2e/dashboard/dashboard.spec.ts with 6 tests:
   - Unauthenticated redirect to /login
@@ -903,7 +903,7 @@ Files:
 Files:
 - src/app/(dashboard)/dashboard/page.tsx (updated from placeholder)
 - src/app/layout.tsx (added TRPCReactProvider)
-- playwright.config.ts (updated baseURL to 127.0.0.1:3000)
+- playwright.config.ts (updated baseURL to localhost:3000)
 - e2e/helpers/auth.ts (new)
 - e2e/dashboard/dashboard.spec.ts (new)
 

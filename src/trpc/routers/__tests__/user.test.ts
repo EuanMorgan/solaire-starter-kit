@@ -51,7 +51,7 @@ type MockSessionData = { session: typeof mockSession; user: typeof mockUser };
 const createCaller = (sessionData: MockSessionData | null) => {
   return appRouter.createCaller({
     session: sessionData,
-    ip: "127.0.0.1",
+    ip: "localhost",
   });
 };
 

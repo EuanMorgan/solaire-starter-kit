@@ -107,7 +107,7 @@ const mockUser = { id: "user-123", name: "Test", email: "test@example.com" };
 const mockSession = { id: "session-123", userId: "user-123", token: "token" };
 
 const createCaller = (sessionData) =>
-  appRouter.createCaller({ session: sessionData, ip: "127.0.0.1" });
+  appRouter.createCaller({ session: sessionData, ip: "localhost" });
 
 describe("userRouter.me", () => {
   it("returns user when authenticated", async () => {

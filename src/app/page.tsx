@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { PublicFooter } from "@/components/public-footer";
-import { PublicHeader } from "@/components/public-header";
+import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { getSession } from "@/lib/auth";
@@ -71,7 +71,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <PublicHeader />
+      <SiteHeader session={session} />
 
       <main className="flex flex-col items-center overflow-hidden">
         {/* Hero Section */}

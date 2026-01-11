@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { captureException, track } from "@/lib/analytics";
+import { captureException } from "@/lib/analytics";
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Next.js error page convention
 export default function Error({
@@ -13,23 +13,9 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  const seenErrorRef = useRef<string | null>(null);
-
   useEffect(() => {
-    const digest = error.digest ?? null;
-
-    if (seenErrorRef.current === digest) {
-      return;
-    }
-
     console.error(error);
-    captureException(error, { digest });
-    track("application_error", {
-      error_message: error.message,
-      digest,
-    });
-
-    seenErrorRef.current = digest;
+    captureException(error);
   }, [error]);
 
   return (

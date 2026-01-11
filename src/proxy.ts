@@ -32,7 +32,7 @@ export async function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  //   Copied from https://clerk.com/docs/reference/nextjs/clerk-middleware
+  // Copied from https://clerk.com/docs/reference/nextjs/clerk-middleware
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",

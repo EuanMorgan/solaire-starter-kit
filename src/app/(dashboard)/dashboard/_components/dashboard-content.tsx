@@ -1,6 +1,8 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useTRPC } from "@/trpc/client";
 
 interface User {
   id: string;
@@ -17,6 +19,11 @@ interface DashboardContentProps {
 }
 
 export function DashboardContent({ user }: DashboardContentProps) {
+  const trpc = useTRPC();
+
+  // Data is already hydrated from server prefetch - no loading state needed
+  const { data: stats } = useSuspenseQuery(trpc.user.stats.queryOptions());
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">
@@ -43,11 +50,24 @@ export function DashboardContent({ user }: DashboardContentProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
+          <CardTitle>Account Stats</CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            This is your dashboard. More features coming soon.
+        <CardContent className="space-y-2">
+          <p>
+            <span className="text-muted-foreground">Account age:</span>{" "}
+            <span>
+              {stats.accountAgeDays === 0
+                ? "Created today"
+                : `${stats.accountAgeDays} day${stats.accountAgeDays === 1 ? "" : "s"}`}
+            </span>
+          </p>
+          <p>
+            <span className="text-muted-foreground">Email verified:</span>{" "}
+            <span>{stats.emailVerified ? "Yes" : "No"}</span>
+          </p>
+          <p>
+            <span className="text-muted-foreground">Profile complete:</span>{" "}
+            <span>{stats.profileComplete ? "Yes" : "No"}</span>
           </p>
         </CardContent>
       </Card>

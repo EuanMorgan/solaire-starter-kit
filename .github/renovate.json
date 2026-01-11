@@ -1,17 +1,17 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": ["config:best-practices"],
-    "packageRules": [
-        {
-            "groupName": "all non-major dependencies",
-            "groupSlug": "all-minor-patch",
-            "matchUpdateTypes": ["minor", "patch"],
-            "matchPackageNames": ["*"],
-            "enabled": true
-        }
-    ],
-    "automerge": true,
-    "schedule": ["every weekend"],
-    "timezone": "Europe/London",
-    "rangeStrategy": "bump"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "packageRules": [
+    {
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["*"],
+      "enabled": true
+    }
+  ],
+  "automerge": true,
+  "schedule": ["every weekend"],
+  "timezone": "Europe/London",
+  "rangeStrategy": "bump"
 }

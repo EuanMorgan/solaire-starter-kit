@@ -261,11 +261,13 @@ test("renders user profile", async () => {
 
 ### Environment Setup
 
-When setting up for local development, copy the `.env` file from `.env.local`:
+When setting up for local development, copy the `.env` file from `.env.local` (contains real credentials):
 
 ```bash
 cp .env.local .env
 ```
+
+Note: CI uses `cp .env.example .env` since `.env.local` is not committed to the repo.
 
 ### Before Pushing Code
 

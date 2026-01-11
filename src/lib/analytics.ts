@@ -1,7 +1,5 @@
 "use client";
 
-import posthog from "posthog-js";
-
 /**
  * Allowed event names for type-safe tracking.
  * Add new events here as the application grows.
@@ -28,47 +26,35 @@ export type EventName =
 
 /**
  * Track an analytics event with optional properties.
- * No-ops if PostHog is not initialized.
+ * TODO: Wire up to your analytics provider (e.g., PostHog, Mixpanel, etc.)
  */
-export function track(event: EventName, properties?: Record<string, unknown>) {
-  if (typeof window === "undefined") return;
-  if (!posthog.__loaded) return;
-
-  posthog.capture(event, properties);
+export function track(_event: EventName, _properties?: Record<string, unknown>) {
+  // No-op stub - implement with your analytics provider
 }
 
 /**
  * Identify a user for analytics tracking.
- * No-ops if PostHog is not initialized.
+ * TODO: Wire up to your analytics provider
  */
-export function identify(userId: string, traits?: Record<string, unknown>) {
-  if (typeof window === "undefined") return;
-  if (!posthog.__loaded) return;
-
-  posthog.identify(userId, traits);
+export function identify(_userId: string, _traits?: Record<string, unknown>) {
+  // No-op stub - implement with your analytics provider
 }
 
 /**
  * Reset the current user's identity (e.g., on logout).
- * No-ops if PostHog is not initialized.
+ * TODO: Wire up to your analytics provider
  */
 export function reset() {
-  if (typeof window === "undefined") return;
-  if (!posthog.__loaded) return;
-
-  posthog.reset();
+  // No-op stub - implement with your analytics provider
 }
 
 /**
  * Capture an exception/error for error tracking.
- * No-ops if PostHog is not initialized.
+ * TODO: Wire up to your analytics provider
  */
 export function captureException(
-  error: Error | unknown,
-  additionalProperties?: Record<string, unknown>,
+  _error: Error | unknown,
+  _additionalProperties?: Record<string, unknown>,
 ) {
-  if (typeof window === "undefined") return;
-  if (!posthog.__loaded) return;
-
-  posthog.captureException(error, additionalProperties);
+  // No-op stub - implement with your analytics provider
 }

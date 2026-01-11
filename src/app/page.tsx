@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  BarChart3,
   Database,
   FileCode2,
   FlaskConical,
@@ -43,11 +42,6 @@ const features = [
     name: "Tailwind v4",
     description: "CSS-first config with shadcn/ui components",
     icon: Paintbrush,
-  },
-  {
-    name: "PostHog",
-    description: "Product analytics with ad-blocker bypass proxy",
-    icon: BarChart3,
   },
   {
     name: "Resend",

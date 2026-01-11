@@ -16,18 +16,20 @@ export default function Error({
   const seenErrorRef = useRef<string | null>(null);
 
   useEffect(() => {
-    if (seenErrorRef.current === error.digest) {
+    const digest = error.digest ?? null;
+
+    if (seenErrorRef.current === digest) {
       return;
     }
 
     console.error(error);
-    captureException(error, { digest: error.digest });
+    captureException(error, { digest });
     track("application_error", {
       error_message: error.message,
-      digest: error.digest,
+      digest,
     });
 
-    seenErrorRef.current = error.digest ?? null;
+    seenErrorRef.current = digest;
   }, [error]);
 
   return (

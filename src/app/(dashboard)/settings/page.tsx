@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { Suspense } from "react";
 import { QueryErrorBoundary } from "@/components/query-error-boundary";
 import { auth } from "@/lib/auth";
@@ -8,10 +9,9 @@ import { SettingsSkeleton } from "./_components/settings-skeleton";
 
 export default async function SettingsPage() {
   const session = await auth.api.getSession({ headers: await headers() });
+  if (!session) redirect("/login");
 
-  if (session) {
-    prefetch(trpc.user.me.queryOptions());
-  }
+  prefetch(trpc.user.me.queryOptions());
 
   return (
     <HydrateClient>

@@ -14,7 +14,9 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          {error instanceof Error ? error.message : "Failed to load data"}
+          {process.env.NODE_ENV === "development" && error instanceof Error
+            ? error.message
+            : "Failed to load data"}
         </p>
         <Button variant="outline" onClick={resetErrorBoundary}>
           Try again

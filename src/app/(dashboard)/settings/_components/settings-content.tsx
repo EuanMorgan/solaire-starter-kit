@@ -1,14 +1,12 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -32,6 +30,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -95,18 +94,19 @@ export function SettingsContent() {
     }),
   );
 
-  const updateForm = useForm<UpdateNameInput>({
-    resolver: zodResolver(updateNameSchema),
+  const updateForm = useForm({
+    schema: updateNameSchema,
     defaultValues: {
-      name: user.name ?? "",
-    },
-    values: {
       name: user.name ?? "",
     },
   });
 
-  const deleteForm = useForm<DeleteConfirmInput>({
-    resolver: zodResolver(deleteConfirmSchema),
+  useEffect(() => {
+    updateForm.reset({ name: user.name ?? "" });
+  }, [user.name, updateForm]);
+
+  const deleteForm = useForm({
+    schema: deleteConfirmSchema,
     defaultValues: {
       confirmation: "",
     },

@@ -1,17 +1,21 @@
 "use client";
 
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
 import {
+  useForm as __useForm,
   Controller,
   type ControllerProps,
   type FieldPath,
   type FieldValues,
   FormProvider,
+  type UseFormProps,
   useFormContext,
   useFormState,
 } from "react-hook-form";
+import type { ZodType } from "zod";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
@@ -155,6 +159,22 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   );
 }
 
+/**
+ * Custom useForm hook with automatic schema resolution
+ */
+function useForm<TOut extends FieldValues, TIn extends FieldValues>(
+  props: Omit<UseFormProps<TIn, unknown, TOut>, "resolver"> & {
+    schema: ZodType<TOut, TIn>;
+  },
+) {
+  const form = __useForm<TIn, unknown, TOut>({
+    ...props,
+    resolver: standardSchemaResolver(props.schema, undefined),
+  });
+
+  return form;
+}
+
 export {
   useFormField,
   Form,
@@ -164,4 +184,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  useForm,
 };

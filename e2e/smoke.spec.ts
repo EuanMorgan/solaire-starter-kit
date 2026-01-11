@@ -8,10 +8,10 @@ test.describe("Smoke Tests", () => {
 
   test("homepage shows main content", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByAltText("Next.js logo")).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Documentation" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText(
+      "Solaire",
+    );
+    await expect(page.getByRole("link", { name: "Get Started" })).toBeVisible();
   });
 
   test("login page is accessible", async ({ page }) => {

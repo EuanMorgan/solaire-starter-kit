@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!drizzle", "!.emails"]
+    "includes": ["**", "!drizzle/**", "!.emails/**"]
   },
   "formatter": {
     "enabled": true,

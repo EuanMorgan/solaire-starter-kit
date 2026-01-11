@@ -256,3 +256,15 @@ test("renders user profile", async () => {
 - **Route protection**: `src/proxy.ts` redirects unauthenticated users
 - **Test user**: `test@example.com` / `password123` (run `bun run db:seed`)
 - **Table prefix**: All tables use `TABLE_PREFIX` env var for multi-tenancy
+
+## Pre-Push Checks
+
+**IMPORTANT**: Before pushing any commits, ALWAYS run these checks and fix any issues:
+
+```bash
+bun run format       # Auto-fix formatting
+bun run lint         # Check for linting errors (run lint:fix if needed)
+bun run typecheck    # Verify TypeScript types
+```
+
+All three checks must pass before pushing. If any fail, fix the issues and amend/recommit before pushing.

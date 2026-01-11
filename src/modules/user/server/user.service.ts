@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, eq, isNotNull } from "drizzle-orm";
 import { db } from "@/db";
-import { user } from "@/db/schema";
+import { account, user } from "@/db/schema";
 
 export async function getUserStats(userId: string) {
   const [userData] = await db
@@ -22,4 +22,20 @@ export async function getUserStats(userId: string) {
     emailVerified: userData.emailVerified,
     profileComplete: Boolean(userData.name && userData.email),
   };
+}
+
+export async function userHasPassword(userId: string): Promise<boolean> {
+  const [credentialAccount] = await db
+    .select()
+    .from(account)
+    .where(
+      and(
+        eq(account.userId, userId),
+        eq(account.providerId, "credential"),
+        isNotNull(account.password),
+      ),
+    )
+    .limit(1);
+
+  return Boolean(credentialAccount);
 }

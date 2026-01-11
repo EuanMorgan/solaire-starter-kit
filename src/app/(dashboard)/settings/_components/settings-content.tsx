@@ -1,10 +1,13 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { User } from "@/lib/auth-client";
+import { useTRPC } from "@/trpc/client";
 import { ChangePasswordForm } from "./change-password-form";
 import { DeleteAccountDialog } from "./delete-account-dialog";
+import { SetPasswordForm } from "./set-password-form";
 import { UpdateNameForm } from "./update-name-form";
 
 interface SettingsContentProps {
@@ -12,6 +15,11 @@ interface SettingsContentProps {
 }
 
 export function SettingsContent({ user }: SettingsContentProps) {
+  const trpc = useTRPC();
+  const { data: hasPassword } = useSuspenseQuery(
+    trpc.user.hasPassword.queryOptions(),
+  );
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Settings</h1>
@@ -43,7 +51,7 @@ export function SettingsContent({ user }: SettingsContentProps) {
         </TabsContent>
 
         <TabsContent value="security" className="mt-6 space-y-6">
-          <ChangePasswordForm />
+          {hasPassword ? <ChangePasswordForm /> : <SetPasswordForm />}
           <DeleteAccountDialog />
         </TabsContent>
       </Tabs>

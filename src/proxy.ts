@@ -32,7 +32,6 @@ export async function proxy(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  runtime: "nodejs",
   //   Copied from https://clerk.com/docs/reference/nextjs/clerk-middleware
   matcher: [
     // Skip Next.js internals and all static files, unless found in search params

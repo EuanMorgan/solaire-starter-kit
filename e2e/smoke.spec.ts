@@ -9,9 +9,7 @@ test.describe("Smoke Tests", () => {
   test("homepage shows main content", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { name: "Solaire" })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Get Started" }),
-    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Get Started" })).toBeVisible();
   });
 
   test("login page is accessible", async ({ page }) => {

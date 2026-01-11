@@ -1,3 +1,4 @@
+import { render } from "@react-email/components";
 import { Resend } from "resend";
 import { env } from "@/env";
 
@@ -20,11 +21,18 @@ export async function sendEmail({ to, subject, react }: SendEmailParams) {
     return { data: null, error: null };
   }
 
+  // Render both HTML and plain text for email client compatibility
+  const [html, text] = await Promise.all([
+    render(react),
+    render(react, { plainText: true }),
+  ]);
+
   const { data, error } = await resend.emails.send({
     from: env.FROM_EMAIL,
     to: Array.isArray(to) ? to : [to],
     subject,
-    react,
+    html,
+    text,
   });
 
   if (error) {

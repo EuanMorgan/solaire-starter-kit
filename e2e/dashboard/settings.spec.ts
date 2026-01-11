@@ -1,16 +1,20 @@
 import { expect, test } from "@playwright/test";
-import { loginAsTestUser } from "../helpers/auth";
 
-test.describe("Settings Page", () => {
+test.describe("Settings Page - Unauthenticated", () => {
+  test.use({ storageState: { cookies: [], origins: [] } });
+
   test("redirects unauthenticated users to /login", async ({ page }) => {
     await page.goto("/settings");
     await expect(page).toHaveURL("/login");
   });
+});
+
+test.describe("Settings Page - Authenticated", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("/settings");
+  });
 
   test("shows error for empty name", async ({ page }) => {
-    await loginAsTestUser(page);
-    await page.goto("/settings");
-
     const nameInput = page.getByRole("textbox", { name: "Name" });
     await nameInput.clear();
     await page.getByRole("button", { name: "Update Name" }).click();
@@ -19,9 +23,6 @@ test.describe("Settings Page", () => {
   });
 
   test("tabs navigate between Profile and Security", async ({ page }) => {
-    await loginAsTestUser(page);
-    await page.goto("/settings");
-
     // Navigate to Security tab
     await page.getByRole("tab", { name: "Security" }).click();
     await expect(page.getByText("Danger Zone")).toBeVisible();
@@ -34,8 +35,6 @@ test.describe("Settings Page", () => {
   test("delete account dialog validates confirmation input", async ({
     page,
   }) => {
-    await loginAsTestUser(page);
-    await page.goto("/settings");
     await page.getByRole("tab", { name: "Security" }).click();
 
     await page.getByRole("button", { name: "Delete Account" }).click();
@@ -57,8 +56,6 @@ test.describe("Settings Page", () => {
   test("delete account dialog cancel closes without action", async ({
     page,
   }) => {
-    await loginAsTestUser(page);
-    await page.goto("/settings");
     await page.getByRole("tab", { name: "Security" }).click();
 
     await page.getByRole("button", { name: "Delete Account" }).click();

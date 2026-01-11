@@ -6,7 +6,6 @@ test.describe("Forgot Password Page", () => {
   });
 
   test("renders forgot password form", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
     await expect(
       page.getByText("Forgot password", { exact: true }),
     ).toBeVisible();

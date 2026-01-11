@@ -7,7 +7,6 @@ test.describe("Login Page", () => {
   });
 
   test("renders login form", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
     await expect(page.getByText("Welcome back")).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(page.getByLabel("Password")).toBeVisible();

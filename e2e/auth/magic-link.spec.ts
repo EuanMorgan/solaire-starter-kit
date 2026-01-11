@@ -6,7 +6,6 @@ test.describe("Magic Link Page", () => {
   });
 
   test("renders magic link form", async ({ page }) => {
-    await page.waitForLoadState("networkidle");
     await expect(page.getByText("Magic link", { exact: true })).toBeVisible();
     await expect(page.getByLabel("Email")).toBeVisible();
     await expect(

@@ -49,3 +49,6 @@ next-env.d.ts
 storybook-static
 
 .playwright-mcp
+
+# Mock emails (local dev)
+.emails/

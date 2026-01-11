@@ -1,46 +1,49 @@
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { HttpResponse, http } from "msw";
 
 /**
- * MSW v2 request handlers for API mocking in tests.
- * Add handlers here for any endpoints you need to mock.
+ * MSW request handlers for local dev email mocking.
  */
 export const handlers = [
-  // Example: Mock user.me tRPC procedure
-  http.get("*/api/trpc/user.me", () => {
-    return HttpResponse.json({
-      result: {
-        data: {
-          id: "test-user-id",
-          name: "Test User",
-          email: "test@example.com",
-          emailVerified: true,
-          image: null,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        },
-      },
-    });
-  }),
+  // Mock Resend API - writes emails to .emails/*.json
+  http.post("https://api.resend.com/emails", async ({ request }) => {
+    const body = (await request.json()) as {
+      from: string;
+      to: string | string[];
+      subject: string;
+      html?: string;
+      text?: string;
+    };
 
-  // Example: Mock unauthorized user.me
-  http.get("*/api/trpc/user.me.unauthorized", () => {
-    return HttpResponse.json(
-      {
-        error: {
-          code: "UNAUTHORIZED",
-          message: "You must be logged in to access this resource",
+    const timestamp = Date.now();
+    const recipients = Array.isArray(body.to) ? body.to : [body.to];
+    const safeRecipient = recipients[0]
+      .replace(/[^a-zA-Z0-9@._-]/g, "_")
+      .slice(0, 50);
+
+    const dir = join(process.cwd(), ".emails");
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+
+    const filename = `${timestamp}-${safeRecipient}.json`;
+    writeFileSync(
+      join(dir, filename),
+      JSON.stringify(
+        {
+          id: `mock-${timestamp}`,
+          timestamp: new Date().toISOString(),
+          from: body.from,
+          to: recipients,
+          subject: body.subject,
+          html: body.html ?? null,
+          text: body.text ?? null,
         },
-      },
-      { status: 401 },
+        null,
+        2,
+      ),
     );
-  }),
 
-  // Health check endpoint
-  http.get("*/api/health", () => {
-    return HttpResponse.json({
-      status: "ok",
-      timestamp: new Date().toISOString(),
-      database: "connected",
-    });
+    console.log(`[MSW] Email saved: .emails/${filename}`);
+    return HttpResponse.json({ id: `mock-${timestamp}` });
   }),
 ];

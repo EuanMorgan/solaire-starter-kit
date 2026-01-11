@@ -22,7 +22,11 @@ export const handlers = [
       return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
     }
 
-    const recipients = Array.isArray(body.to) ? body.to : body.to ? [body.to] : [];
+    const recipients = Array.isArray(body.to)
+      ? body.to
+      : body.to
+        ? [body.to]
+        : [];
     if (recipients.length === 0) {
       return HttpResponse.json({ error: "No recipients" }, { status: 400 });
     }

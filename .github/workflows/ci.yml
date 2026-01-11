@@ -73,7 +73,7 @@ jobs:
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: solaire
         options: >-
-          --health-cmd pg_isready
+          --health-cmd "pg_isready -U postgres"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -100,10 +100,8 @@ jobs:
       - run: cp .env.example .env
       - run: bun run db:push
       - run: bun run db:seed
-      - name: Run auth setup
-        run: bunx playwright test --project=setup
       - name: Run e2e tests
-        run: bunx playwright test --project=chromium --project=chromium-authenticated --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+        run: bunx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
 
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}

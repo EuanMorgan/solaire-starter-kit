@@ -8,7 +8,7 @@ import { HttpResponse, http } from "msw";
 export const handlers = [
   // Mock Resend API - writes emails to .emails/*.json
   http.post("https://api.resend.com/emails", async ({ request }) => {
-    const body = (await request.json()) as {
+    let body: {
       from: string;
       to: string | string[];
       subject: string;
@@ -16,8 +16,18 @@ export const handlers = [
       text?: string;
     };
 
+    try {
+      body = (await request.json()) as typeof body;
+    } catch {
+      return HttpResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    }
+
+    const recipients = Array.isArray(body.to) ? body.to : body.to ? [body.to] : [];
+    if (recipients.length === 0) {
+      return HttpResponse.json({ error: "No recipients" }, { status: 400 });
+    }
+
     const timestamp = Date.now();
-    const recipients = Array.isArray(body.to) ? body.to : [body.to];
     const safeRecipient = recipients[0]
       .replace(/[^a-zA-Z0-9@._-]/g, "_")
       .slice(0, 50);

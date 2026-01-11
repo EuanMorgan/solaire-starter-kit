@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { track } from "@/lib/analytics";
 import { authClient } from "@/lib/auth-client";
 import { type MagicLinkInput, magicLinkSchema } from "@/lib/validations/auth";
 
@@ -54,6 +55,7 @@ export default function ForgotPasswordPage() {
       setSuccess(
         "If an account exists with that email, you will receive a password reset link",
       );
+      track("password_reset_requested");
       form.reset();
     } catch {
       setError("Something went wrong. Please try again.");

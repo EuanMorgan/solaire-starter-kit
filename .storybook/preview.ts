@@ -1,5 +1,5 @@
-import type { Preview, ReactRenderer } from "@storybook/nextjs-vite";
 import { withThemeByClassName } from "@storybook/addon-themes";
+import type { Preview, ReactRenderer } from "@storybook/nextjs-vite";
 import "../src/app/globals.css";
 
 const preview: Preview = {

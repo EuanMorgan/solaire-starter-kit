@@ -2,20 +2,16 @@
 
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
-import { useEffect } from "react";
 import { env } from "@/env";
 
+/**
+ * PostHog React context provider.
+ *
+ * Note: PostHog is initialized in instrumentation-client.ts, which is the
+ * recommended approach for Next.js 15.3+. This provider only wraps the app
+ * with the React context to enable hooks like usePostHog.
+ */
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    if (!env.NEXT_PUBLIC_POSTHOG_KEY) return;
-
-    posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
-      api_host: env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
-      capture_pageview: "history_change",
-      capture_pageleave: "if_capture_pageview",
-    });
-  }, []);
-
   if (!env.NEXT_PUBLIC_POSTHOG_KEY) {
     return <>{children}</>;
   }

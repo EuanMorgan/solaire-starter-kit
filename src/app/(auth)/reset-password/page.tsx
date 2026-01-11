@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -25,13 +25,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { track } from "@/lib/analytics";
 import { authClient } from "@/lib/auth-client";
 import {
   type ResetPasswordInput,
   resetPasswordSchema,
 } from "@/lib/validations/auth";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -70,6 +72,7 @@ export default function ResetPasswordPage() {
       }
 
       setSuccess("Password reset successfully! Redirecting to login...");
+      track("password_reset_completed");
       form.reset();
 
       setTimeout(() => {
@@ -171,5 +174,29 @@ export default function ResetPasswordPage() {
         </p>
       </CardFooter>
     </Card>
+  );
+}
+
+function ResetPasswordLoading() {
+  return (
+    <Card className="w-full max-w-md">
+      <CardHeader className="text-center">
+        <Skeleton className="mx-auto h-8 w-48" />
+        <Skeleton className="mx-auto mt-2 h-4 w-64" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </CardContent>
+    </Card>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

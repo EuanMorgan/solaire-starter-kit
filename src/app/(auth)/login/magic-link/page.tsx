@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { track } from "@/lib/analytics";
 import { signIn } from "@/lib/auth-client";
 import { type MagicLinkInput, magicLinkSchema } from "@/lib/validations/auth";
 
@@ -56,6 +57,7 @@ export default function MagicLinkPage() {
       }
 
       setSuccess("Check your email for a login link");
+      track("magic_link_requested");
       form.reset();
     } catch {
       setError("Something went wrong. Please try again.");

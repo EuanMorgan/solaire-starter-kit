@@ -40,7 +40,7 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
-    
+
     sendResetPassword: async ({ user, url }) => {
       // Don't await to prevent timing attacks
       void sendEmail({
@@ -51,7 +51,6 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
-    
     sendVerificationEmail: async ({ user, url }) => {
       // Don't await to prevent timing attacks
       void sendEmail({

@@ -56,6 +56,9 @@ export default function SignupPage() {
 
       if (result.error) {
         setError(result.error.message ?? "Failed to create account");
+        track("signup_form_error", {
+          error: result.error.message ?? "failed_to_create_account",
+        });
         return;
       }
 

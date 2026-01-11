@@ -55,6 +55,10 @@ export default function LoginPage() {
 
       if (result.error) {
         setError(result.error.message ?? "Invalid credentials");
+        track("login_form_error", {
+          method: "email",
+          error: result.error.message ?? "invalid_credentials",
+        });
         return;
       }
 
@@ -74,6 +78,7 @@ export default function LoginPage() {
 
   async function handleGitHubSignIn() {
     setIsGitHubLoading(true);
+    track("user_signed_in_github", { method: "github" });
     try {
       await signIn.social({
         provider: "github",
@@ -81,6 +86,10 @@ export default function LoginPage() {
       });
     } catch {
       setError("Failed to sign in with GitHub");
+      track("login_form_error", {
+        method: "github",
+        error: "github_oauth_failed",
+      });
       setIsGitHubLoading(false);
     }
   }

@@ -3,7 +3,7 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,15 +13,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { track } from "@/lib/analytics";
 
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
 
   const [countdown, setCountdown] = useState(3);
+  const hasTracked = useRef(false);
 
   const isSuccess = !error;
+
+  // Track verification result once on mount
+  useEffect(() => {
+    if (hasTracked.current) return;
+    hasTracked.current = true;
+
+    if (isSuccess) {
+      track("email_verified");
+    } else {
+      track("email_verification_failed", { error: error ?? "unknown" });
+    }
+  }, [isSuccess, error]);
 
   useEffect(() => {
     if (!isSuccess) return;
@@ -89,5 +104,28 @@ export default function VerifyEmailPage() {
         </Link>
       </CardContent>
     </Card>
+  );
+}
+
+function VerifyEmailLoading() {
+  return (
+    <Card className="w-full max-w-md">
+      <CardHeader className="text-center">
+        <Skeleton className="mx-auto mb-4 h-12 w-12 rounded-full" />
+        <Skeleton className="mx-auto h-8 w-48" />
+        <Skeleton className="mx-auto mt-2 h-4 w-64" />
+      </CardHeader>
+      <CardContent className="text-center">
+        <Skeleton className="mx-auto h-4 w-48" />
+      </CardContent>
+    </Card>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<VerifyEmailLoading />}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

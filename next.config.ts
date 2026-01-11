@@ -4,6 +4,9 @@ import "./src/env";
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
+  // Required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
+
   async headers() {
     return [
       {
@@ -22,6 +25,20 @@ const nextConfig: NextConfig = {
             value: "geolocation=(), microphone=(), camera=()",
           },
         ],
+      },
+    ];
+  },
+
+  // PostHog reverse proxy to avoid ad blockers
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
       },
     ];
   },

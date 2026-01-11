@@ -1171,3 +1171,17 @@ Files:
 - src/components/posthog-provider.tsx (new)
 - src/app/layout.tsx (updated)
 - package.json (posthog-js dep)
+
+## ANALYTICS-002: Create Analytics Utilities - COMPLETE
+
+- Created src/lib/analytics.ts with:
+  - EventName type union: user_signed_up, user_signed_in, user_signed_out, user_updated_profile, user_deleted_account, page_viewed, feature_used
+  - track(event, properties?) - captures event if PostHog initialized
+  - identify(userId, traits?) - identifies user for analytics
+  - reset() - resets identity on logout
+- All functions guard with `if (!posthog.__loaded) return` for no-op when PostHog not initialized
+- Also guards `if (typeof window === "undefined") return` for SSR safety
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- src/lib/analytics.ts (new)

@@ -1284,7 +1284,7 @@
       "VERIFY: bun run setup works on fresh clone",
       "DONE: Automated setup script for new developers"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "CI-005",

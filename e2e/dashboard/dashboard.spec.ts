@@ -38,8 +38,9 @@ test.describe("Dashboard Page", () => {
   test("sidebar shows user info", async ({ page }) => {
     await loginAsTestUser(page);
 
-    await expect(page.getByText("Test User")).toBeVisible();
-    await expect(page.getByText("test@example.com")).toBeVisible();
+    // Use .first() since "Test User" appears in sidebar, welcome heading, and profile card
+    await expect(page.getByText("Test User").first()).toBeVisible();
+    await expect(page.getByText("test@example.com").first()).toBeVisible();
   });
 
   test("settings link navigates to /settings", async ({ page }) => {

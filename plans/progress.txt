@@ -1185,3 +1185,22 @@ Files:
 
 Files:
 - src/lib/analytics.ts (new)
+
+## CI-004: Create Setup Script - COMPLETE
+
+- Created scripts/setup.ts with Bun shell ($) for command execution
+- Steps: check/copy .env from .env.example, bun install, check required env vars, db:push if DB configured
+- Added @types/bun devDep for TypeScript support
+- Colored console output (cyan/green/yellow/red) for clear feedback
+- Warns about missing/placeholder vars (DATABASE_URL, BETTER_AUTH_SECRET, NEXT_PUBLIC_BASE_URL)
+- Graceful skip of db:push if DATABASE_URL not configured
+- Shows "Next steps" guide at end
+- Added "setup" script to package.json
+- Verified: bun run setup runs successfully
+- Fixed pre-existing E2E test (strict mode violation on getByText)
+- All checks pass: typecheck, lint, 21 unit tests, 49 E2E tests
+
+Files:
+- scripts/setup.ts (new)
+- package.json (setup script, @types/bun devDep)
+- e2e/dashboard/dashboard.spec.ts (fixed .first() for strict mode)

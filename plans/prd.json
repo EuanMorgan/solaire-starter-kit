@@ -12,7 +12,7 @@
       "VERIFY: bun run typecheck passes",
       "DONE: Fresh Next.js 16 project running, ready for features"
     ],
-    "passes": false
+    "passes": true
   },
   {
     "id": "FOUND-001",
@@ -1330,6 +1330,6 @@
       "VERIFY: bun run typecheck passes",
       "DONE: package.json has proper metadata"
     ],
-    "passes": false
+    "passes": true
   }
 ]

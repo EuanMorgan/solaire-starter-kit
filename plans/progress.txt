@@ -1204,3 +1204,20 @@ Files:
 - scripts/setup.ts (new)
 - package.json (setup script, @types/bun devDep)
 - e2e/dashboard/dashboard.spec.ts (fixed .first() for strict mode)
+
+## CI-007: Update package.json Metadata - COMPLETE
+
+- Added description: "Next.js 16 starter with tRPC, better-auth, Drizzle ORM, and Tailwind v4"
+- Added license: MIT
+- Added author: Euan Morgan
+- Added repository: { type: git, url: https://github.com/euanmorgan/solaire }
+- Typecheck passes
+
+Files:
+- package.json (updated)
+
+## INIT-001: Initialize fresh Next.js project - COMPLETE (marked retroactively)
+
+- Project was already initialized and running
+- All verification steps passing (dev server runs, typecheck passes)
+- CLAUDE.md and progress.txt exist

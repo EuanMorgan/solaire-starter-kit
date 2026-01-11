@@ -1,7 +1,14 @@
 {
   "name": "solaire",
   "version": "0.1.0",
+  "description": "Next.js 16 starter with tRPC, better-auth, Drizzle ORM, and Tailwind v4",
   "private": true,
+  "license": "MIT",
+  "author": "Euan Morgan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/euanmorgan/solaire"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

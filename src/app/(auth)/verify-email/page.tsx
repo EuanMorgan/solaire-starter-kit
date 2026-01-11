@@ -3,7 +3,7 @@
 import { CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -22,15 +22,9 @@ function VerifyEmailContent() {
   const error = searchParams.get("error");
 
   const [countdown, setCountdown] = useState(3);
-  const hasTracked = useRef(false);
-
   const isSuccess = !error;
 
-  // Track verification result once on mount
   useEffect(() => {
-    if (hasTracked.current) return;
-    hasTracked.current = true;
-
     if (isSuccess) {
       track("email_verified");
     } else {

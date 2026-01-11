@@ -2,14 +2,12 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { headers } from "next/headers";
 import { cache } from "react";
 import superjson from "superjson";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 import { ratelimit } from "@/lib/rate-limit";
 
 export const createTRPCContext = cache(async () => {
   const reqHeaders = await headers();
-  const session = await auth.api.getSession({
-    headers: reqHeaders,
-  });
+  const session = await getSession();
   // Get IP for rate limiting (X-Forwarded-For or fallback)
   const ip =
     reqHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";

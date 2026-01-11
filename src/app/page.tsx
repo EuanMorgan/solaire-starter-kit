@@ -10,14 +10,13 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
-import { headers } from "next/headers";
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { PublicFooter } from "@/components/public-footer";
 import { PublicHeader } from "@/components/public-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth";
 
 const features = [
   {
@@ -68,9 +67,7 @@ const features = [
 ];
 
 export default async function HomePage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSession();
 
   return (
     <div className="min-h-screen bg-background">

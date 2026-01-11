@@ -1,77 +1,24 @@
-"use client";
+import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { QueryErrorBoundary } from "@/components/query-error-boundary";
+import { getSession } from "@/lib/auth";
+import { HydrateClient, prefetch, trpc } from "@/trpc/server";
+import { DashboardContent } from "./_components/dashboard-content";
+import { DashboardSkeleton } from "./_components/dashboard-skeleton";
 
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useTRPC } from "@/trpc/client";
+export default async function DashboardPage() {
+  const session = await getSession();
+  if (!session) redirect("/login");
 
-export default function DashboardPage() {
-  const trpc = useTRPC();
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useQuery(trpc.user.me.queryOptions());
-
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <Skeleton className="h-8 w-48" />
-        <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <Skeleton className="h-4 w-full" />
-            <Skeleton className="h-4 w-3/4" />
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-destructive">
-        <p>Failed to load user data</p>
-      </div>
-    );
-  }
+  prefetch(trpc.user.me.queryOptions());
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">
-        Welcome back{user?.name ? `, ${user.name}` : ""}!
-      </h1>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Your Profile</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2">
-          <p>
-            <span className="text-muted-foreground">Email:</span>{" "}
-            <span>{user?.email}</span>
-          </p>
-          {user?.name && (
-            <p>
-              <span className="text-muted-foreground">Name:</span>{" "}
-              <span>{user.name}</span>
-            </p>
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            This is your dashboard. More features coming soon.
-          </p>
-        </CardContent>
-      </Card>
-    </div>
+    <HydrateClient>
+      <QueryErrorBoundary>
+        <Suspense fallback={<DashboardSkeleton />}>
+          <DashboardContent />
+        </Suspense>
+      </QueryErrorBoundary>
+    </HydrateClient>
   );
 }

@@ -1,6 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "./button";
@@ -12,6 +10,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useForm,
 } from "./form";
 import { Input } from "./input";
 
@@ -20,15 +19,13 @@ const loginSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-type LoginFormValues = z.infer<typeof loginSchema>;
-
 function LoginFormExample({
   defaultErrors = false,
 }: {
   defaultErrors?: boolean;
 }) {
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm({
+    schema: loginSchema,
     defaultValues: {
       email: defaultErrors ? "invalid-email" : "",
       password: defaultErrors ? "short" : "",
@@ -121,11 +118,9 @@ const signupSchema = z
     path: ["confirmPassword"],
   });
 
-type SignupFormValues = z.infer<typeof signupSchema>;
-
 function SignupFormExample() {
-  const form = useForm<SignupFormValues>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm({
+    schema: signupSchema,
     defaultValues: {
       name: "",
       email: "",

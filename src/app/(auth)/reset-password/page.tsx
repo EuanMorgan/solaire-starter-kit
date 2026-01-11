@@ -1,10 +1,8 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
-import { useForm } from "react-hook-form";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
@@ -23,6 +21,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -42,8 +41,8 @@ function ResetPasswordContent() {
   const [success, setSuccess] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<ResetPasswordInput>({
-    resolver: zodResolver(resetPasswordSchema),
+  const form = useForm({
+    schema: resetPasswordSchema,
     defaultValues: {
       password: "",
       confirmPassword: "",

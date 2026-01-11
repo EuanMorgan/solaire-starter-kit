@@ -1,11 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Github } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { FormError } from "@/components/form-error";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +21,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { identify, track } from "@/lib/analytics";
@@ -35,8 +34,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGitHubLoading, setIsGitHubLoading] = useState(false);
 
-  const form = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm({
+    schema: loginSchema,
     defaultValues: {
       email: "",
       password: "",

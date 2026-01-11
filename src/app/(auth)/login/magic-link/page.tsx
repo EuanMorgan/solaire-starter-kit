@@ -1,9 +1,7 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
@@ -22,6 +20,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  useForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { track } from "@/lib/analytics";
@@ -33,8 +32,8 @@ export default function MagicLinkPage() {
   const [success, setSuccess] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<MagicLinkInput>({
-    resolver: zodResolver(magicLinkSchema),
+  const form = useForm({
+    schema: magicLinkSchema,
     defaultValues: {
       email: "",
     },

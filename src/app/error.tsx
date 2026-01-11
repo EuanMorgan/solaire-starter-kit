@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { captureException, track } from "@/lib/analytics";
 
@@ -13,13 +13,21 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const seenErrorRef = useRef<string | null>(null);
+
   useEffect(() => {
+    if (seenErrorRef.current === error.digest) {
+      return;
+    }
+
     console.error(error);
     captureException(error, { digest: error.digest });
     track("application_error", {
       error_message: error.message,
       digest: error.digest,
     });
+
+    seenErrorRef.current = error.digest ?? null;
   }, [error]);
 
   return (

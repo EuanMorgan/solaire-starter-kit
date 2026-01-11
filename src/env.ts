@@ -6,8 +6,8 @@ export const env = createEnv({
     // Database - required
     DATABASE_URL: z.string().url(),
     TABLE_PREFIX: z.string().default("solaire_"),
-    // Auth - required
-    BETTER_AUTH_SECRET: z.string().min(1),
+    // Auth - required (min 32 chars for security)
+    BETTER_AUTH_SECRET: z.string().min(32),
     // GitHub OAuth - optional
     GITHUB_CLIENT_ID: z.string().min(1).optional(),
     GITHUB_CLIENT_SECRET: z.string().min(1).optional(),

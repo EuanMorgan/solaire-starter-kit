@@ -10,6 +10,7 @@ import {
   MagicLinkEmail,
   ResetPasswordEmail,
   VerificationEmail,
+  WelcomeEmail,
 } from "@/modules/email/ui";
 
 export const auth = betterAuth({
@@ -24,8 +25,22 @@ export const auth = betterAuth({
   }),
   baseURL: env.NEXT_PUBLIC_BASE_URL,
   secret: env.BETTER_AUTH_SECRET,
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          void sendEmail({
+            to: user.email,
+            subject: "Welcome to Solaire",
+            react: WelcomeEmail({ userName: user.name || "there" }),
+          });
+        },
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
+    
     sendResetPassword: async ({ user, url }) => {
       // Don't await to prevent timing attacks
       void sendEmail({
@@ -36,6 +51,7 @@ export const auth = betterAuth({
     },
   },
   emailVerification: {
+    
     sendVerificationEmail: async ({ user, url }) => {
       // Don't await to prevent timing attacks
       void sendEmail({

@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { identify, track } from "@/lib/analytics";
 import { signUp } from "@/lib/auth-client";
 import { type SignupInput, signupSchema } from "@/lib/validations/auth";
 
@@ -56,6 +57,11 @@ export default function SignupPage() {
       if (result.error) {
         setError(result.error.message ?? "Failed to create account");
         return;
+      }
+
+      if (result.data?.user) {
+        identify(result.data.user.id, { email: result.data.user.email });
+        track("user_signed_up", { method: "email" });
       }
 
       router.push("/dashboard");

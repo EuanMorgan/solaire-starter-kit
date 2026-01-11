@@ -8,7 +8,7 @@ interface LogoProps {
 
 export function Logo({ className, size = 32 }: LogoProps) {
   return (
-    <>
+    <span className="inline-flex">
       <Image
         src="/logo-light.png"
         alt="Solaire"
@@ -25,6 +25,6 @@ export function Logo({ className, size = 32 }: LogoProps) {
         className={cn("object-contain hidden dark:block", className)}
         priority
       />
-    </>
+    </span>
   );
 }

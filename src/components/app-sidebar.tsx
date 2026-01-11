@@ -19,6 +19,7 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/config/site";
+import { reset, track } from "@/lib/analytics";
 import { signOut, useSession } from "@/lib/auth-client";
 
 const navItems = [
@@ -41,6 +42,8 @@ export function AppSidebar() {
   const { data: session } = useSession();
 
   const handleSignOut = async () => {
+    track("user_signed_out");
+    reset();
     await signOut();
     window.location.href = "/login";
   };

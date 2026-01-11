@@ -9,12 +9,18 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
-          // Prevent clickjacking by disallowing framing
           { key: "X-Frame-Options", value: "DENY" },
-          // Prevent MIME type sniffing
           { key: "X-Content-Type-Options", value: "nosniff" },
-          // Control referrer information sent with requests
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
+          { key: "X-XSS-Protection", value: "1; mode=block" },
+          {
+            key: "Permissions-Policy",
+            value: "geolocation=(), microphone=(), camera=()",
+          },
         ],
       },
     ];

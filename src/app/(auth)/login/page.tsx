@@ -25,6 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { identify, track } from "@/lib/analytics";
 import { signIn } from "@/lib/auth-client";
 import { type LoginInput, loginSchema } from "@/lib/validations/auth";
 
@@ -55,6 +56,11 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message ?? "Invalid credentials");
         return;
+      }
+
+      if (result.data?.user) {
+        identify(result.data.user.id, { email: result.data.user.email });
+        track("user_signed_in", { method: "email" });
       }
 
       router.push("/dashboard");

@@ -32,6 +32,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { reset, track } from "@/lib/analytics";
 import { signOut } from "@/lib/auth-client";
 import { useTRPC } from "@/trpc/client";
 
@@ -71,6 +72,7 @@ export default function SettingsPage() {
         setUpdateSuccess("Profile updated successfully");
         setUpdateError(undefined);
         queryClient.invalidateQueries({ queryKey: trpc.user.me.queryKey() });
+        track("user_updated_profile");
       },
       onError: (err) => {
         setUpdateError(err.message);
@@ -82,6 +84,8 @@ export default function SettingsPage() {
   const deleteAccountMutation = useMutation(
     trpc.user.deleteAccount.mutationOptions({
       onSuccess: async () => {
+        track("user_deleted_account");
+        reset();
         await signOut();
         router.push("/login");
         router.refresh();

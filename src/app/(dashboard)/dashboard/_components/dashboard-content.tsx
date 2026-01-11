@@ -1,13 +1,22 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTRPC } from "@/trpc/client";
 
-export function DashboardContent() {
-  const trpc = useTRPC();
-  const { data: user } = useSuspenseQuery(trpc.user.me.queryOptions());
+interface User {
+  id: string;
+  name: string | null;
+  email: string;
+  emailVerified: boolean;
+  image?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
+interface DashboardContentProps {
+  user: User;
+}
+
+export function DashboardContent({ user }: DashboardContentProps) {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">

@@ -13,6 +13,7 @@ export type EventName =
   | "user_signed_in_github"
   | "user_signed_out"
   | "user_updated_profile"
+  | "user_changed_password"
   | "user_deleted_account"
   | "magic_link_requested"
   | "password_reset_requested"

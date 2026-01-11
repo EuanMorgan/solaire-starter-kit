@@ -10,14 +10,9 @@ vi.mock("@/env", () => ({
   },
 }));
 
-vi.mock("@/db", () => ({
-  db: {
-    update: vi.fn().mockReturnThis(),
-    set: vi.fn().mockReturnThis(),
-    where: vi.fn().mockReturnThis(),
-    returning: vi.fn().mockResolvedValue([{ id: "1", name: "Updated" }]),
-    delete: vi.fn().mockReturnThis(),
-  },
+vi.mock("@/modules/user/server", () => ({
+  updateUser: vi.fn().mockResolvedValue({ id: "user-123", name: "Updated Name" }),
+  deleteUser: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("@/lib/rate-limit", () => ({
@@ -56,22 +51,6 @@ const createCaller = (sessionData: MockSessionData | null) => {
 };
 
 describe("userRouter", () => {
-  describe("me", () => {
-    it("returns user data when authenticated", async () => {
-      const caller = createCaller({ session: mockSession, user: mockUser });
-      const result = await caller.user.me();
-      expect(result).toEqual(mockUser);
-    });
-
-    it("throws UNAUTHORIZED when session is null", async () => {
-      const caller = createCaller(null);
-      await expect(caller.user.me()).rejects.toThrow(TRPCError);
-      await expect(caller.user.me()).rejects.toMatchObject({
-        code: "UNAUTHORIZED",
-      });
-    });
-  });
-
   describe("updateProfile", () => {
     it("updates name and returns updated user", async () => {
       const caller = createCaller({ session: mockSession, user: mockUser });

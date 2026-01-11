@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
@@ -28,8 +27,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { reset, track } from "@/lib/analytics";
-import { signOut } from "@/lib/auth-client";
-import { useTRPC } from "@/trpc/client";
+import { authClient } from "@/lib/auth-client";
 
 const deleteConfirmSchema = z.object({
   confirmation: z
@@ -39,25 +37,10 @@ const deleteConfirmSchema = z.object({
 
 export function DeleteAccountDialog() {
   const router = useRouter();
-  const trpc = useTRPC();
 
   const [error, setError] = useState<string | undefined>();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const deleteAccountMutation = useMutation(
-    trpc.user.deleteAccount.mutationOptions({
-      onSuccess: async () => {
-        track("user_deleted_account");
-        reset();
-        await signOut();
-        router.push("/login");
-        router.refresh();
-      },
-      onError: (err) => {
-        setError(err.message);
-      },
-    }),
-  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
     schema: deleteConfirmSchema,
@@ -66,9 +49,27 @@ export function DeleteAccountDialog() {
     },
   });
 
-  async function onSubmit(data: { confirmation: string }) {
+  async function onSubmit(_data: { confirmation: string }) {
     setError(undefined);
-    deleteAccountMutation.mutate({ confirmation: data.confirmation });
+    setIsSubmitting(true);
+
+    try {
+      const result = await authClient.deleteUser();
+
+      if (result.error) {
+        setError(result.error.message ?? "Failed to delete account");
+        return;
+      }
+
+      track("user_deleted_account");
+      reset();
+      router.push("/login");
+      router.refresh();
+    } catch {
+      setError("An unexpected error occurred");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -111,7 +112,7 @@ export function DeleteAccountDialog() {
                       <FormControl>
                         <Input
                           placeholder="DELETE"
-                          disabled={deleteAccountMutation.isPending}
+                          disabled={isSubmitting}
                           {...field}
                         />
                       </FormControl>
@@ -136,8 +137,8 @@ export function DeleteAccountDialog() {
                   <Button
                     type="submit"
                     variant="destructive"
-                    disabled={deleteAccountMutation.isPending}
-                    loading={deleteAccountMutation.isPending}
+                    disabled={isSubmitting}
+                    loading={isSubmitting}
                   >
                     Delete Account
                   </Button>

@@ -15,6 +15,11 @@ import {
 } from "@/modules/email/ui";
 
 export const auth = betterAuth({
+  user: {
+    deleteUser: {
+      enabled: true,
+    },
+  },
   session: {
     cookieCache: {
       enabled: true,

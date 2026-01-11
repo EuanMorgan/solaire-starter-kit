@@ -23,21 +23,3 @@ export async function getUserStats(userId: string) {
     profileComplete: Boolean(userData.name && userData.email),
   };
 }
-
-export async function updateUser(userId: string, data: { name: string }) {
-  const [updated] = await db
-    .update(user)
-    .set(data)
-    .where(eq(user.id, userId))
-    .returning();
-
-  if (!updated) {
-    throw new Error("User not found");
-  }
-
-  return updated;
-}
-
-export async function deleteUser(userId: string) {
-  await db.delete(user).where(eq(user.id, userId));
-}

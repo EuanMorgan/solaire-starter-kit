@@ -1,6 +1,5 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
@@ -19,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { track } from "@/lib/analytics";
-import { useTRPC } from "@/trpc/client";
+import { authClient } from "@/lib/auth-client";
 
 const updateNameSchema = z.object({
   name: z.string().min(1, "Name is required").max(100, "Name is too long"),
@@ -33,25 +32,10 @@ interface UpdateNameFormProps {
 
 export function UpdateNameForm({ currentName }: UpdateNameFormProps) {
   const router = useRouter();
-  const trpc = useTRPC();
 
   const [success, setSuccess] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
-
-  const updateProfileMutation = useMutation(
-    trpc.user.updateProfile.mutationOptions({
-      onSuccess: () => {
-        setSuccess("Profile updated successfully");
-        setError(undefined);
-        track("user_updated_profile");
-        router.refresh();
-      },
-      onError: (err) => {
-        setError(err.message);
-        setSuccess(undefined);
-      },
-    }),
-  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm({
     schema: updateNameSchema,
@@ -63,7 +47,24 @@ export function UpdateNameForm({ currentName }: UpdateNameFormProps) {
   async function onSubmit(data: UpdateNameInput) {
     setSuccess(undefined);
     setError(undefined);
-    updateProfileMutation.mutate({ name: data.name });
+    setIsSubmitting(true);
+
+    try {
+      const result = await authClient.updateUser({ name: data.name });
+
+      if (result.error) {
+        setError(result.error.message ?? "Failed to update profile");
+        return;
+      }
+
+      setSuccess("Profile updated successfully");
+      track("user_updated_profile");
+      router.refresh();
+    } catch {
+      setError("An unexpected error occurred");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -83,7 +84,7 @@ export function UpdateNameForm({ currentName }: UpdateNameFormProps) {
                   <FormControl>
                     <Input
                       placeholder="Your name"
-                      disabled={updateProfileMutation.isPending}
+                      disabled={isSubmitting}
                       {...field}
                     />
                   </FormControl>
@@ -97,8 +98,8 @@ export function UpdateNameForm({ currentName }: UpdateNameFormProps) {
 
             <Button
               type="submit"
-              disabled={updateProfileMutation.isPending}
-              loading={updateProfileMutation.isPending}
+              disabled={isSubmitting}
+              loading={isSubmitting}
             >
               Update Name
             </Button>

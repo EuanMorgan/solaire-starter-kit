@@ -25,7 +25,7 @@ import { signOut, useSession } from "@/lib/auth-client";
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/settings", label: "Settings", icon: Settings },
-];
+] as const;
 
 function getInitials(name: string | undefined | null): string {
   if (!name) return "?";
@@ -55,7 +55,7 @@ export function AppSidebar() {
           href="/dashboard"
           className="flex items-center gap-2 px-2 py-1 font-semibold"
         >
-          <Logo size={24} />
+          <Logo size={32} />
           <span className="text-lg">{siteConfig.name}</span>
         </Link>
       </SidebarHeader>

@@ -8,6 +8,7 @@ import posthog from "posthog-js";
  */
 export type EventName =
   | "user_signed_up"
+  | "user_signed_up_github"
   | "user_signed_in"
   | "user_signed_in_github"
   | "user_signed_out"

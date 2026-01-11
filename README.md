@@ -6,13 +6,15 @@ A modern Next.js 16 SaaS starter with auth, API, and database pre-configured.
 
 | Category | Technology |
 |----------|------------|
-| Framework | [Next.js 16](https://nextjs.org/) with App Router, React 19 |
+| Framework | [Next.js 16](https://nextjs.org/) with App Router, React 19, React Compiler |
 | Database | [PostgreSQL](https://www.postgresql.org/) + [Drizzle ORM](https://orm.drizzle.team/) |
 | API | [tRPC v11](https://trpc.io/) with [@trpc/tanstack-react-query](https://trpc.io/docs/client/react) |
 | Auth | [better-auth](https://www.better-auth.com/) (email/password, magic link, GitHub OAuth) |
 | Styling | [Tailwind CSS v4](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/) |
 | Email | [Resend](https://resend.com/) + [React Email](https://react.email/) |
-| Testing | [Vitest](https://vitest.dev/) + [Playwright](https://playwright.dev/) + [MSW](https://mswjs.io/) |
+| Analytics | [PostHog](https://posthog.com/) with reverse proxy for ad-blocker bypass |
+| Rate Limiting | [Upstash Redis](https://upstash.com/) sliding window rate limiter |
+| Testing | [Vitest](https://vitest.dev/) + [Playwright](https://playwright.dev/) + [Storybook](https://storybook.js.org/) + [MSW](https://mswjs.io/) |
 | Linting | [Biome](https://biomejs.dev/) |
 
 ## Quick Start

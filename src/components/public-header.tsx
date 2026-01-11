@@ -9,9 +9,9 @@ import { siteConfig } from "@/config/site";
 export function PublicHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between">
+      <div className="container px-4 flex h-14 items-center justify-between mx-auto">
         <Link href="/" className="flex items-center gap-2 font-semibold">
-          <Logo size={28} />
+          <Logo size={32} />
           <span className="text-lg">{siteConfig.name}</span>
         </Link>
 

@@ -15,7 +15,7 @@ export default function AuthLayout({
       </div>
       <main className="flex flex-1 flex-col items-center justify-center p-4">
         <Link href="/" className="mb-8 flex items-center justify-center gap-2">
-          <Logo size={40} />
+          <Logo size={48} />
         </Link>
         {children}
       </main>

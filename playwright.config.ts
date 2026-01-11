@@ -21,16 +21,5 @@ export default defineConfig({
     command: "bun dev",
     url: "http://localhost:3000",
     reuseExistingServer: !process.env.CI,
-    env: {
-      DATABASE_URL:
-        process.env.DATABASE_URL ||
-        "postgres://postgres:postgres@localhost:5435/solaire",
-      BETTER_AUTH_SECRET:
-        process.env.BETTER_AUTH_SECRET ||
-        "e2e-test-secret-that-is-at-least-32-characters-long",
-      NEXT_PUBLIC_BASE_URL:
-        process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-      TABLE_PREFIX: process.env.TABLE_PREFIX || "solaire_",
-    },
   },
 });

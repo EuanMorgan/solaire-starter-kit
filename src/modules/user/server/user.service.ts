@@ -2,13 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { user } from "@/db/schema";
 
-export interface UserStats {
-  accountAgeDays: number;
-  emailVerified: boolean;
-  profileComplete: boolean;
-}
-
-export async function getUserStats(userId: string): Promise<UserStats> {
+export async function getUserStats(userId: string) {
   const [userData] = await db
     .select()
     .from(user)
@@ -36,6 +30,11 @@ export async function updateUser(userId: string, data: { name: string }) {
     .set(data)
     .where(eq(user.id, userId))
     .returning();
+
+  if (!updated) {
+    throw new Error("User not found");
+  }
+
   return updated;
 }
 

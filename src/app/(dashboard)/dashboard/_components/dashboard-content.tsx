@@ -2,17 +2,8 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { User } from "@/lib/auth-client";
 import { useTRPC } from "@/trpc/client";
-
-interface User {
-  id: string;
-  name: string | null;
-  email: string;
-  emailVerified: boolean;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 interface DashboardContentProps {
   user: User;

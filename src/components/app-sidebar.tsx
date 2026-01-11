@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/config/site";
 import { reset, track } from "@/lib/analytics";
-import { signOut } from "@/lib/auth-client";
+import { signOut, type User } from "@/lib/auth-client";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -35,16 +35,6 @@ function getInitials(name: string | undefined | null): string {
     .join("")
     .toUpperCase()
     .slice(0, 2);
-}
-
-interface User {
-  id: string;
-  name: string | null;
-  email: string;
-  emailVerified: boolean;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 interface AppSidebarProps {

@@ -2,19 +2,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { User } from "@/lib/auth-client";
 import { ChangePasswordForm } from "./change-password-form";
 import { DeleteAccountDialog } from "./delete-account-dialog";
 import { UpdateNameForm } from "./update-name-form";
-
-interface User {
-  id: string;
-  name: string | null;
-  email: string;
-  emailVerified: boolean;
-  image?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 interface SettingsContentProps {
   user: User;

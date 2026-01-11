@@ -1,5 +1,6 @@
 import { render } from "@react-email/components";
 import { Resend } from "resend";
+import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 
 const resend = env.RESEND_API_KEY ? new Resend(env.RESEND_API_KEY) : null;
@@ -28,7 +29,7 @@ export async function sendEmail({ to, subject, react }: SendEmailParams) {
   ]);
 
   const { data, error } = await resend.emails.send({
-    from: env.FROM_EMAIL,
+    from: `${siteConfig.name} <${env.FROM_EMAIL}>`,
     to: Array.isArray(to) ? to : [to],
     subject,
     html,

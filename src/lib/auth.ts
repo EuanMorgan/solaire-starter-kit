@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { magicLink } from "better-auth/plugins";
+import { cookies } from "next/headers";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 import { env } from "@/env";
@@ -14,6 +15,12 @@ import {
 } from "@/modules/email/ui";
 
 export const auth = betterAuth({
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60, // 5 minutes
+    },
+  },
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {
@@ -86,3 +93,27 @@ export const auth = betterAuth({
     nextCookies(),
   ],
 });
+
+export type Session = typeof auth.$Infer.Session;
+
+/**
+ * Get session in server components.
+ * Workaround for Next.js 16 bug where auth.api.getSession() returns null
+ * despite valid session cookies. Fetches via API endpoint instead.
+ * @see https://github.com/better-auth/better-auth/issues/7008
+ * @see https://github.com/better-auth/better-auth/issues/4188
+ */
+export async function getSession(): Promise<Session | null> {
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
+
+  const res = await fetch(`${env.NEXT_PUBLIC_BASE_URL}/api/auth/get-session`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+  });
+
+  if (!res.ok) return null;
+
+  const data = (await res.json()) as Session | null;
+  return data?.session ? data : null;
+}

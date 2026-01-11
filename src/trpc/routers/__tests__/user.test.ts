@@ -11,7 +11,9 @@ vi.mock("@/env", () => ({
 }));
 
 vi.mock("@/modules/user/server", () => ({
-  updateUser: vi.fn().mockResolvedValue({ id: "user-123", name: "Updated Name" }),
+  updateUser: vi
+    .fn()
+    .mockResolvedValue({ id: "user-123", name: "Updated Name" }),
   deleteUser: vi.fn().mockResolvedValue(undefined),
 }));
 

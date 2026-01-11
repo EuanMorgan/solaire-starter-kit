@@ -10,7 +10,7 @@ export function Logo({ className, size = 32 }: LogoProps) {
   return (
     <span className="inline-flex">
       <Image
-        src="/logo-light.png"
+        src="/logo-dark.png"
         alt="Solaire"
         width={size}
         height={size}
@@ -18,7 +18,7 @@ export function Logo({ className, size = 32 }: LogoProps) {
         priority
       />
       <Image
-        src="/logo-dark.png"
+        src="/logo-light.png"
         alt="Solaire"
         width={size}
         height={size}

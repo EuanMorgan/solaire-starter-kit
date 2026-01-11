@@ -1,5 +1,7 @@
+import Link from "next/link";
+import { Logo } from "@/components/logo";
 import { PublicFooter } from "@/components/public-footer";
-import { PublicHeader } from "@/components/public-header";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AuthLayout({
   children,
@@ -8,8 +10,13 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <PublicHeader />
-      <main className="flex flex-1 items-center justify-center p-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      <main className="flex flex-1 flex-col items-center justify-center p-4">
+        <Link href="/" className="mb-8 flex items-center justify-center gap-2">
+          <Logo size={40} />
+        </Link>
         {children}
       </main>
       <PublicFooter />

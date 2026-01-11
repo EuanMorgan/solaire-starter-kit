@@ -1,3 +1,4 @@
+import { PublicFooter } from "@/components/public-footer";
 import { PublicHeader } from "@/components/public-header";
 
 export default function AuthLayout({
@@ -6,11 +7,12 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <PublicHeader />
-      <main className="flex min-h-[calc(100vh-3.5rem)] items-center justify-center p-4">
+      <main className="flex flex-1 items-center justify-center p-4">
         {children}
       </main>
+      <PublicFooter />
     </div>
   );
 }

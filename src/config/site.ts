@@ -14,6 +14,6 @@ export const siteConfig: SiteConfig = {
   description: "A modern Next.js starter with authentication, tRPC, and more",
   url: env.NEXT_PUBLIC_BASE_URL,
   links: {
-    github: "https://github.com/yourusername/solaire",
+    github: "https://github.com/EuanMorgan/solaire-starter-kit",
   },
 };

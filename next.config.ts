@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import "./src/env";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
 
   // Required to support PostHog trailing slash API requests

@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build", "!drizzle"]
+    "includes": ["**", "!drizzle", "!.emails"]
   },
   "formatter": {
     "enabled": true,
@@ -17,14 +17,17 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
-      "suspicious": {
-        "noUnknownAtRules": "off"
-      }
+      "recommended": true
     },
     "domains": {
       "next": "recommended",
       "react": "recommended"
+    }
+  },
+  "css": {
+    "parser": {
+      "cssModules": true,
+      "tailwindDirectives": true
     }
   },
   "assist": {

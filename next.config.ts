@@ -5,20 +5,14 @@ const nextConfig: NextConfig = {
   output: "standalone",
   reactCompiler: true,
 
-  // Required to support PostHog trailing slash API requests
-  skipTrailingSlashRedirect: true,
-
   typescript: {
     ignoreBuildErrors: true,
   },
 
   typedRoutes: true,
 
-  // PostHog reverse proxy to avoid ad blockers (disabled in CI)
+  // PostHog reverse proxy to avoid ad blockers
   async rewrites() {
-    if (process.env.CI) {
-      return [];
-    }
     return [
       {
         source: "/ingest/static/:path*",
@@ -30,6 +24,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  // Required to support PostHog trailing slash API requests
+  skipTrailingSlashRedirect: true,
 };
 
 export default nextConfig;

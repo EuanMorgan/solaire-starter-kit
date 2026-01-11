@@ -89,7 +89,7 @@ export default async function HomePage() {
               </div>
             </div>
 
-            <h1 className="mt-8 text-4xl font-bold tracking-tight sm:text-6xl bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="mt-8 text-4xl font-bold tracking-tight sm:text-6xl bg-linear-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               {siteConfig.name}
             </h1>
 

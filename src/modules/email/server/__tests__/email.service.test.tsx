@@ -83,7 +83,7 @@ describe("sendEmail", () => {
     });
 
     expect(mockSend).toHaveBeenCalledWith({
-      from: "sender@example.com",
+      from: "Solaire <sender@example.com>",
       to: ["user@example.com"],
       subject: "Welcome",
       html: "<html>HTML content</html>",

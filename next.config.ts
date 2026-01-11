@@ -14,8 +14,11 @@ const nextConfig: NextConfig = {
 
   typedRoutes: true,
 
-  // PostHog reverse proxy to avoid ad blockers
+  // PostHog reverse proxy to avoid ad blockers (disabled in CI)
   async rewrites() {
+    if (process.env.CI) {
+      return [];
+    }
     return [
       {
         source: "/ingest/static/:path*",

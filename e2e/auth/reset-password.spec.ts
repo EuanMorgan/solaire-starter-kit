@@ -5,7 +5,6 @@ test.describe("Reset Password Page", () => {
     page,
   }) => {
     await page.goto("/reset-password");
-    await page.waitForLoadState("networkidle");
 
     await expect(page.getByText("Invalid Link")).toBeVisible();
     await expect(
@@ -32,8 +31,6 @@ test.describe("Reset Password Page", () => {
     test("renders reset password form when token provided", async ({
       page,
     }) => {
-      await page.waitForLoadState("networkidle");
-
       await expect(
         page.getByText("Enter your new password below"),
       ).toBeVisible();

@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { PublicHeader } from "@/components/public-header";
+import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
     <div className="flex min-h-screen flex-col">
-      <PublicHeader />
+      <SiteHeader />
       <div className="flex flex-1 flex-col items-center justify-center gap-4">
         <h1 className="text-6xl font-bold text-muted-foreground">404</h1>
         <h2 className="text-2xl font-semibold">Page not found</h2>

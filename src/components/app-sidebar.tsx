@@ -3,6 +3,7 @@
 import { LayoutDashboard, LogOut, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -51,6 +52,7 @@ export function AppSidebar() {
           href="/dashboard"
           className="flex items-center gap-2 px-2 py-1 font-semibold"
         >
+          <Logo size={24} />
           <span className="text-lg">{siteConfig.name}</span>
         </Link>
       </SidebarHeader>

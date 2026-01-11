@@ -1,5 +1,7 @@
 "use client";
 
+import posthog from "posthog-js";
+
 /**
  * Allowed event names for type-safe tracking.
  * Add new events here as the application grows.
@@ -26,35 +28,35 @@ export type EventName =
 
 /**
  * Track an analytics event with optional properties.
- * TODO: Wire up to your analytics provider (e.g., PostHog, Mixpanel, etc.)
+ * Wired up to PostHog for event tracking.
  */
-export function track(_event: EventName, _properties?: Record<string, unknown>) {
-  // No-op stub - implement with your analytics provider
+export function track(event: EventName, properties?: Record<string, unknown>) {
+  posthog.capture(event, properties);
 }
 
 /**
  * Identify a user for analytics tracking.
- * TODO: Wire up to your analytics provider
+ * Links anonymous sessions to a known user identity.
  */
-export function identify(_userId: string, _traits?: Record<string, unknown>) {
-  // No-op stub - implement with your analytics provider
+export function identify(userId: string, traits?: Record<string, unknown>) {
+  posthog.identify(userId, traits);
 }
 
 /**
  * Reset the current user's identity (e.g., on logout).
- * TODO: Wire up to your analytics provider
+ * Unlinks future events from the current user.
  */
 export function reset() {
-  // No-op stub - implement with your analytics provider
+  posthog.reset();
 }
 
 /**
  * Capture an exception/error for error tracking.
- * TODO: Wire up to your analytics provider
+ * Sends error details to PostHog for monitoring.
  */
 export function captureException(
-  _error: Error | unknown,
-  _additionalProperties?: Record<string, unknown>,
+  error: Error | unknown,
+  additionalProperties?: Record<string, unknown>,
 ) {
-  // No-op stub - implement with your analytics provider
+  posthog.captureException(error, additionalProperties);
 }

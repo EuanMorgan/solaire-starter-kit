@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { captureException, track } from "@/lib/analytics";
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: Next.js error page convention
 export default function Error({
@@ -14,6 +15,11 @@ export default function Error({
 }) {
   useEffect(() => {
     console.error(error);
+    captureException(error, { digest: error.digest });
+    track("application_error", {
+      error_message: error.message,
+      digest: error.digest,
+    });
   }, [error]);
 
   return (
